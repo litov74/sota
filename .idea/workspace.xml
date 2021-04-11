@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f97aad0f-c76f-4b66-93c0-4db290f3c9be" name="Default Changelist" comment="Commit msg...">
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator-enh.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/local.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/AddClientCard.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/GetClientCards.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/GetClientTransactions.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/GetReplenishmentPackages.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/PromoService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/RemoveClientCard.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/SetCardAsMain.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/login/domain/entities/PromoDataItem.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/promo/domain/PromoInteractor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/promo/domain/entities/PromoData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/entities/ClientPurseResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/OrderService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/OrderService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/RetrofitProviders.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/RetrofitProviders.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/drivings/domain/DrivingsInteractor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/drivings/domain/DrivingsInteractor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/drivings/presentation/DrivingsPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/drivings/presentation/DrivingsPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/login/presentation/LoginPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/login/presentation/LoginPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/login/presentation/fragments/code/LoginCodePresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/login/presentation/fragments/code/LoginCodePresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/map/presentation/MapActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/map/presentation/MapActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/map/presentation/MapPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/map/presentation/MapPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/profile/presentation/ProfileActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/profile/presentation/ProfileActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/PurseUpBalanceInteractorImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/PurseUpBalanceInteractorImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/PurseActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/PurseActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/PursePresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/PursePresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalanceFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalanceFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalancePresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalancePresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/tutorial/presentation/TutorialActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/tutorial/presentation/TutorialActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/tutorial/presentation/TutorialPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/tutorial/presentation/TutorialPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_invite_friends.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_invite_friends.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login_input.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login_input.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tutorial.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tutorial.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1qDTTklTrgCdM334uah99DLHL2o" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DEBUGGABLE_DEVICE" value="xiaomi-redmi_5-bf37d8587d94" />
+    <property name="DEBUGGABLE_PROCESS" value="com.development.sota.scooter" />
+    <property name="DEBUGGER_ID" value="Auto" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3a_API_30_x86" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-04-05T00:28:59.516Z" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="SelectDeploymentTargetsDialog.selectedDevices" value="Pixel_4_API_30&#10;Pixel_3a_API_30_x86" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.development.sota.scooter.ui.purse.domain.entities" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="com.development.sota.scooter.net" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="Scooter.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f97aad0f-c76f-4b66-93c0-4db290f3c9be" name="Default Changelist" comment="" />
+      <created>1616613170280</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1616613170280</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Commit msg..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit msg..." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="477" y="271" key="#PSD" timestamp="1616679400230">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="477" y="271" key="#PSD/0.0.1920.1050@0.0.1920.1050" timestamp="1616679400230" />
+    <state x="414" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1616613617533">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="414" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1616613617533" />
+    <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser" timestamp="1617833122384">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1617009547308" />
+    <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1617833122384" />
+    <state x="698" y="316" width="527" height="418" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1617015301469">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="698" y="316" width="527" height="418" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1617015301469" />
+    <state x="167" y="71" width="1736" height="867" key="AVDManager" timestamp="1618082153465">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="92" y="92" width="1736" height="866" key="AVDManager/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616786630271" />
+    <state x="167" y="71" width="1736" height="867" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1618082153465" />
+    <state x="501" y="276" key="AndroidCreateResourceDirectoryDialog" timestamp="1616679203476">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="501" y="276" key="AndroidCreateResourceDirectoryDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1616679203476" />
+    <state x="501" y="276" key="AndroidCreateResourceFileDialog" timestamp="1616679281664">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="501" y="276" key="AndroidCreateResourceFileDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1616679281664" />
+    <state x="471" y="271" key="AndroidProcessChooserDialog" timestamp="1616662145084">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="471" y="271" key="AndroidProcessChooserDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1616662145084" />
+    <state x="740" y="279" key="FileChooserDialogImpl" timestamp="1618144347420">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1618144347420" />
+    <state width="1877" height="243" key="GridCell.Tab.0.bottom" timestamp="1617919077142">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="242" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544398" />
+    <state width="1877" height="243" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1617919077142" />
+    <state width="1877" height="243" key="GridCell.Tab.0.center" timestamp="1617919077141">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="242" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544397" />
+    <state width="1877" height="243" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1617919077141" />
+    <state width="1877" height="243" key="GridCell.Tab.0.left" timestamp="1617919077140">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="242" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544397" />
+    <state width="1877" height="243" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1617919077140" />
+    <state width="1877" height="243" key="GridCell.Tab.0.right" timestamp="1617919077141">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="242" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544397" />
+    <state width="1877" height="243" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1617919077141" />
+    <state width="1340" height="265" key="GridCell.Tab.1.bottom" timestamp="1616701925680">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1340" height="265" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1616701925680" />
+    <state width="1340" height="265" key="GridCell.Tab.1.center" timestamp="1616701925679">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1340" height="265" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1616701925679" />
+    <state width="1340" height="265" key="GridCell.Tab.1.left" timestamp="1616701925679">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1340" height="265" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1616701925679" />
+    <state width="1340" height="265" key="GridCell.Tab.1.right" timestamp="1616701925680">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1340" height="265" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1616701925680" />
+    <state x="662" y="333" key="com.android.tools.idea.run.deployment.ModifyDeviceSetDialog" timestamp="1617920123361">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="662" y="333" key="com.android.tools.idea.run.deployment.ModifyDeviceSetDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1617920123361" />
+    <state x="769" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1616669900185">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="769" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1050@0.0.1920.1050" timestamp="1616669900185" />
+    <state x="420" y="283" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1617915901900">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="420" y="283" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1050@0.0.1920.1050" timestamp="1617915901900" />
+    <state x="524" y="101" width="908" height="1037" key="dock-window-1" timestamp="1617833539768">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="1912" y="-8" width="1296" height="1037" maximized="true" key="dock-window-1/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616765752404" />
+    <state x="524" y="101" width="908" height="1037" key="dock-window-1/0.0.1920.1050@0.0.1920.1050" timestamp="1617833539768" />
+    <state x="306" y="135" width="908" height="948" key="dock-window-2" timestamp="1617011928727">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="306" y="135" width="908" height="948" key="dock-window-2/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1617011928727" />
+    <state x="-7" y="0" width="974" height="1057" key="dock-window-2/0.0.1920.1050@0.0.1920.1050" timestamp="1616690538773" />
+    <state x="1118" y="181" width="908" height="1037" key="dock-window-3" timestamp="1616698465491">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="1118" y="181" width="908" height="1037" key="dock-window-3/0.0.1920.1050@0.0.1920.1050" timestamp="1616698465491" />
+    <state x="473" y="101" width="908" height="1037" key="dock-window-4" timestamp="1616699142849">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="473" y="101" width="908" height="1037" key="dock-window-4/0.0.1920.1050@0.0.1920.1050" timestamp="1616699142849" />
+    <state x="577" y="243" key="run.anything.popup" timestamp="1616682560332">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="577" y="243" key="run.anything.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1616682560332" />
+    <state x="1050" y="327" width="672" height="678" key="search.everywhere.popup" timestamp="1617831137402">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="1050" y="327" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1617010520176" />
+    <state x="1050" y="327" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050@0.0.1920.1050" timestamp="1617831137402" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint suspend="NONE" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/map/presentation/MapPresenter.kt</url>
+          <line>195</line>
+          <properties class="com.development.sota.scooter.ui.map.presentation.MapPresenter" method="purchaseToBalance">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint suspend="NONE" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/profile/presentation/ProfileActivity.kt</url>
+          <line>61</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/drivings/domain/DrivingsInteractor.kt</url>
+          <line>53</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
