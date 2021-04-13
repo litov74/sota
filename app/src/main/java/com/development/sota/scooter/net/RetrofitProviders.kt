@@ -61,26 +61,13 @@ object ClientRetrofitProvider {
     val service: ClientService = retrofit.create(ClientService::class.java)
 }
 
-object MainCardRetrofitProvider {
-    val service: SetCardAsMain = retrofit.create(SetCardAsMain::class.java)
-}
-
-object AddCardRetrofitProvider {
-    val service: AddClientCard = retrofit.create(AddClientCard::class.java)
-}
-
-object RemoveCardRetrofitProvider {
-    val service: RemoveClientCard = retrofit.create(RemoveClientCard::class.java)
-}
-
-object GetTransactionRetrofitProvider {
-    val service: GetClientTransactions = retrofit.create(GetClientTransactions::class.java)
-}
 
 object GetReplenishmentPackagesProvider{
     val service: GetReplenishmentPackages = retrofit.create(GetReplenishmentPackages::class.java)
 }
 
-object GetClientCardsProvider{
-    val service: GetClientCards = retrofit.create(GetClientCards::class.java)
+
+
+object PurseRetrofitProvider{
+    val service: PurseService = retrofit.create(PurseService::class.java)
 }

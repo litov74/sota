@@ -49,7 +49,7 @@ class LoginCodeFragment(
 ) : MvpAppCompatFragment(), LoginCodeView {
     private val presenter by moxyPresenter {
         LoginCodePresenter(
-            context ?: activity!!.applicationContext,
+            context ?: requireActivity().applicationContext,
             code,
             loginCodeView.getPhoneAndName()
         )

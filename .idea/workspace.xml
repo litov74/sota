@@ -28,7 +28,37 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f97aad0f-c76f-4b66-93c0-4db290f3c9be" name="Default Changelist" comment="Commit msg..." />
+    <list default="true" id="f97aad0f-c76f-4b66-93c0-4db290f3c9be" name="Default Changelist" comment="Commit msg...">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8.3/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/AddClientCard.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/GetClientCards.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/GetClientTransactions.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/RemoveClientCard.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/RetrofitProviders.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/RetrofitProviders.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/SetCardAsMain.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/login/presentation/fragments/code/LoginCodeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/login/presentation/fragments/code/LoginCodeFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/profile/presentation/ProfileActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/profile/presentation/ProfileActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/WalletViewInteractor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/WalletInteractor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/entities/ClientCards.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/entities/ClientCards.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/WalletActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/WalletActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/WalletPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/WalletPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsPresenter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalanceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalanceActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalancecPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/upbalance/UpBalancecPresenter.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,9 +91,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="layoutResourceFile" />
-        <option value="Kotlin Interface" />
         <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
       </list>
     </option>
   </component>
@@ -221,11 +251,11 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="414" y="179" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1616613617533" />
-    <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser" timestamp="1618178478264">
+    <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser" timestamp="1618330681147">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1617009547308" />
-    <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1618178478264" />
+    <state x="751" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1618330681147" />
     <state x="583" y="449" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1618165950330">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -234,11 +264,11 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="698" y="316" width="527" height="418" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1617015301469" />
-    <state x="167" y="71" width="1736" height="867" key="AVDManager" timestamp="1618082153465">
+    <state x="167" y="71" width="1736" height="867" key="AVDManager" timestamp="1618324954311">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="92" y="92" width="1736" height="866" key="AVDManager/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616786630271" />
-    <state x="167" y="71" width="1736" height="867" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1618082153465" />
+    <state x="167" y="71" width="1736" height="867" key="AVDManager/0.0.1920.1050@0.0.1920.1050" timestamp="1618324954311" />
     <state x="501" y="276" key="AndroidCreateResourceDirectoryDialog" timestamp="1616679203476">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -255,26 +285,26 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="740" y="279" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1618176180148" />
-    <state width="916" height="843" key="GridCell.Tab.0.bottom" timestamp="1618179100213">
+    <state width="916" height="845" key="GridCell.Tab.0.bottom" timestamp="1618330832541">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1877" height="242" key="GridCell.Tab.0.bottom/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544398" />
-    <state width="916" height="843" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1618179100213" />
-    <state width="916" height="843" key="GridCell.Tab.0.center" timestamp="1618179100212">
+    <state width="916" height="845" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1618330832541" />
+    <state width="916" height="845" key="GridCell.Tab.0.center" timestamp="1618330832541">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1877" height="242" key="GridCell.Tab.0.center/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544397" />
-    <state width="916" height="843" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1618179100212" />
-    <state width="916" height="843" key="GridCell.Tab.0.left" timestamp="1618179100212">
+    <state width="916" height="845" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1618330832541" />
+    <state width="916" height="845" key="GridCell.Tab.0.left" timestamp="1618330832540">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1877" height="242" key="GridCell.Tab.0.left/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544397" />
-    <state width="916" height="843" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1618179100212" />
-    <state width="916" height="843" key="GridCell.Tab.0.right" timestamp="1618179100213">
+    <state width="916" height="845" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1618330832540" />
+    <state width="916" height="845" key="GridCell.Tab.0.right" timestamp="1618330832541">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="1877" height="242" key="GridCell.Tab.0.right/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616768544397" />
-    <state width="916" height="843" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1618179100213" />
+    <state width="916" height="845" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1618330832541" />
     <state width="1340" height="265" key="GridCell.Tab.1.bottom" timestamp="1616701925680">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -307,11 +337,11 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="420" y="283" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1050@0.0.1920.1050" timestamp="1617915901900" />
-    <state x="953" y="0" width="974" height="1057" key="dock-window-1" timestamp="1618176494674">
+    <state x="-7" y="0" width="974" height="1057" key="dock-window-1" timestamp="1618329085155">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="1912" y="-8" width="1296" height="1037" maximized="true" key="dock-window-1/0.0.1920.1050/1920.0.1280.994@0.0.1920.1050" timestamp="1616765752404" />
-    <state x="953" y="0" width="974" height="1057" key="dock-window-1/0.0.1920.1050@0.0.1920.1050" timestamp="1618176494674" />
+    <state x="-7" y="0" width="974" height="1057" key="dock-window-1/0.0.1920.1050@0.0.1920.1050" timestamp="1618329085155" />
     <state x="953" y="0" width="974" height="1057" key="dock-window-2" timestamp="1618179006432">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

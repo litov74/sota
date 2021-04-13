@@ -26,12 +26,13 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
     private var _binding: ActivityPurseBinding? = null
     private val binding get() = _binding!!
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         _binding = ActivityPurseBinding.inflate(layoutInflater)
         binding.imageButtonDrivingsListBack.setOnClickListener{
             onBackPressed()
         }
+
 
         var key: Int = 0
         val fm = supportFragmentManager
