@@ -28,11 +28,20 @@ interface PurseService {
         @Field("id") id: Long
     ): Observable<Card>
 
+    @POST("confirmCardLinking")
+    @FormUrlEncoded
+    fun confirmCardLinking(
+        @Field("MD") transactionId: Long,
+        @Field("PaRes") PaRes: String
+    ): Observable<Card>
+
 
     @GET("getClientCards/")
     fun fetchPurseInfo(@Query("id") id: Long): Observable<Card>
 
     @GET("getTransactions/")
     fun fetchTransactionsInfo(@Query("id") id: Long): Observable<Card>
+
+
 
 }

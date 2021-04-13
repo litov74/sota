@@ -10,4 +10,5 @@ data class Card(val serverId: Long,
                 val verified: Boolean,
                 val id: Long,
                 val card: String,
-                val card_id: Long)
+                val card_id: Long,
+                val PaRes: String)

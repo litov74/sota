@@ -60,21 +60,26 @@ class ProfileActivity : MvpAppCompatActivity(), ProfileView {
         }
 
         binding.additionalProfileText.setOnClickListener {
-            //TODO: need profile editing
-            //val tmp: String = et_name.toString()
-            //val tmp2: String = et_phone.toString()
-            //var name: String = ""
-            //var surname: String = ""
 
-            //if(tmp.contains(" ")){
-            //    name = tmp.split(" ").first().toString()
-            //    surname = tmp.split(" ").last().toString()
-            //    setProfileInfo(name, surname, tmp2, "")
-            //    profileUpdate()
-            //}else{
-            //    setProfileInfo(tmp, "", tmp2, "")
-            //    profileUpdate()
-            //}
+           // val tmp: String = et_name.text.toString()
+           // val tmp2: String = et_phone.text.toString()
+           // var name: String = ""
+           // var surname: String = ""
+
+            val fullName = binding.etName.text.toString()
+            val phone = binding.etPhone.text.toString()
+            var name: String = ""
+            var surname: String = ""
+
+            if(fullName.contains(" ")){
+                name = fullName.split(" ").first()
+                surname = fullName.split(" ").last()
+                setProfileInfo(name, surname, phone, "")
+                profileUpdate()
+            }else{
+                setProfileInfo(fullName, "", phone, "")
+                profileUpdate()
+            }
 
         }
 
