@@ -28,6 +28,12 @@ interface ProfileView : MvpView {
     fun setLoading(by: Boolean)
 
     @AddToEnd
+    fun setProgressUpdateName(by: Boolean)
+
+    @AddToEnd
+    fun setProgressUpdatePhone(by: Boolean)
+
+    @AddToEnd
     fun profileUpdate()
 }
 
@@ -74,12 +80,13 @@ class ProfileActivity : MvpAppCompatActivity(), ProfileView {
             if(fullName.contains(" ")){
                 name = fullName.split(" ").first()
                 surname = fullName.split(" ").last()
+
                 setProfileInfo(name, surname, phone, "")
-                profileUpdate()
             }else{
                 setProfileInfo(fullName, "", phone, "")
-                profileUpdate()
             }
+
+            presenter.updateProfileInfo(fullName, phone);
 
         }
 
@@ -112,8 +119,40 @@ class ProfileActivity : MvpAppCompatActivity(), ProfileView {
     override fun setLoading(by: Boolean) {
         runOnUiThread {
             if (by) {
+                binding.additionalProfileText.visibility = View.GONE
+                binding.userDataContainer.visibility = View.GONE
                 binding.progressBarProfile.visibility = View.VISIBLE
             } else {
+                binding.additionalProfileText.visibility = View.VISIBLE
+                binding.userDataContainer.visibility = View.VISIBLE
+                binding.progressBarProfile.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun setProgressUpdateName(by: Boolean) {
+        runOnUiThread {
+            if (by) {
+                binding.additionalProfileText.visibility = View.GONE
+                binding.userDataContainer.visibility = View.GONE
+                binding.progressBarProfile.visibility = View.VISIBLE
+            } else {
+                binding.additionalProfileText.visibility = View.VISIBLE
+                binding.userDataContainer.visibility = View.VISIBLE
+                binding.progressBarProfile.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun setProgressUpdatePhone(by: Boolean) {
+        runOnUiThread {
+            if (by) {
+                binding.additionalProfileText.visibility = View.GONE
+                binding.userDataContainer.visibility = View.GONE
+                binding.progressBarProfile.visibility = View.VISIBLE
+            } else {
+                binding.additionalProfileText.visibility = View.VISIBLE
+                binding.userDataContainer.visibility = View.VISIBLE
                 binding.progressBarProfile.visibility = View.GONE
             }
         }

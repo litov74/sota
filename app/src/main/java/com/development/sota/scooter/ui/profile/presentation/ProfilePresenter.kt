@@ -16,9 +16,8 @@ class ProfilePresenter(val context: Context) : MvpPresenter<ProfileView>() {
         interactor.getProfileInfo()
     }
 
-    fun setProfileInfo(clientName: String, phone: String) {
-        viewState.setLoading(true)
-        interactor.setProfileInfo(clientName, phone)
+    fun showLoading(boolean: Boolean) {
+        viewState.setLoading(boolean)
     }
 
     fun showError(msg: String) {
@@ -34,6 +33,14 @@ class ProfilePresenter(val context: Context) : MvpPresenter<ProfileView>() {
         val surname = item.surname
         val clientPhoto = item.clientPhoto
         viewState.setProfileInfo(clientName, surname, phone, clientPhoto)
+    }
+
+    fun progressUpdateClientName(boolean: Boolean) {
+        viewState.setProgressUpdateName(boolean)
+    }
+
+    fun updateProfileInfo(clientName: String, phone: String) {
+        interactor.setProfileInfo(clientName, phone)
     }
 
     fun completeUpdateProfile() {
