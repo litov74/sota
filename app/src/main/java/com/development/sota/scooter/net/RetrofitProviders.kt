@@ -1,5 +1,7 @@
 package com.development.sota.scooter.net
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.development.sota.scooter.SotaApp
 import com.google.gson.Gson
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.Interceptor
@@ -28,6 +30,7 @@ val client: OkHttpClient = OkHttpClient.Builder()
     .connectTimeout(30, TimeUnit.SECONDS)
     .addInterceptor(HeadersInterceptor())
     .addInterceptor(interceptor)
+    .addInterceptor(ChuckerInterceptor(SotaApp.applicationContext()))
     .build()
 
 val retrofit: Retrofit = Retrofit.Builder()

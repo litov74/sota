@@ -29,6 +29,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityPurseBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         binding.imageButtonDrivingsListBack.setOnClickListener{
             onBackPressed()
         }
@@ -36,7 +37,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
 
         var key: Int = 0
         val fm = supportFragmentManager
-        fm.beginTransaction().replace(R.id.host, UpBalanceActivity()).commit()
+        fm.beginTransaction().add(binding.host.id, UpBalanceActivity()).commit()
 
         binding.btnOpenUpBalance.setOnClickListener{
             if(key != 0){
@@ -44,7 +45,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 unCheck(binding.btnOpenTransactions)
                 check(binding.btnOpenUpBalance)
                 key = 0
-                fm.beginTransaction().replace(R.id.host, UpBalanceActivity()).commit()
+                fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
 
             }
         }
@@ -54,7 +55,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 unCheck(binding.btnOpenTransactions)
                 unCheck(binding.btnOpenUpBalance)
                 key = 1
-                fm.beginTransaction().replace(R.id.host, UpBalanceActivity()).commit()
+                fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
 
             }
         }
@@ -64,7 +65,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 check(binding.btnOpenTransactions)
                 unCheck(binding.btnOpenUpBalance)
                 key = 2
-                fm.beginTransaction().replace(R.id.host, UpBalanceActivity()).commit()
+                fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
 
             }
         }
