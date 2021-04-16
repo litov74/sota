@@ -294,7 +294,7 @@
                     android:textColor="@color/white"
                     android:textSize="14dp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonItemScooterFirstActivate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
                     android:padding="4dp"
                     android:text="@string/scooter_activate"
                     android:textAllCaps="false"
-                    android:textColor="@color/purple_text"
+                    android:textColor="#0342C2"
                     android:textSize="18dp" />
             </LinearLayout>
 

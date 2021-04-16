@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -21,6 +21,11 @@
         <item name="android:windowBackground">@drawable/ic_launch_screen</item>
     </style>
 
+    <style name="MenuItem" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/robotoregular</item>
+
+    </style>
 
     <style name="SCBSwitch" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/green_switch</item>

@@ -151,10 +151,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:drawableStart="@drawable/ic_exit"
+        android:drawableTint="@color/red_edit_text"
+        android:textSize="17sp"
         android:drawablePadding="6dp"
         android:text="Выйти"
         android:textColor="@color/red_edit_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:targetApi="m" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

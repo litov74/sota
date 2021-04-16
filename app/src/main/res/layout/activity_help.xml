@@ -34,9 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:text="Связаться через:"
+        android:text="@string/connect_with"
         android:textAlignment="textStart"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:layout_marginTop="16dp"
         android:textColor="@color/gray"/>
     <androidx.recyclerview.widget.RecyclerView

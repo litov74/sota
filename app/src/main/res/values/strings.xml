@@ -98,7 +98,7 @@
     <string name="menu_learn">Обучение</string>
     <string name="menu_help">Помощь</string>
     <string name="menu_greeting">Привет, мы рады видеть тебя!</string>
-    <string name="menu_balance">Баланс:</string>
+    <string name="menu_balance">Баланс</string>
     <!-- End of Menu -->
 
     <!-- Purse -->
@@ -125,4 +125,6 @@
 
     <string name="error_api">Произошла ошибка при подключении к серверу. Попробуйте перезапустить приложение</string>
     <string name="wallet_label">Кошелёк</string>
+    <string name="connect_with">Связаться через:</string>
+    <string name="mock_zero_balance">0.00 ₽</string>
 </resources>
