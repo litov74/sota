@@ -7,6 +7,7 @@ import com.development.sota.scooter.ui.profile.domain.entities.ClientUpdateNameP
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.rxjava3.core.Observable
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -19,9 +20,9 @@ interface ClientService {
     @GET("isClientBooksBlocked")
     fun checkBookingBlock(@Query("id") id: String): Observable<BookingBlockResponse>
 
-    @POST("setClientName")
-    fun updateClientName(@Body jsonObject: ClientUpdateNameData): Observable<JsonElement>
+    @POST("setClientName/")
+    fun updateClientName(@Body jsonObject: ClientUpdateNameData): Observable<Response<Void>>
 
-    @POST("setClientPhone")
-    fun updateClientPhone(@Body jsonObject: ClientUpdateNamePhone): Observable<JsonElement>
+    @POST("setClientPhone/")
+    fun updateClientPhone(@Body jsonObject: ClientUpdateNamePhone): Observable<Response<Void>>
 }
