@@ -32,6 +32,7 @@ class ProfilePresenter(val context: Context) : MvpPresenter<ProfileView>() {
         val phone = item.phone
         val surname = item.surname
         val clientPhoto = item.clientPhoto
+        val balance = item.balance
         viewState.setProfileInfo(clientName, surname, phone, clientPhoto)
     }
 
