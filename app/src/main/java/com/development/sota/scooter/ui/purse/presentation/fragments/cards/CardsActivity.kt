@@ -57,7 +57,7 @@ class CardsActivity : MvpAppCompatFragment(R.layout.fragment_cards), CardsView{
     }
 
     override fun showUserCards(last_four: String, main: String) {
-        binding.
+        
     }
 
 
