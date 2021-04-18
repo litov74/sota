@@ -1,14 +1,16 @@
 package com.development.sota.scooter.ui.purse.domain
 
-import android.content.SharedPreferences
 import com.development.sota.scooter.common.base.BaseInteractor
-import com.development.sota.scooter.common.base.BasePresenter
 import com.development.sota.scooter.db.SharedPreferencesProvider
+import com.development.sota.scooter.net.ClientRetrofitProvider
 import com.development.sota.scooter.ui.purse.presentation.WalletPresenter
 import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardsPresenter
 import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionsPresenter
 import com.development.sota.scooter.ui.purse.presentation.fragments.upbalance.UpBalancePresenter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 interface WalletInteractor : BaseInteractor{
 
@@ -50,11 +52,24 @@ interface WalletTransactionsInteractor : BaseInteractor{
 
 class WalletInteractorImpl(val presenter: WalletPresenter) : WalletInteractor {
     private val compositeDisposable = CompositeDisposable()
-    private val sharedPreferencesProvider = SharedPreferencesProvider(presenter.context).sharedPreferences
+    private val sharedPreferences = SharedPreferencesProvider(presenter.context).sharedPreferences
 
 
     override fun getUserBalance() {
-        TODO("Not yet implemented")
+        compositeDisposable.add(
+            ClientRetrofitProvider.service.getClient(
+                sharedPreferences.getLong("id", -1).toString()
+            ).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onNext = {
+                        presenter.getUserBalance(
+                            it[0]
+                        )
+                    },
+                    onError = { presenter.errorGotFromServer(it.localizedMessage) }
+                )
+        )
     }
 
     override fun disposeRequests(){

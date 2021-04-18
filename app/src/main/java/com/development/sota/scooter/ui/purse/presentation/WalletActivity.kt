@@ -1,21 +1,30 @@
 package com.development.sota.scooter.ui.purse.presentation
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityPurseBinding
 import com.development.sota.scooter.ui.purse.presentation.fragments.upbalance.UpBalanceActivity
-import kotlinx.android.synthetic.main.activity_purse.view.*
 import moxy.MvpAppCompatActivity
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
+import moxy.viewstate.strategy.alias.AddToEnd
 
 
-interface WalletView: MvpView
+interface WalletView: MvpView {
+    @AddToEnd
+    fun showToast(text: String)
+
+    @AddToEnd
+    fun setLoading(by: Boolean)
+
+    @AddToEnd
+    fun setUserBalance(value: String)
+}
 
 interface WalletActivityView
 
@@ -85,4 +94,20 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         btn.elevation = 4f
     }
 
+    override fun setUserBalance(value: String) {
+        (binding.balance as TextView).text = "$value ₽ "
+
+    }
+
+    override fun showToast(text: String) {
+        runOnUiThread {
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun setLoading(by: Boolean) {
+        runOnUiThread {
+            binding.progressBarDrivingsList.visibility = if (by) View.VISIBLE else View.GONE
+        }
+    }
 }
