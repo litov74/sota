@@ -3,6 +3,7 @@ package com.development.sota.scooter.ui.purse.domain
 import com.development.sota.scooter.common.base.BaseInteractor
 import com.development.sota.scooter.db.SharedPreferencesProvider
 import com.development.sota.scooter.net.ClientRetrofitProvider
+import com.development.sota.scooter.net.PurseRetrofitProvider
 import com.development.sota.scooter.ui.purse.presentation.WalletPresenter
 import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardsPresenter
 import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionsPresenter
@@ -21,15 +22,15 @@ interface WalletInteractor : BaseInteractor{
 // fragment interfaces
 interface WalletCardsInteractor : BaseInteractor{
 
-    fun addCard()
+    fun addCard(card: String, id: Long)
 
-    fun deleteCard()
+    fun deleteCard(card: String, card_id: Long, id: Long)
 
     fun makeCryptogram()
 
-    fun setMain()
+    fun setMain(card: String, id: Long)
 
-    fun confirmCard()
+    fun confirmCard(MD: Int, PaRes: String)
 
     fun getCards()
 
@@ -80,29 +81,43 @@ class WalletInteractorImpl(val presenter: WalletPresenter) : WalletInteractor {
 
 class WalletCardsInteractorImpl(val presenter: CardsPresenter) : WalletCardsInteractor {
     private val compositeDisposable = CompositeDisposable()
-    override fun addCard() {
-        TODO("Not yet implemented")
+    private val sharedPreferences = SharedPreferencesProvider(presenter.context).sharedPreferences
+
+    override fun addCard(card: String, id: Long) {
+
     }
 
-    override fun deleteCard() {
-        TODO("Not yet implemented")
+    override fun deleteCard(card: String, card_id: Long, id: Long) {
+
     }
 
     override fun makeCryptogram() {
         TODO("Not yet implemented")
     }
 
-    override fun setMain() {
+    override fun setMain(card: String, id: Long) {
         TODO("Not yet implemented")
     }
 
-    override fun confirmCard() {
+    override fun confirmCard(MD: Int, PaRes: String) {
         TODO("Not yet implemented")
     }
 
-    override fun getCards() {
-        TODO("Not yet implemented")
+    override fun getCards(){
+        val clientId = sharedPreferences.getLong("id", -1).toString()
+        compositeDisposable.add(
+            PurseRetrofitProvider.service.fetchPurseInfo(
+                sharedPreferences.getLong("id", -1).toLong()
+            ).subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onNext = {
+                        presenter.getCards(it)
+                    },
+                    onError = {presenter.errorGotFromServer(it.localizedMessage)}
+                ))
     }
+
+
 
     override fun disposeRequests(){
         compositeDisposable.dispose()

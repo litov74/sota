@@ -69,6 +69,7 @@
     <string name="drivings_inpit_hint">Вы можете найти его на передней панели самоката</string>
     <string name="drivings_active">Активные</string>
     <string name="drivings_history">История</string>
+    <string name="drivings_closed">Завершен</string>
     <string name="drivings_cancelled">Отменён</string>
     <!-- End of drivings -->
 

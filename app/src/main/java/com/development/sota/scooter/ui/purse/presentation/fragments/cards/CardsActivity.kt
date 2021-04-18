@@ -4,14 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentCardsBinding
 import com.development.sota.scooter.databinding.FragmentTransactionsBinding
+import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
+import moxy.viewstate.strategy.alias.AddToEnd
 
-interface CardsView : MvpView
+interface CardsView : MvpView{
+    @AddToEnd
+    fun showToast(text: String)
+
+    @AddToEnd
+    fun showUserCards(last_four: String, main: String)
+
+}
 
 
 
@@ -39,4 +49,16 @@ class CardsActivity : MvpAppCompatFragment(R.layout.fragment_cards), CardsView{
         presenter.onDestroyCalled()
         super.onDestroy()
     }
+
+    override fun showToast(text: String) {
+        runOnUiThread {
+
+        }
+    }
+
+    override fun showUserCards(last_four: String, main: String) {
+        binding.
+    }
+
+
 }

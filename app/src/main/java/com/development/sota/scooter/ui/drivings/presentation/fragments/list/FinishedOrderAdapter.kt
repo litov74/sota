@@ -37,6 +37,10 @@ class FinishedOrderAdapter(val data: List<OrderWithStatus>, val context: Context
                 holder.textViewItemFinishedDelta.text =
                     context.getString(R.string.drivings_cancelled)
             }
+            if (data[position].order.status == OrderStatus.CLOSED.value) {
+                holder.textViewItemFinishedDelta.text =
+                    context.getString(R.string.drivings_closed)
+            }
         }
 
     override fun getItemCount(): Int = data.size

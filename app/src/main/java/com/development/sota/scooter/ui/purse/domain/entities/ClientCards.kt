@@ -11,4 +11,12 @@ data class Card(val serverId: Long? = null,
                 val id: Long? = null,
                 val card: String? = null,
                 val card_id: Long? = null,
-                val PaRes: String? = null)
+                val PaRes: String? = null,
+                val crypto: String? = null,
+                val is_main: Boolean? = null,
+                val first_six: String? = null,
+                val last_four: String? = null)
+
+
+
+data class ReplenishmentPacks(val id: Long, val cost: Int, val income: Int)

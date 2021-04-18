@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityPurseBinding
+import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardsActivity
+import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionsActivity
 import com.development.sota.scooter.ui.purse.presentation.fragments.upbalance.UpBalanceActivity
 import moxy.MvpAppCompatActivity
 import moxy.MvpView
@@ -64,7 +66,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 unCheck(binding.btnOpenTransactions)
                 unCheck(binding.btnOpenUpBalance)
                 key = 1
-                fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
+                fm.beginTransaction().replace(binding.host.id, CardsActivity()).commit()
 
             }
         }
@@ -74,7 +76,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 check(binding.btnOpenTransactions)
                 unCheck(binding.btnOpenUpBalance)
                 key = 2
-                fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
+                fm.beginTransaction().replace(binding.host.id, TransactionsActivity()).commit()
 
             }
         }
