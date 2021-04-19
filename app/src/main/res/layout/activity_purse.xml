@@ -93,6 +93,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9">
 
+
+
+
         <Button
             android:id="@+id/btn_open_up_balance"
             style="?android:attr/borderlessButtonStyle"
@@ -122,6 +125,8 @@
             tools:layout_editor_absoluteX="210dp"
             tools:layout_editor_absoluteY="226dp" />
 
+
+
         <Button
             android:id="@+id/btn_open_transactions"
             style="?android:attr/borderlessButtonStyle"
@@ -136,5 +141,20 @@
             tools:layout_editor_absoluteX="210dp"
             tools:layout_editor_absoluteY="226dp" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/addCardTextView"
+        android:layout_width="match_parent"
+        android:text="Добавить способ оплаты"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:background="@color/white"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/linnearLayoutSegmentContol"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:shadowColor="@color/white"
+        android:textColor="@color/purple_secondary_text"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

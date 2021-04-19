@@ -21,6 +21,8 @@ interface CardsView : MvpView{
     @AddToEnd
     fun showUserCards(last_four: String, main: String)
 
+
+
 }
 
 
@@ -39,8 +41,8 @@ class CardsActivity : MvpAppCompatFragment(R.layout.fragment_cards), CardsView{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentCardsBinding.inflate(inflater, container, false)
+
 
         return binding.root
     }
@@ -57,7 +59,7 @@ class CardsActivity : MvpAppCompatFragment(R.layout.fragment_cards), CardsView{
     }
 
     override fun showUserCards(last_four: String, main: String) {
-        
+
     }
 
 

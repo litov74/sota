@@ -20,3 +20,4 @@ data class Card(val serverId: Long? = null,
 
 
 data class ReplenishmentPacks(val id: Long, val cost: Int, val income: Int)
+

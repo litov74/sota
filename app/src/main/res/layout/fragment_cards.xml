@@ -16,22 +16,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linnearLayoutSegmentContol"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/addCardTextView"
-        android:layout_width="match_parent"
-        android:text="Добавить способ оплаты"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:background="@color/white"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:shadowColor="@color/white"
-        android:textColor="@color/purple_secondary_text"
-        android:layout_height="wrap_content"/>
+
 
     <ProgressBar
         android:id="@+id/progressBarCardsList"
