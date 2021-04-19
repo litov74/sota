@@ -2,6 +2,7 @@ package com.development.sota.scooter.net
 
 import com.development.sota.scooter.ui.purse.domain.entities.*
 import io.reactivex.rxjava3.core.Observable
+import retrofit2.Call
 import retrofit2.http.*
 
 interface PurseService {
@@ -37,10 +38,10 @@ interface PurseService {
 
 
     @GET("getClientCards/")
-    fun fetchPurseInfo(@Query("id") id: Long): Observable<Card>
+    fun fetchPurseInfo(@Query("id") id: Long): Observable<List<Card>>
 
     @GET("getTransactions/")
-    fun fetchTransactionsInfo(@Query("id") id: Long): Observable<Card>
+    fun fetchTransactionsInfo(@Query("id") id: Long): Observable<List<Card>>
 
 
 

@@ -8,9 +8,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityPurseBinding
+import com.development.sota.scooter.ui.purse.presentation.fragments.cards.AddCard
+import com.development.sota.scooter.ui.purse.presentation.fragments.cards.AddCardActivity
 import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardsActivity
 import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionsActivity
 import com.development.sota.scooter.ui.purse.presentation.fragments.upbalance.UpBalanceActivity
+import kotlinx.android.synthetic.main.activity_purse.*
+import kotlinx.android.synthetic.main.fragment_cards.*
 import moxy.MvpAppCompatActivity
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
@@ -49,7 +53,6 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         var key: Int = 0
         val fm = supportFragmentManager
         fm.beginTransaction().add(binding.host.id, UpBalanceActivity()).commit()
-
         binding.btnOpenUpBalance.setOnClickListener{
             if(key != 0){
                 unCheck(binding.btnOpenCards)
@@ -57,7 +60,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 check(binding.btnOpenUpBalance)
                 key = 0
                 fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
-
+                binding.addCardTextView.visibility = View.GONE
             }
         }
         binding.btnOpenCards.setOnClickListener{
@@ -67,6 +70,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 unCheck(binding.btnOpenUpBalance)
                 key = 1
                 fm.beginTransaction().replace(binding.host.id, CardsActivity()).commit()
+                binding.addCardTextView.visibility = View.VISIBLE
 
             }
         }
@@ -77,8 +81,13 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 unCheck(binding.btnOpenUpBalance)
                 key = 2
                 fm.beginTransaction().replace(binding.host.id, TransactionsActivity()).commit()
+                binding.addCardTextView.visibility = View.GONE
 
             }
+        }
+        binding.addCardTextView.setOnClickListener {
+            fm.beginTransaction().replace(binding.host.id, AddCard()).commit()
+            addCardTextView.visibility = View.GONE
         }
 
 
