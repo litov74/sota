@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "104536877347",
+    "project_id": "sota-663bc",
+    "storage_bucket": "sota-663bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104536877347:android:8af8d79fa6afa4d4678496",
+        "android_client_info": {
+          "package_name": "com.development.sota.scooter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "104536877347-ql204e94ojn7v67g2tob2joc1cgefmp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.development.sota.scooter",
+            "certificate_hash": "2154715cb6d2f72fbfe015d20bdef36f9ec73be0"
+          }
+        },
+        {
+          "client_id": "104536877347-4bg35a690ruosfd6gmh2j4kq7mn4hh6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNX0FiuWYJ8e-X5YlnAY-uYwGRJh3r1lM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "104536877347-4bg35a690ruosfd6gmh2j4kq7mn4hh6c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "104536877347-ltm2lcnnki906616q9l0c5ubou02gtk5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "world.sota"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

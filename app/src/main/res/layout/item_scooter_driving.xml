@@ -19,7 +19,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
+        
         android:background="#00000000"
         android:outlineProvider="background"
         android:padding="8dp"
@@ -43,7 +43,7 @@
                 android:layout_marginStart="32dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:textSize="18dp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayoutScooterItemInfoTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="8dp"
                 android:textAllCaps="true"
                 android:textColor="@android:color/black"
-                android:textSize="18dp"
+                android:textSize="15sp"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="@+id/textViewItemScooterId"
                 app:layout_constraintTop_toBottomOf="@+id/textViewItemScooterId" />
@@ -110,7 +110,7 @@
                     android:paddingBottom="4dp"
                     android:text="₽10 в минуту"
                     android:textColor="#000"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textViewtextViewItemScooterHourPricing"
@@ -120,7 +120,7 @@
                     android:paddingBottom="4dp"
                     android:text="₽300 в час"
                     android:textColor="#000"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textViewItemScooterBatteryPercent"
@@ -160,7 +160,7 @@
                     android:text="@string/scooter_cancel_book"
                     android:textAllCaps="false"
                     android:textColor="@color/purple_secondary_text"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
 
                 <Button
                     android:id="@+id/buttonScooterItemActivate"
@@ -173,7 +173,7 @@
                     android:text="@string/scooter_activate"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -204,7 +204,7 @@
                     android:text="@string/scooter_minute_pricing"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
 
                 <Button
                     android:id="@+id/buttonScooterPerHour"
@@ -217,7 +217,7 @@
                     android:text="@string/scooter_hour_pricing"
                     android:textAllCaps="false"
                     android:textColor="@color/purple_secondary_text"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -248,7 +248,7 @@
                     android:text="@string/scooter_pause"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
 
                 <Button
                     android:id="@+id/buttonScooterFinish"
@@ -261,7 +261,7 @@
                     android:text="@string/scooter_finish"
                     android:textAllCaps="false"
                     android:textColor="@color/purple_secondary_text"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -271,7 +271,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+           
                 android:background="#00000000"
                 android:orientation="horizontal"
                 android:padding="4dp"
@@ -288,11 +288,11 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:background="@drawable/ic_curved_gradient"
-                    android:padding="4dp"
+                 
                     android:text="@string/scooter_first_book"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="15sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonItemScooterFirstActivate"
@@ -306,7 +306,7 @@
                     android:text="@string/scooter_activate"
                     android:textAllCaps="false"
                     android:textColor="#0342C2"
-                    android:textSize="18dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
 
