@@ -2,6 +2,7 @@ package com.development.sota.scooter.net
 
 import com.development.sota.scooter.ui.map.data.BookingBlockResponse
 import com.development.sota.scooter.ui.map.data.Client
+import com.development.sota.scooter.ui.map.data.ClientUpdateToken
 import com.development.sota.scooter.ui.profile.domain.entities.ClientUpdateNameData
 import com.development.sota.scooter.ui.profile.domain.entities.ClientUpdateNamePhone
 import com.google.gson.JsonElement
@@ -25,4 +26,7 @@ interface ClientService {
 
     @POST("setClientPhone/")
     fun updateClientPhone(@Body jsonObject: ClientUpdateNamePhone): Observable<Response<Void>>
+
+    @POST("setClientToken/")
+    fun updateClientFBToken(@Body jsonObject: ClientUpdateToken): Observable<Response<Void>>
 }

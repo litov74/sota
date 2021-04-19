@@ -6,8 +6,10 @@ import com.development.sota.scooter.db.SharedPreferencesProvider
 import com.development.sota.scooter.net.ClientRetrofitProvider
 import com.development.sota.scooter.net.MapRetrofitProvider
 import com.development.sota.scooter.net.OrdersRetrofitProvider
+import com.development.sota.scooter.ui.map.data.ClientUpdateToken
 import com.development.sota.scooter.ui.map.data.Scooter
 import com.development.sota.scooter.ui.map.presentation.MapPresenter
+import com.development.sota.scooter.ui.profile.domain.entities.ClientUpdateNameData
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
@@ -35,6 +37,7 @@ interface MapInteractor : BaseInteractor {
     fun getGeoZone()
     fun getCodeOfScooterAndNull(): Long?
     fun getProfileInfo()
+    fun sendFirebaseToken(token: String)
 }
 
 class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
@@ -54,6 +57,24 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
                     onNext = {
                         presenter.gotClientsFromAPI(it)
                     }
+
+                )
+        )
+    }
+
+    override fun sendFirebaseToken(token: String) {
+        compositeDisposable.add(
+            ClientRetrofitProvider.service
+                .updateClientFBToken(ClientUpdateToken(sharedPreferences.getLong("id", -1), token))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onNext = {
+
+                    },
+                    onError = {
+                        it.printStackTrace()
+                         }
                 )
         )
     }

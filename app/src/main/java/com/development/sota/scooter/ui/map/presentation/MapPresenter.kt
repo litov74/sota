@@ -3,7 +3,6 @@ package com.development.sota.scooter.ui.map.presentation
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import android.view.Menu
 import com.development.sota.scooter.R
 import com.development.sota.scooter.common.base.BasePresenter
 import com.development.sota.scooter.ui.drivings.domain.entities.Order
@@ -11,6 +10,9 @@ import com.development.sota.scooter.ui.drivings.domain.entities.OrderStatus
 import com.development.sota.scooter.ui.map.data.*
 import com.development.sota.scooter.ui.map.domain.MapInteractor
 import com.development.sota.scooter.ui.map.domain.MapInteractorImpl
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
@@ -23,6 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import moxy.MvpPresenter
 import java.util.*
+
 
 class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresenter {
     private val interactor: MapInteractor = MapInteractorImpl(this)
@@ -201,7 +204,16 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         viewState.sendToDrivingsList()
     }
 
+    fun sendCurrentFBToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+
+            interactor.sendFirebaseToken(task.result)
+
+        })
+    }
+
     fun onStartEmitted() {
+        sendCurrentFBToken()
         interactor.getScootersAndOrders()
 
         val id = interactor.getCodeOfScooterAndNull()
@@ -209,6 +221,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         if (id != null) {
             clickedOnScooterWith(id)
         }
+
     }
 
     fun scooterUnselected() {
@@ -291,7 +304,11 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
     fun sendToProfile() {
         viewState.sendToProfile()
+
+
     }
+
+
 
     fun sendToHelp() {
         viewState.sendToHelp()

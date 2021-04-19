@@ -123,6 +123,10 @@
     <string name="skip">Пропустить</string>
     <string name="next">Далее</string>
 
+    <!-- Firebase message service -->
+    <string name="fcm_message">Сообщение</string>
+    <string name="default_notification_channel_id">123</string>
+
 
     <string name="error_api">Произошла ошибка при подключении к серверу. Попробуйте перезапустить приложение</string>
     <string name="wallet_label">Кошелёк</string>

@@ -2,6 +2,7 @@ package com.development.sota.scooter
 
 import android.content.Context
 import androidx.multidex.MultiDexApplication
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class SotaApp : MultiDexApplication() {
 
