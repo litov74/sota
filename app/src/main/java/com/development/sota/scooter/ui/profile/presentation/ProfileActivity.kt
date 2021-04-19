@@ -99,7 +99,7 @@ class ProfileActivity : MvpAppCompatActivity(), ProfileView {
         clientName: String,
         surname: String,
         phone: String,
-        imgUrl: String?,
+        imgUrl: String?
     ) {
         binding.etName.setText(clientName)
         binding.etSurname.setText(surname)

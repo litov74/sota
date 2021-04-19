@@ -120,7 +120,7 @@ interface MapView : MvpView {
     fun drawGeoZones(feauters: ArrayList<Feature>)
 
     @AddToEnd
-    fun setProfileInfo(clientName: String, balance: String)
+    fun setProfileInfo(clientName: String)
 
     @AddToEnd
     fun showError(msg: String)
@@ -941,9 +941,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
     }
 
-    override fun setProfileInfo(clientName: String, balance: String) {
+    override fun setProfileInfo(clientName: String) {
         val name = getBinding.navView.findViewById<TextView>(R.id.textView6)
-        getBinding.navView.findViewById<TextView>(R.id.balance).text = getString(R.string.balance_pattern, balance)
         name.text = clientName
     }
 

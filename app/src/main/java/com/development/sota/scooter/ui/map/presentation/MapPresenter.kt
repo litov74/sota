@@ -319,6 +319,5 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         viewState.setLoading(false)
         val item = arrayList[0]
         val clientName = item.clientName
-        val balance = item.balance
-        viewState.setProfileInfo(clientName, balance)
+        viewState.setProfileInfo(clientName)
     }}
