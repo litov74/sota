@@ -23,8 +23,8 @@ class TransactionsPresenter(val context: Context) : MvpPresenter<TransactionsVie
     }
 
 
-    fun getTransactions(card: Card){
-        viewState.showTransactions(card.first_six.toString(), card.last_four.toString(), card.dateTime.toString(), card.cost.toString())
+    fun getTransactions(card: List<Card>){
+        viewState.showTransactions(card)
 
     }
 
