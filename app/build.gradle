@@ -64,8 +64,9 @@ dependencies {
     //Moxy
     implementation "com.github.moxy-community:moxy:$moxy_version"
     kapt "com.github.moxy-community:moxy-compiler:$moxy_version"
-    implementation "com.github.moxy-community:moxy-androidx:$moxy_version"
     implementation "com.github.moxy-community:moxy-ktx:$moxy_version"
+    implementation "com.github.moxy-community:moxy-androidx:$moxy_version"
+
 
     //RxJava 3
     implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
