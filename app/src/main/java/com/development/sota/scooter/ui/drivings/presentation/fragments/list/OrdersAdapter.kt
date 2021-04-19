@@ -172,7 +172,7 @@ class OrdersAdapter(
                 holder.linnearLayoutScooterItemFinishButtons.visibility = View.VISIBLE
 
                 holder.buttonScooterItemPause.setOnClickListener {
-                      manipulatorDelegate.setRateAndActivate(data[position].order.id, RateType.MINUTE)
+                    //  manipulatorDelegate.setRateAndActivate(data[position].order.id, RateType.MINUTE)
                 }
 
                 holder.buttonScooterFinish.setOnClickListener {
