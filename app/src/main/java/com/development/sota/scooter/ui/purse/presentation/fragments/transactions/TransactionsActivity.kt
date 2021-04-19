@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentCardsBinding
 import com.development.sota.scooter.databinding.FragmentTransactionsBinding
+import com.development.sota.scooter.ui.purse.domain.entities.Card
 import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardsPresenter
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import moxy.MvpAppCompatFragment
@@ -25,7 +26,7 @@ interface TransactionsView : MvpView{
     fun setLoading(by: Boolean)
 
     @AddToEnd
-    fun showTransactions(paymentSystem: String, lastSix: String, date: String, sum: String)
+    fun showTransactions(transactions: List<Card>)
 
 }
 
@@ -67,7 +68,7 @@ class TransactionsActivity: MvpAppCompatFragment(R.layout.fragment_transactions)
         }
     }
 
-    override fun showTransactions(paymentSystem: String, lastSix: String, date: String, sum: String) {
-        binding.TransactionsGrid.
+    override fun showTransactions(transactions: List<Card>) {
+
     }
 }

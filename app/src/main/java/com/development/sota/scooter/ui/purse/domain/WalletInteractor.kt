@@ -111,12 +111,12 @@ class WalletCardsInteractorImpl(val presenter: CardsPresenter) : WalletCardsInte
 
     override fun getCards(){
         val clientId = sharedPreferences.getLong("id", -1).toString()
-        compositeDisposable.add(
-            PurseRetrofitProvider.service.fetchPurseInfo(
-                sharedPreferences.getLong("id", -1).toLong()
-            ).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-                .forEach()    )
+    //    compositeDisposable.add(
+    //        PurseRetrofitProvider.service.fetchPurseInfo(
+    //            sharedPreferences.getLong("id", -1).toLong()
+    //        ).subscribeOn(Schedulers.io())
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //            .forEach()    )
 
 
 
@@ -156,7 +156,7 @@ class WalletTransactionsInteractorImpl(val presenter: TransactionsPresenter) : W
             ).subscribeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = {
-                        presenter.getTransactions()
+                        presenter.getTransactions(it)
                     },
                     onError = {presenter.errorGotFromServer(it.localizedMessage)}
                 ))

@@ -41,16 +41,11 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/PurseService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/net/PurseService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/common/Constants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/common/Constants.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/WalletInteractor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/WalletInteractor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/entities/ClientCards.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/domain/entities/ClientCards.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/WalletActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/WalletActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/CardsActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/AddCardActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/cards/AddCardActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsPresenter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation/fragments/transactions/TransactionsPresenter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_purse.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_purse.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_cards.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_cards.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transactions.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transactions.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +107,7 @@
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="SelectDeploymentTargetsDialog.selectedDevices" value="Pixel_4_API_30&#10;Pixel_3a_API_30_x86" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/java/com/development/sota/scooter/ui/purse/presentation" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../cloudpayments" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
