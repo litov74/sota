@@ -839,7 +839,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                                 while (true) {
 
                                     if (orderTime != null) {
-                                        System.out.println("ORDER TIME "+orderTime)
 
                                        val time = LocalDateTime.now().atZone(ZoneId.systemDefault())
                                                 .toInstant().toEpochMilli() - orderTime
