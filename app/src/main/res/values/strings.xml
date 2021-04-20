@@ -132,4 +132,5 @@
     <string name="wallet_label">Кошелёк</string>
     <string name="connect_with">Связаться через:</string>
     <string name="mock_zero_balance">0.00 ₽</string>
+    <string name="balance_user">%s ₽</string>
 </resources>
