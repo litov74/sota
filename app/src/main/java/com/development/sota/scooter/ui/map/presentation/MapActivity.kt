@@ -64,8 +64,11 @@ import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
 import timber.log.Timber
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -759,6 +762,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                         val bookOrder = orders.first { it.status == OrderStatus.BOOKED.value }
 
+                        System.out.println("BOOK "+bookOrder.parseStartTime())
+
                         disposableJobsBag.add(
                             GlobalScope.launch {
                                 val orderTime = bookOrder.parseStartTime()
@@ -766,27 +771,32 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                                 while (true) {
 
                                     if (orderTime != null) {
-                                        val time =
-                                            LocalDateTime.now().atZone(ZoneId.systemDefault())
+
+
+                                        val dateTime = DateTimeFormatter
+                                                .ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
+                                                .withZone(ZoneOffset.UTC)
+                                                .format(Instant.now())
+
+
+
+                                        val time = LocalDateTime.now().atZone(ZoneId.systemDefault())
                                                 .toInstant().toEpochMilli() - orderTime
+
+                                        System.out.println("BOOK TIME "+time)
                                         val rawMinutes = TimeUnit.MILLISECONDS.toMinutes(time)
-
-                                        val hours = rawMinutes / 60
-                                        val minutes = rawMinutes % 60
-                                        val seconds = time / 1000 - minutes * 60 - hours * 3600
-
-                                        runOnUiThread {
-                                            getBinding.contentOfMap.mapPopupItem.textViewPopupMenuUpValue.text =
-                                                String.format(
-                                                    "%d:%02d:%02d",
-                                                    hours,
-                                                    minutes,
-                                                    seconds
-                                                )
+                                        val totalSeconds = TimeUnit.MINUTES.toSeconds(rawMinutes)
+                                        val tickSeconds = 1
+                                        for (second in totalSeconds downTo tickSeconds) {
+                                            val time = String.format("%d:%02d:%02d",
+                                                    TimeUnit.SECONDS.toHours(second),
+                                                    TimeUnit.SECONDS.toMinutes(second),
+                                                    second - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(second))
+                                            )
+                                            getBinding.contentOfMap.mapPopupItem.textViewPopupMenuUpValue.text = time
+                                            delay(1000)
                                         }
                                     }
-                                    delay(1000)
-
                                 }
                                 //Server check
                             }
@@ -829,26 +839,23 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                                 while (true) {
 
                                     if (orderTime != null) {
-                                        val time =
-                                            LocalDateTime.now().atZone(ZoneId.systemDefault())
+                                        System.out.println("ORDER TIME "+orderTime)
+
+                                       val time = LocalDateTime.now().atZone(ZoneId.systemDefault())
                                                 .toInstant().toEpochMilli() - orderTime
                                         val rawMinutes = TimeUnit.MILLISECONDS.toMinutes(time)
-
-                                        val hours = rawMinutes / 60
-                                        val minutes = rawMinutes % 60
-                                        val seconds = time / 1000 - minutes * 60 - hours * 3600
-
-                                        runOnUiThread {
-                                            getBinding.contentOfMap.mapPopupItem.textViewPopupMenuUpValue.text =
-                                                String.format(
-                                                    "%d:%02d:%02d",
-                                                    hours,
-                                                    minutes,
-                                                    seconds
-                                                )
+                                        val totalSeconds = TimeUnit.MINUTES.toSeconds(rawMinutes)
+                                        val tickSeconds = 1
+                                        for (second in totalSeconds downTo tickSeconds) {
+                                            val time = String.format("%d:%02d:%02d",
+                                                    TimeUnit.SECONDS.toHours(second),
+                                                    TimeUnit.SECONDS.toMinutes(second),
+                                                    second - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(second))
+                                            )
+                                            getBinding.contentOfMap.mapPopupItem.textViewPopupMenuUpValue.text = time
+                                            delay(1000)
                                         }
                                     }
-                                    delay(1000)
 
                                 }
                                 //Server check

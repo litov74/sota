@@ -51,5 +51,5 @@ data class OrderWithStatus(val order: Order, val scooter: Scooter, var status: O
 data class AddOrderResponse(val id: Long)
 
 enum class OrderStatus(val value: String) {
-    CANDIDIATE("CA"), BOOKED("BK"), CHOOSE_RATE("CR"), ACTIVATED("AC"), CLOSED("CD"), CANCELED("CCD")
+    CANDIDIATE("CA"), BOOKED("BK"), CHOOSE_RATE("CR"), ACTIVATED("AC"), CLOSED("CD"),  PAUSED("STP"), CANCELED("CCD")
 }

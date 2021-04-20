@@ -19,6 +19,8 @@ interface DrivingsListInteractor : BaseInteractor {
     fun addOrder(order: Order)
     fun cancelOrder(orderId: Long)
     fun activateOrder(orderId: Long)
+    fun resumeOrder(orderId: Long)
+    fun pauseOrder(orderId: Long)
     fun setRateAndActivateOrder(orderId: Long, type: RateType)
     fun closeOrder(orderId: Long)
 }
@@ -82,11 +84,43 @@ class DrivingsListInteractorImpl(private val presenter: DrivingsListPresenter) :
         TODO("Not yet implemented")
     }
 
+    override fun resumeOrder(orderId: Long) {
+        compositeDisposable.add(
+                OrdersRetrofitProvider.service
+                        .resumeOrder(
+                                orderId
+                        )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onComplete = { presenter.actionEnded(true) { getAllOrdersAndScooters() } },
+                                onError = { presenter.actionEnded(false) }
+                        )
+        )
+
+    }
+
+    override fun pauseOrder(orderId: Long) {
+        compositeDisposable.add(
+                OrdersRetrofitProvider.service
+                        .pauseOrder(
+                                orderId
+                        )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onComplete = { presenter.actionEnded(true) { getAllOrdersAndScooters() } },
+                                onError = { presenter.actionEnded(false) }
+                        )
+        )
+    }
+
     override fun setRateAndActivateOrder(orderId: Long, type: RateType) {
         compositeDisposable.add(
             OrdersRetrofitProvider.service
                 .setRateType(orderId, type.value)
                 .doOnComplete {
+
                     OrdersRetrofitProvider.service.activateOrder(orderId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe()
@@ -112,8 +146,12 @@ class DrivingsListInteractorImpl(private val presenter: DrivingsListPresenter) :
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                    onComplete = { presenter.actionEnded(true) { getAllOrdersAndScooters() } },
-                    onError = { presenter.actionEnded(false) }
+                    onComplete = {
+
+                        presenter.actionEnded(true) { getAllOrdersAndScooters() } },
+                    onError = {
+                        presenter.gotErrorFromServer(it.localizedMessage)
+                        presenter.actionEnded(false) }
                 )
         )
     }

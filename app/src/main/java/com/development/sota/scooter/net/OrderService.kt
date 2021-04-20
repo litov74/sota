@@ -38,6 +38,19 @@ interface OrderService {
         @Field("id") orderId: Long
     ): Completable
 
+    @POST("stopOrder/")
+    @FormUrlEncoded
+    fun pauseOrder(
+            @Field("id") orderId: Long
+    ): Completable
+
+    @POST("resumeOrder/")
+    @FormUrlEncoded
+    fun resumeOrder(
+            @Field("id") orderId: Long
+    ): Completable
+
+
     @POST("setTaxType/")
     @FormUrlEncoded
     fun setRateType(

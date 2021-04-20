@@ -33,6 +33,10 @@ interface OrderManipulatorDelegate {
 
     fun activateOrder(id: Long)
 
+    fun resumeOrder(id: Long)
+
+    fun pauseOrder(id: Long)
+
     fun setRateAndActivate(id: Long, type: RateType)
 
     fun closeOrder(id: Long)
@@ -132,6 +136,14 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
 
     override fun activateOrder(id: Long) {
         presenter.activateOrder(id)
+    }
+
+    override fun resumeOrder(id: Long) {
+        presenter.resumeOrder(id)
+    }
+
+    override fun pauseOrder(id: Long) {
+        presenter.pauseOrder(id)
     }
 
     override fun setRateAndActivate(id: Long, type: RateType) {

@@ -20,12 +20,11 @@ import com.development.sota.scooter.ui.drivings.domain.entities.OrderStatus
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivity
 import com.development.sota.scooter.ui.map.data.RateType
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 
 class OrdersAdapter(
@@ -48,6 +47,7 @@ class OrdersAdapter(
         holder.linnearLayoutScooterItemBookingButtons.visibility = View.GONE
         holder.linnearLayoutScooterItemRentButtons.visibility = View.GONE
         holder.linnearLayoutScooterItemFirstBookButtons.visibility = View.GONE
+        holder.pausedStateContainer.visibility = View.GONE
 
         val scooterPercentage = data[position].scooter.getBatteryPercentage()
         val scooterInfo = data[position].scooter.getScooterRideInfo()
@@ -71,8 +71,10 @@ class OrdersAdapter(
         holder.textViewItemScooterId.text = "#${data[position].order.scooter}"
         holder.textViewItemScooterBatteryPercent.text = spannable
 
+        System.err.println("STATUS "+data[position].status)
 
         when (data[position].status) {
+
             OrderStatus.BOOKED -> {
                 holder.linnearLayoutScooterItemBookingButtons.visibility = View.VISIBLE
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_booked)
@@ -94,9 +96,36 @@ class OrdersAdapter(
                     }
                 }
 
+
+//                tickerJobs[data[position].order.id] = GlobalScope.launch(Dispatchers.Main) {
+//
+//
+//                    val first = data[position].order.startTime
+//
+//
+//                    System.out.println("FIRST ZONE FORMATED "+data[position].order.formattedDateStartTime())
+//
+//                    System.out.println("STAMO "+data[position].order.startTime)
+//
+//                    val totalSeconds =   TimeUnit.valueOf(data[position].order.startTime).toSeconds(0)
+//                    val tickSeconds = 1
+//                    for (second in totalSeconds downTo tickSeconds) {
+//                        val time = String.format("%02d:%02d",
+//                                TimeUnit.SECONDS.toMinutes(second),
+//                                second - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(second))
+//                        )
+//                        (context as DrivingsActivity).runOnUiThread {
+//                            holder.textViewItemScooterStateValue.text = time
+//                        }
+//                        delay(1000)
+//                    }
+//                    System.out.println("FOR")
+//                }
+
                 tickerJobs[data[position].order.id] = GlobalScope.launch {
                     try {
                         val orderTime = data[position].order.parseStartTime()
+
 
                         while (true) {
 
@@ -104,6 +133,8 @@ class OrdersAdapter(
                                 val time =
                                     LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()
                                         .toEpochMilli() - orderTime
+
+
 
                                 val rawMinutes = TimeUnit.MILLISECONDS.toMinutes(time)
 
@@ -122,6 +153,26 @@ class OrdersAdapter(
                     } catch (e: Exception) {
                     }
                 }
+            }
+
+            OrderStatus.CLOSED -> {
+
+          
+                tickerJobs[data[position].order.id]?.cancel()
+
+                holder.pausedStateContainer.visibility = View.VISIBLE
+
+                holder.buttonResumeScooter.setOnClickListener {
+                    manipulatorDelegate.resumeOrder(data[position].order.id)
+                }
+
+                holder.buttonCloseOrder.setOnClickListener {
+                    manipulatorDelegate.closeOrder(data[position].order.id)
+                }
+
+                holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
+                holder.textViewItemScooterStateValue.text =
+                        String.format("%.2f", data[position].order.cost).plus(" ₽")
             }
 
             OrderStatus.CHOOSE_RATE -> {
@@ -172,7 +223,7 @@ class OrdersAdapter(
                 holder.linnearLayoutScooterItemFinishButtons.visibility = View.VISIBLE
 
                 holder.buttonScooterItemPause.setOnClickListener {
-                    //  manipulatorDelegate.setRateAndActivate(data[position].order.id, RateType.MINUTE)
+                      manipulatorDelegate.pauseOrder(data[position].order.id)
                 }
 
                 holder.buttonScooterFinish.setOnClickListener {
@@ -183,6 +234,8 @@ class OrdersAdapter(
                 holder.textViewItemScooterStateValue.text =
                     String.format("%.2f", data[position].order.cost).plus(" ₽")
             }
+
+
 
         }
     }
@@ -224,7 +277,9 @@ class OrdersAdapter(
         val buttonScooterPerHour: Button = cardView.findViewById(R.id.buttonScooterPerHour)
         val buttonScooterItemPause: Button =
             cardView.findViewById(R.id.buttonScooterItemPause)
+        val pausedStateContainer: LinearLayout = cardView.findViewById(R.id.pausedStateContainer)
+        val buttonCloseOrder: Button = cardView.findViewById(R.id.buttonCloseOrder)
         val buttonScooterFinish: Button = cardView.findViewById(R.id.buttonScooterFinish)
-
+        val buttonResumeScooter: Button = cardView.findViewById(R.id.buttonResumeScooter)
     }
 }

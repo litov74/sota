@@ -97,6 +97,18 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
         interactor.activateOrder(id)
     }
 
+    fun resumeOrder(id: Long) {
+        viewState.setLoading(true)
+
+        interactor.resumeOrder(id)
+    }
+
+    fun pauseOrder(id: Long) {
+        viewState.setLoading(true)
+
+        interactor.pauseOrder(id)
+    }
+
     fun setRateAndActivate(id: Long, type: RateType) {
         viewState.setLoading(true)
 
