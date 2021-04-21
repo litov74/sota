@@ -113,6 +113,7 @@
     <string name="dialog_free_book_finished">Время бесплатной брони вышло. Далее бронь платная N руб/мин.</string>
     <string name="dialog_cancel_paid_book">Отменить\nплатное бронирование</string>
     <string name="dialog_continue">Продолжить</string>
+    <string name="dialog_add_card">Пополнение</string>
     <string name="dialog_no_money">На вашем балансе недосточно средств, бронь отменена</string>
     <!-- End of Purse -->
 

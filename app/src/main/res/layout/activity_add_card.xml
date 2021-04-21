@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-   android:orientation="vertical">
+    >
 
+    <TextView
+        android:id="@+id/textViewAddCardLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/dialog_add_card"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/imageButtonAddCardBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="#00FFFFFF"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewAddCardLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewAddCardLabel"
+        app:srcCompat="@drawable/ic_back_arrow" />
 
     <androidx.appcompat.widget.AppCompatEditText
+
         android:id="@+id/cardNumberInput"
+        android:layout_marginTop="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAddCardLabel"
         android:layout_marginHorizontal="8dp"
         android:backgroundTint="@color/gray_edit_text"
         android:hint="Номер карты"
@@ -23,7 +52,6 @@
         android:inputType="number"
         android:maxLength="16"
         android:singleLine="true"
-        android:text="4274320026985872"
         app:itemCount="1"
         android:paddingTop="16dp"
         app:viewType="line"
@@ -32,6 +60,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/cardholderInput"
         android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:backgroundTint="@color/gray_edit_text"
@@ -52,6 +81,7 @@
         android:id="@+id/linearLayoutCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +100,6 @@
             android:maxLines="1"
             android:paddingTop="16dp"
             android:singleLine="true"
-            android:text="03/22"
             android:textAlignment="center"
             android:textSize="20dp"
             app:itemCount="1"
@@ -89,7 +118,6 @@
             android:maxLines="1"
             android:paddingTop="16dp"
             android:singleLine="true"
-            android:text="863"
             android:textAlignment="center"
             android:inputType="numberPassword"
             android:maxLength="5"
@@ -100,12 +128,12 @@
             tools:layout_editor_absoluteX="0dp" />
 
     </LinearLayout>
-
+<!--
     <Space
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
+-->
     <TextView
         android:id="@+id/textViewCards"
         android:layout_width="match_parent"
@@ -118,7 +146,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCard"
         app:layout_constraintBottom_toTopOf="@id/buttonRegCard"/>
 
     <Button
@@ -137,4 +164,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
