@@ -26,6 +26,9 @@ interface AddCardActivity: MvpView{
 
     @AddToEnd
     fun showToast(text: String)
+
+    @AddToEnd
+    fun showProgress(boolean: Boolean)
 }
 
 
@@ -57,23 +60,9 @@ class AddCard : MvpAppCompatFragment(R.layout.fragment_add_card), AddCardActivit
         })
         binding.buttonRegCard.setOnClickListener{
 
-            System.out.println(binding.cardNumberInput.text.toString())
-            System.out.println(Card.isValidNumber(binding.cardNumberInput.text.toString()))
-            System.out.println(Card.isValidExpDate(binding.cardDateInput.text.toString()))
-            System.out.println(Card.getType(binding.cardNumberInput.text.toString()))
+            presenter.attachCard(binding.cardNumberInput.text.toString(), binding.cardDateInput.text.toString(), binding.cardCodeInput.text.toString())
 
-            if (Card.isValidNumber(binding.cardNumberInput.text.toString()) && Card.isValidExpDate(binding.cardDateInput.text.toString())) {
-                val cardCryptogram = Card.cardCryptogram(binding.cardNumberInput.toString(), binding.cardDateInput.toString(), binding.cardCodeInput.text.toString(), Constants.MERCHANT_PUBLIC_ID)
-                if(cardCryptogram == null){
-                    Log.e("Attempt to add card", "Error!!")
-                    showToast("Пожалуйста, проверьте данные карты")
 
-                }else{
-                    showToast("ВСе ок ")
-                }
-            } else {
-                showToast("Пожалуйста, проверьте данные карты")
-            }
         }
     }
 
@@ -104,6 +93,17 @@ class AddCard : MvpAppCompatFragment(R.layout.fragment_add_card), AddCardActivit
         }
     }
 
+    override fun showProgress(boolean: Boolean) {
+        runOnUiThread {
+            if (boolean) {
+                this.binding.loadingContainer.visibility = View.VISIBLE
+                this.binding.contentContainer.visibility = View.GONE
+            } else {
+                this.binding.loadingContainer.visibility = View.GONE
+                this.binding.contentContainer.visibility = View.VISIBLE
+            }
+        }
+    }
 
 
 }

@@ -6,6 +6,7 @@ import com.development.sota.scooter.common.base.BaseInteractor
 import com.development.sota.scooter.db.SharedPreferencesProvider
 import com.development.sota.scooter.net.ClientRetrofitProvider
 import com.development.sota.scooter.net.PurseRetrofitProvider
+import com.development.sota.scooter.ui.purse.domain.entities.AddCardModel
 import com.development.sota.scooter.ui.purse.domain.entities.Card
 import com.development.sota.scooter.ui.purse.presentation.WalletPresenter
 import com.development.sota.scooter.ui.purse.presentation.fragments.cards.AddCardPresenter
@@ -28,7 +29,7 @@ interface WalletInteractor : BaseInteractor{
 // fragment interfaces
 interface WalletCardsInteractor : BaseInteractor{
 
-    fun addCard(card: String, id: Long)
+    fun addCard(card: String)
 
     fun deleteCard(card: String, card_id: Long, id: Long)
 
@@ -89,7 +90,9 @@ class WalletCardsInteractorImpl(val presenter: CardsPresenter) : WalletCardsInte
     private val compositeDisposable = CompositeDisposable()
     private val sharedPreferences = SharedPreferencesProvider(presenter.context).sharedPreferences
 
-    override fun addCard(card: String, id: Long) {
+
+
+    override fun addCard(card: String) {
 
     }
 
@@ -172,8 +175,21 @@ class WalletAddCardsInteractorImpl(val presenter: AddCardPresenter) : WalletCard
     private val compositeDisposable = CompositeDisposable()
     private val sharedPreferences = SharedPreferencesProvider(presenter.context).sharedPreferences
 
-    override fun addCard(card: String, id: Long) {
+    override fun addCard(card: String) {
+        compositeDisposable.add(
+                ClientRetrofitProvider.service
+                        .addClientCard(AddCardModel(sharedPreferences.getLong("id", -1),card))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onError = {
+                                    presenter.showError(it.localizedMessage ?: "") },
+                                onNext = {
+                                    presenter.attachCardDone()
+                                }
 
+                        )
+        )
     }
 
     override fun deleteCard(card: String, card_id: Long, id: Long) {
