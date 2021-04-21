@@ -26,6 +26,9 @@ class CardsPresenter(
         interactor.disposeRequests()
     }
 
+    fun progressAddCard() {
+
+    }
 
 
     @SuppressLint("TimberArgCount")

@@ -5,6 +5,7 @@ import com.development.sota.scooter.ui.map.data.Client
 import com.development.sota.scooter.ui.map.data.ClientUpdateToken
 import com.development.sota.scooter.ui.profile.domain.entities.ClientUpdateNameData
 import com.development.sota.scooter.ui.profile.domain.entities.ClientUpdateNamePhone
+import com.development.sota.scooter.ui.purse.domain.entities.AddCardModel
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import io.reactivex.rxjava3.core.Observable
@@ -29,4 +30,7 @@ interface ClientService {
 
     @POST("setClientToken/")
     fun updateClientFBToken(@Body jsonObject: ClientUpdateToken): Observable<Response<Void>>
+
+    @POST("addClientCard/")
+    fun addClientCard(@Body jsonObject: AddCardModel): Observable<Response<Void>>
 }

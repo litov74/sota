@@ -22,7 +22,8 @@ interface CardsView : MvpView{
     fun showUserCards(last_four: String, main: String)
 
 
-
+    @AddToEnd
+    fun ShowProgress(boolean: Boolean)
 }
 
 
@@ -60,6 +61,10 @@ class CardsActivity : MvpAppCompatFragment(R.layout.fragment_cards), CardsView{
 
     override fun showUserCards(last_four: String, main: String) {
 
+    }
+
+    override fun ShowProgress(boolean: Boolean) {
+        TODO("Not yet implemented")
     }
 
 
