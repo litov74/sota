@@ -134,4 +134,7 @@
     <string name="connect_with">Связаться через:</string>
     <string name="mock_zero_balance">0.00 ₽</string>
     <string name="balance_user">%s ₽</string>
+    <string name="date">Дата</string>
+    <string name="card">Карта</string>
+    <string name="sum">Сумма</string>
 </resources>

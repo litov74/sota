@@ -161,7 +161,9 @@ class WalletTransactionsInteractorImpl(val presenter: TransactionsPresenter) : W
                     onNext = {
                         presenter.getTransactions(it)
                     },
-                    onError = {presenter.errorGotFromServer(it.localizedMessage)}
+                    onError = {
+                        presenter.errorGotFromServer(it.localizedMessage)
+                    }
                 ))
     }
 

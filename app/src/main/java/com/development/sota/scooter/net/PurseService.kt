@@ -41,7 +41,7 @@ interface PurseService {
     fun fetchPurseInfo(@Query("id") id: Long): Observable<List<Card>>
 
     @GET("getTransactions/")
-    fun fetchTransactionsInfo(@Query("id") id: Long): Observable<List<Card>>
+    fun fetchTransactionsInfo(@Query("id") id: Long): Observable<List<TransactionModel>>
 
 
 

@@ -10,27 +10,32 @@ import com.development.sota.scooter.ui.purse.domain.WalletTransactionsInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletUpBalanceInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletUpBalanceInteractorImpl
 import com.development.sota.scooter.ui.purse.domain.entities.Card
+import com.development.sota.scooter.ui.purse.domain.entities.TransactionModel
 import moxy.MvpPresenter
 
 class TransactionsPresenter(val context: Context) : MvpPresenter<TransactionsView>(), BasePresenter {
 
     private val interactor: WalletTransactionsInteractor = WalletTransactionsInteractorImpl(this)
 
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        interactor.getTransactions()
-        viewState.setLoading(true)
     }
 
 
-    fun getTransactions(card: List<Card>){
+    fun getTransactions(card: List<TransactionModel>){
         viewState.showTransactions(card)
 
     }
 
+    public fun resumeView() {
+        interactor.getTransactions()
+        viewState.setLoading(true)
+    }
+
     @SuppressLint("TimberArgCount")
     fun errorGotFromServer(error: String) {
-        Log.w("Error calling server", error)
+
         viewState.showToast(context.getString(R.string.error_api))
         viewState.setLoading(false)
     }

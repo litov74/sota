@@ -17,6 +17,12 @@ data class Card(val serverId: Long? = null,
                 val first_six: String? = null,
                 val last_four: String? = null)
 
+data class TransactionModel(
+                val date_time: Date? = null,
+                val cost: String? = null,
+                val verified: Boolean? = null,
+                val id: Long? = null,
+                val used_card: String? = null)
 
 
 data class ReplenishmentPacks(val id: Long, val cost: Int, val income: Int)
