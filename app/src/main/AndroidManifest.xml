@@ -74,7 +74,9 @@
         <activity
             android:name=".ui.comment.CommentActivity"
             android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".ui.purse.presentation.AddCardActivity"
+            android:screenOrientation="portrait"/>
 
 
 

@@ -13,18 +13,33 @@
         android:padding="16dp"
         android:text="Выберите один из доступных пакетов:"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_packs"
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_gravity="center"
-        tools:listitem="@layout/item_purse"
-        tools:itemCount="4"
-        app:spanCount="2"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_packs"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            app:spanCount="2"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+        <ProgressBar
+            android:id="@+id/progressLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

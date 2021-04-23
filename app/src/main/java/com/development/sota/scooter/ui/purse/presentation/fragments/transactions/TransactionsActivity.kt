@@ -5,24 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.development.sota.scooter.R
-import com.development.sota.scooter.databinding.FragmentCardsBinding
 import com.development.sota.scooter.databinding.FragmentTransactionsBinding
-import com.development.sota.scooter.ui.help.presentation.HelpAdapter
-import com.development.sota.scooter.ui.purse.domain.entities.Card
 import com.development.sota.scooter.ui.purse.domain.entities.TransactionModel
-import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardsPresenter
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
-import java.lang.Exception
-import java.util.*
 
 interface TransactionsView : MvpView{
     @AddToEnd

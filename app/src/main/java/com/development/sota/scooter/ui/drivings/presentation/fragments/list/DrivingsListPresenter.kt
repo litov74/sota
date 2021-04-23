@@ -115,12 +115,26 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
         interactor.setRateAndActivateOrder(id, type)
     }
 
+    fun closeSucc() {
+        viewState.clearViewPage()
+        interactor.getAllOrdersAndScooters()
+    }
+
+    fun closeError() {
+
+        viewState.setLoading(false)
+        viewState.showToast("Самокат не в зоне завершения аренды")
+    }
+
     fun closeOrder(id: Long) {
         viewState.setLoading(true)
 
         interactor.closeOrder(id)
     }
 
+    fun showError(error: String) {
+        viewState.showToast(error)
+    }
 
     fun actionEnded(success: Boolean, actionToPerform: () -> Unit = {}) {
         if (success) {

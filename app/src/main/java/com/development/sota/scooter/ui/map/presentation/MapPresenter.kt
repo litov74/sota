@@ -145,13 +145,12 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
     fun newOrderGotFromServer(orderId: Long, scooterId: Long, withActivation: Boolean) {
         scootersWithOrders[scooterId] = orderId
+        interactor.activateOrder(orderId)
+    }
 
-        if (withActivation) {
-            interactor.activateOrder(orderId)
-        }
-
-        interactor.getOrders()
+    fun activateSucc() {
         viewState.setLoading(false)
+
         viewState.sendToDrivingsList()
     }
 

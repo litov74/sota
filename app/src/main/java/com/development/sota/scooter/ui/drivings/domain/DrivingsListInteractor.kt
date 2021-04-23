@@ -8,11 +8,17 @@ import com.development.sota.scooter.net.OrdersRetrofitProvider
 import com.development.sota.scooter.ui.drivings.domain.entities.Order
 import com.development.sota.scooter.ui.drivings.presentation.fragments.list.DrivingsListPresenter
 import com.development.sota.scooter.ui.map.data.RateType
+import com.google.gson.Gson
+import com.google.gson.JsonElement
+import com.google.gson.TypeAdapter
+import com.squareup.okhttp.ResponseBody
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.HttpException
+import java.io.IOException
 
 interface DrivingsListInteractor : BaseInteractor {
     fun getAllOrdersAndScooters()
@@ -146,12 +152,14 @@ class DrivingsListInteractorImpl(private val presenter: DrivingsListPresenter) :
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
-                    onComplete = {
-
-                        presenter.actionEnded(true) { getAllOrdersAndScooters() } },
+                    onNext = {
+                        when (it.code()) {
+                            200 -> { presenter.closeSucc() }
+                            403 -> presenter.closeError() }
+                        },
                     onError = {
-                        presenter.gotErrorFromServer(it.localizedMessage)
-                        presenter.actionEnded(false) }
+                        presenter.closeError()
+                    }
                 )
         )
     }

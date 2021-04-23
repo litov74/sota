@@ -87,7 +87,7 @@ class OrdersAdapter(
                 }
 
                 holder.buttonScooterItemActivate.setOnClickListener {
-                    Log.w("FIRST ACTIVATE", "CLICK")
+
                     data[position].status = OrderStatus.CHOOSE_RATE
 
                     (context as DrivingsActivity).runOnUiThread {

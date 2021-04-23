@@ -31,6 +31,10 @@ class WalletPresenter(val context: Context) : MvpPresenter<WalletView>(), BasePr
         viewState.setLoading(false)
     }
 
+    fun updateUserBalance() {
+        interactor.getUserBalance()
+    }
+
     override fun onDestroyCalled() {
         interactor.disposeRequests()
     }

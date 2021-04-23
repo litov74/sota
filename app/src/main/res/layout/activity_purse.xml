@@ -63,7 +63,7 @@
         android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="16dp"
         android:text="-.- ₽ "
         android:textColor="@color/colorPrimary"
         android:textSize="32sp"
@@ -84,9 +84,9 @@
 
     <LinearLayout
         android:id="@+id/linnearLayoutSegmentContol"
-        android:layout_width="363dp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/ic_gray_segment_corner"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -141,20 +141,5 @@
             tools:layout_editor_absoluteX="210dp"
             tools:layout_editor_absoluteY="226dp" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/addCardTextView"
-        android:layout_width="match_parent"
-        android:text="Добавить способ оплаты"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:background="@color/white"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/linnearLayoutSegmentContol"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:shadowColor="@color/white"
-        android:textColor="@color/purple_secondary_text"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

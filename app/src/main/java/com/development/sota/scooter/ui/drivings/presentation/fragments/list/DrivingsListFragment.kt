@@ -16,6 +16,7 @@ import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
+import java.lang.Exception
 
 interface DrivingsListView : MvpView {
     @AddToEnd
@@ -26,6 +27,9 @@ interface DrivingsListView : MvpView {
 
     @AddToEnd
     fun initViewPager2(data: Pair<ArrayList<OrderWithStatus>, ArrayList<OrderWithStatus>>)
+
+    @AddToEnd
+    fun clearViewPage()
 }
 
 interface OrderManipulatorDelegate {
@@ -103,9 +107,14 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
     }
 
     override fun showToast(message: String) {
-        activity?.runOnUiThread {
-            Toast.makeText(context!!, message, Toast.LENGTH_SHORT).show()
+        try {
+            activity?.runOnUiThread {
+                Toast.makeText(context!!, message, Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
 
     override fun setLoading(by: Boolean) {
@@ -127,6 +136,13 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
             adapter = DrivingsListViewPager2Adapter(activity!!, data, this)
             binding.viewPager2DrivingsList.adapter = adapter
             binding.viewPager2DrivingsList.requestTransform()
+        }
+    }
+
+    override fun clearViewPage() {
+        activity?.runOnUiThread {
+            System.out.println("CLEAR VIEWS ")
+            binding.viewPager2DrivingsList.setSaveFromParentEnabled(false);
         }
     }
 

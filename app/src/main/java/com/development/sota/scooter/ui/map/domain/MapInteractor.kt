@@ -187,8 +187,12 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
             OrdersRetrofitProvider.service.activateOrder(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+                .subscribeBy(
+                        onNext = {  presenter.activateSucc() },
+                        onError = { presenter.errorGotFromServer(it.localizedMessage) }
+                )
         )
+
     }
 
     override fun getScootersAndOrders() {

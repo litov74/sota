@@ -2,8 +2,10 @@ package com.development.sota.scooter.net
 
 import com.development.sota.scooter.ui.drivings.domain.entities.AddOrderResponse
 import com.development.sota.scooter.ui.drivings.domain.entities.Order
+import com.google.gson.JsonElement
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import retrofit2.Response
 import retrofit2.http.*
 
 interface OrderService {
@@ -24,13 +26,13 @@ interface OrderService {
     @FormUrlEncoded
     fun activateOrder(
         @Field("id") orderId: Long
-    ): Completable
+    ): Observable<Response<Void>>
 
     @POST("closeOrder/")
     @FormUrlEncoded
     fun closeOrder(
         @Field("id") orderId: Long
-    ): Completable
+    ): Observable<Response<JsonElement>>
 
     @POST("cancelOrder/")
     @FormUrlEncoded

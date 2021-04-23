@@ -8,9 +8,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityPurseBinding
-import com.development.sota.scooter.ui.purse.presentation.fragments.cards.AddCard
-import com.development.sota.scooter.ui.purse.presentation.fragments.cards.AddCardActivity
-import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardsActivity
+import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardListFragment
+
 import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionsActivity
 import com.development.sota.scooter.ui.purse.presentation.fragments.upbalance.UpBalanceActivity
 import kotlinx.android.synthetic.main.activity_purse.*
@@ -32,7 +31,11 @@ interface WalletView: MvpView {
     fun setUserBalance(value: String)
 }
 
-interface WalletActivityView
+interface WalletActivityView {
+
+    fun needUpdateBalance()
+
+}
 
 class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
 
@@ -60,7 +63,6 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 check(binding.btnOpenUpBalance)
                 key = 0
                 fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
-                binding.addCardTextView.visibility = View.GONE
             }
         }
         binding.btnOpenCards.setOnClickListener{
@@ -69,9 +71,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 unCheck(binding.btnOpenTransactions)
                 unCheck(binding.btnOpenUpBalance)
                 key = 1
-                fm.beginTransaction().replace(binding.host.id, CardsActivity()).commit()
-                binding.addCardTextView.visibility = View.VISIBLE
-
+                fm.beginTransaction().replace(binding.host.id, CardListFragment()).commit()
             }
         }
         binding.btnOpenTransactions.setOnClickListener{
@@ -81,17 +81,17 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 unCheck(binding.btnOpenUpBalance)
                 key = 2
                 fm.beginTransaction().replace(binding.host.id, TransactionsActivity()).commit()
-                binding.addCardTextView.visibility = View.GONE
-
             }
         }
-        binding.addCardTextView.setOnClickListener {
-            fm.beginTransaction().replace(binding.host.id, AddCard()).commit()
-            addCardTextView.visibility = View.GONE
-        }
+//        binding.addCardTextView.setOnClickListener {
+//            fm.beginTransaction().replace(binding.host.id, AddCard()).commit()
+//            addCardTextView.visibility = View.GONE
+//        }
 
 
     }
+
+
 
     private fun unCheck(btn: Button){
         btn.background =
@@ -120,5 +120,10 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         runOnUiThread {
             binding.progressBarDrivingsList.visibility = if (by) View.VISIBLE else View.GONE
         }
+    }
+
+    override fun needUpdateBalance() {
+
+        presenter.updateUserBalance()
     }
 }

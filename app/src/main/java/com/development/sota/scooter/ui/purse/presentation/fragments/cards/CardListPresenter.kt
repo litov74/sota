@@ -7,13 +7,12 @@ import com.development.sota.scooter.R
 import com.development.sota.scooter.common.base.BasePresenter
 import com.development.sota.scooter.ui.purse.domain.WalletCardsInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletCardsInteractorImpl
-import com.development.sota.scooter.ui.purse.domain.WalletInteractor
 import com.development.sota.scooter.ui.purse.domain.entities.Card
 import moxy.MvpPresenter
 
-class CardsPresenter(
+class CardListPresenter(
     val context: Context
-) : MvpPresenter<CardsView>(), BasePresenter {
+) : MvpPresenter<ICardList>(), BasePresenter {
 
     private val interactor: WalletCardsInteractor = WalletCardsInteractorImpl(this)
 
@@ -30,6 +29,18 @@ class CardsPresenter(
 
     }
 
+    fun setCards(cards: List<Card>) {
+        viewState.showProgress(false)
+        viewState.showCards(cards)
+    }
+
+    fun resumeView() {
+       interactor.getCards()
+    }
+
+    fun showLoading(boolean: Boolean) {
+        viewState.showProgress(boolean)
+    }
 
     @SuppressLint("TimberArgCount")
     fun errorGotFromServer(error: String) {

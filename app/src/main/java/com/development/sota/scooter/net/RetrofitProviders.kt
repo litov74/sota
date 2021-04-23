@@ -27,7 +27,10 @@ class HeadersInterceptor : Interceptor {
 }
 
 val client: OkHttpClient = OkHttpClient.Builder()
-    .connectTimeout(30, TimeUnit.SECONDS)
+    .connectTimeout(1, TimeUnit.MINUTES)
+    .callTimeout(1, TimeUnit.MINUTES)
+    .readTimeout(1, TimeUnit.MINUTES)
+    .writeTimeout(1, TimeUnit.MINUTES)
     .addInterceptor(HeadersInterceptor())
     .addInterceptor(interceptor)
     .addInterceptor(ChuckerInterceptor(SotaApp.applicationContext()))
