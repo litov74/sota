@@ -75,11 +75,6 @@ class TransactionsActivity: MvpAppCompatFragment(R.layout.fragment_transactions)
                 binding.content.apply {
                     binding.content.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     binding.content.adapter = TransactionAdapter(transactions)
-                    val dividerItemDecoration = DividerItemDecoration(
-                            binding.content.context,
-                            LinearLayout.VERTICAL
-                    )
-                    binding.content.addItemDecoration(dividerItemDecoration)
                 }
         }
     }

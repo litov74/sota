@@ -7,7 +7,7 @@ import com.development.sota.scooter.R
 import com.development.sota.scooter.common.base.BasePresenter
 import com.development.sota.scooter.ui.purse.domain.WalletCardsInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletCardsInteractorImpl
-import com.development.sota.scooter.ui.purse.domain.entities.Card
+import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
 import moxy.MvpPresenter
 
 class CardListPresenter(
@@ -16,7 +16,7 @@ class CardListPresenter(
 
     private val interactor: WalletCardsInteractor = WalletCardsInteractorImpl(this)
 
-    fun getCards(cards: Card){
+    fun getCards(cards: UserCardModel){
         viewState.showUserCards(cards.last_four.toString(), cards.is_main.toString())
     }
 
@@ -29,9 +29,9 @@ class CardListPresenter(
 
     }
 
-    fun setCards(cards: List<Card>) {
+    fun setCards(userCardModels: List<UserCardModel>) {
         viewState.showProgress(false)
-        viewState.showCards(cards)
+        viewState.showCards(userCardModels)
     }
 
     fun resumeView() {

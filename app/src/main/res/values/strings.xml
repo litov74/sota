@@ -137,4 +137,5 @@
     <string name="date">Дата</string>
     <string name="card">Карта</string>
     <string name="sum">Сумма</string>
+    <string name="main">Главный</string>
 </resources>

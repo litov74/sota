@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentCardsBinding
-import com.development.sota.scooter.ui.purse.domain.entities.Card
+import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
 import com.development.sota.scooter.ui.purse.presentation.AddCardActivity
+import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionAdapter
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
@@ -24,7 +28,7 @@ interface ICardList : MvpView{
     fun showUserCards(last_four: String, main: String)
 
     @AddToEnd
-    fun showCards(cards: List<Card>)
+    fun showCards(userCardModels: List<UserCardModel>)
 
     @AddToEnd
     fun showProgress(boolean: Boolean)
@@ -84,9 +88,12 @@ class CardListFragment : MvpAppCompatFragment(R.layout.fragment_cards), ICardLis
         }
     }
 
-    override fun showCards(cards: List<Card>) {
+    override fun showCards(userCardModels: List<UserCardModel>) {
         runOnUiThread {
-
+            binding.cardListContainer.apply {
+                binding.cardListContainer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                binding.cardListContainer.adapter = UserCardAdapter(userCardModels)
+            }
         }
     }
 

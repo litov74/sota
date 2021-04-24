@@ -215,10 +215,9 @@ class WalletAddCardsInteractorImpl(val presenter: AddCardPresenter) : WalletCard
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
                             onError = {
-                                presenter.showError(it.localizedMessage ?: "") },
+                                presenter.attachCardError()},
                             onNext = {
                                 presenter.attachCardDone(it)
-
                             }
 
                     )

@@ -11,7 +11,9 @@ import com.development.sota.scooter.ui.purse.domain.WalletAddCardsInteractorImpl
 import com.development.sota.scooter.ui.purse.domain.WalletCardsInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletInteractorImpl
+import com.development.sota.scooter.ui.purse.domain.entities.CardPaymentVerificationModel
 import com.development.sota.scooter.ui.purse.domain.entities.WrapperCardPaymentVerificationModel
+import com.google.gson.Gson
 import moxy.MvpPresenter
 import ru.cloudpayments.sdk.card.Card
 
@@ -34,16 +36,20 @@ class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), Bas
         viewState.showToast(string)
     }
 
+    fun attachCardError() {
+        viewState.setLoading(false)
+            viewState.showToast("Пожалуйста, проверьте данные карты")
+    }
+
     fun attachCardDone(wrapperCardPaymentVerificationModel: WrapperCardPaymentVerificationModel) {
 
-      //  if (wrapperCardPaymentVerificationModel.Success) {
-            val parReq = wrapperCardPaymentVerificationModel.Model.PaReq
-            System.out.println("PAR "+parReq)
-            viewState.show3dSecure(wrapperCardPaymentVerificationModel.Model.AcsUrl, wrapperCardPaymentVerificationModel.Model.TransactionId , parReq)
-//        } else {
-//            viewState.setLoading(false)
-//            viewState.showToast("Пожалуйста, проверьте данные карты")
-//        }
+        if (wrapperCardPaymentVerificationModel.Success) {
+            viewState.finish()
+        } else {
+            val article = Gson().fromJson(wrapperCardPaymentVerificationModel.Model, CardPaymentVerificationModel::class.java)
+            val parReq = article.PaReq
+            viewState.show3dSecure(article.AcsUrl, article.TransactionId , parReq)
+        }
 
     }
 
@@ -62,9 +68,6 @@ class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), Bas
 
     fun attachCard(cardNumber: String, cardDate: String, cardCVV: String) {
         if (Card.isValidNumber(cardNumber) && Card.isValidExpDate(cardDate)) {
-
-            System.out.println(" number "+cardNumber+" date "+cardDate+" cvv "+cardCVV)
-
             val cardCryptogram = Card.cardCryptogram(cardNumber.trim(),cardDate.replace("/","").trim(), cardCVV.trim(), Constants.MERCHANT_PUBLIC_ID)
 
             if(cardCryptogram == null){

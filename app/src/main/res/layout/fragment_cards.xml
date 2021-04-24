@@ -12,6 +12,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cardListContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:id="@+id/addCardContainer"
             android:layout_width="match_parent"
@@ -20,16 +27,13 @@
             android:orientation="horizontal">
 
             <TextView
-
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="Добавить способ оплаты"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:background="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:shadowColor="@color/white"
                 android:textColor="@color/purple_secondary_text"
                 android:layout_height="wrap_content" />
 
@@ -41,11 +45,6 @@
                 android:src="@drawable/ic_add"/>
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cardListContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

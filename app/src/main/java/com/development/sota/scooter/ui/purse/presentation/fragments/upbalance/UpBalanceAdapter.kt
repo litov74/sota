@@ -3,8 +3,6 @@ package com.development.sota.scooter.ui.purse.presentation.fragments.upbalance
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.development.sota.scooter.ui.purse.domain.entities.Card
-import com.development.sota.scooter.ui.purse.domain.entities.TransactionModel
 import com.development.sota.scooter.ui.purse.domain.entities.UpBalancePackageModel
 
 

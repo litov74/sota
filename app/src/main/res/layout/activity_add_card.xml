@@ -30,7 +30,6 @@
                 android:id="@+id/textViewAddCardLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="16dp"
                 android:text="@string/dialog_add_card"
                 android:textAlignment="center"
@@ -71,7 +70,7 @@
                 android:digits="01234 56789"
                 android:inputType="number"
                 android:maxLength="16"
-                android:text="4274320026985872"
+                android:text="4242424242424242"
                 app:itemCount="1"
                 app:viewType="line"
                 tools:layout_editor_absoluteX="0dp" />

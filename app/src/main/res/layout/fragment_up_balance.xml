@@ -47,4 +47,5 @@
         android:gravity="center"
         android:padding="16dp"
         android:text="Начало аренды возможно только при положительном балансе"/>
+
 </LinearLayout>
