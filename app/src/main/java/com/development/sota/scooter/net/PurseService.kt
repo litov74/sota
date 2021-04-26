@@ -50,6 +50,15 @@ interface PurseService {
     @POST("topUpBalance/")
     @FormUrlEncoded
     fun topUpBalance( @Field("id") clientId: Long,
-                      @Field("package") packageId: Long): Observable<Response<JsonElement>>
+                      @Field("package") packageId: Long): Observable<WrapperCardPaymentVerificationModel>
+
+    @POST("SetCardAsMain/")
+    @FormUrlEncoded
+    fun setMainCard( @Field("id") clientId: Long,
+                     @Field("card") card: String): Observable<JsonElement>
+
+    @POST("removeClientCard/")
+    @FormUrlEncoded
+    fun deleteUserCard( @Field("id") clientId: Long, @Field("card") card: String, @Field("card_id") card_id: Long,): Observable<JsonElement>
 
 }

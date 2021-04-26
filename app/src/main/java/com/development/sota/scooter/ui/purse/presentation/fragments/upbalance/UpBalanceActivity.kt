@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,9 @@ interface UpBalanceView : MvpView {
 
     @AddToEnd
     fun updateUserBalance()
+
+    @AddToEnd
+    fun showToast(message: String)
 }
 
 interface UpBalanceManipulatorDelegate {
@@ -94,6 +98,12 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
 
     override fun updateUserBalance() {
         (context as WalletActivity).needUpdateBalance()
+    }
+
+    override fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun selectPackage(id: Long) {

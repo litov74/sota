@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentCardsBinding
 import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
 import com.development.sota.scooter.ui.purse.presentation.AddCardActivity
+import com.development.sota.scooter.ui.purse.presentation.WalletActivity
 import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionAdapter
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import moxy.MvpAppCompatFragment
@@ -34,9 +36,15 @@ interface ICardList : MvpView{
     fun showProgress(boolean: Boolean)
 }
 
+interface UserCardAction  {
 
+    fun setMain(userCardModel: UserCardModel)
 
-class CardListFragment : MvpAppCompatFragment(R.layout.fragment_cards), ICardList{
+    fun selectRemove(userCardModel: UserCardModel)
+
+}
+
+class CardListFragment : MvpAppCompatFragment(R.layout.fragment_cards), ICardList, UserCardAction {
     private val presenter by moxyPresenter {
         CardListPresenter(
             context ?: requireActivity().applicationContext
@@ -44,6 +52,8 @@ class CardListFragment : MvpAppCompatFragment(R.layout.fragment_cards), ICardLis
     }
     private var _binding: FragmentCardsBinding? = null
     private val binding get() = _binding!!
+    private var cardListAdapter: UserCardAdapter? = null
+    private var editMode: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,10 +100,10 @@ class CardListFragment : MvpAppCompatFragment(R.layout.fragment_cards), ICardLis
 
     override fun showCards(userCardModels: List<UserCardModel>) {
         runOnUiThread {
-            binding.cardListContainer.apply {
+                (activity as WalletActivity).setCardCount(userCardModels.size)
+                cardListAdapter = UserCardAdapter(userCardModels,editMode,this)
                 binding.cardListContainer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                binding.cardListContainer.adapter = UserCardAdapter(userCardModels)
-            }
+                binding.cardListContainer.adapter = cardListAdapter
         }
     }
 
@@ -109,5 +119,49 @@ class CardListFragment : MvpAppCompatFragment(R.layout.fragment_cards), ICardLis
         }
     }
 
+    override fun setMain(userCardModel: UserCardModel) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder
+                .setTitle("Внимание")
+                .setMessage("Сделать карту ••• "+userCardModel.last_four+" главной?")
+                .setPositiveButton("Да") {
+                    dialog, id ->  dialog.cancel()
+                    presenter.setMain(userCardModel)
+                }
+                .setNegativeButton("Нет") {
+                    dialog, id ->  dialog.cancel()
+                }
+
+        builder.create()
+        builder.show()
+    }
+
+     fun changeEditMode() {
+        editMode = editMode != true
+        cardListAdapter?.editMode = editMode
+        cardListAdapter?.notifyDataSetChanged()
+    }
+
+    fun cancelEditMode() {
+        editMode = false
+        cardListAdapter?.editMode = editMode
+        cardListAdapter?.notifyDataSetChanged()
+    }
+
+    override fun selectRemove(userCardModel: UserCardModel) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder
+                .setTitle("Внимание")
+                .setMessage("Удалить карту ••• "+userCardModel.last_four+"?")
+                .setPositiveButton("Да") {
+                    dialog, id ->  dialog.cancel()
+                    presenter.removeCard(userCardModel)
+                }
+                .setNegativeButton("Нет") {
+                    dialog, id ->  dialog.cancel()
+                }
+        builder.create()
+        builder.show()
+    }
 
 }

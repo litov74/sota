@@ -27,11 +27,11 @@ interface WalletCardsInteractor : BaseInteractor{
 
     fun addCard(card: String)
 
-    fun deleteCard(card: String, card_id: Long, id: Long)
+    fun deleteCard(card: String, card_id: Long)
 
     fun makeCryptogram()
 
-    fun setMain(card: String, id: Long)
+    fun setMain(card: String)
 
     fun confirmCard(MD: String, PaRes: String)
 
@@ -94,16 +94,42 @@ class WalletCardsInteractorImpl(val presenter: CardListPresenter) : WalletCardsI
 
     }
 
-    override fun deleteCard(card: String, card_id: Long, id: Long) {
-
+    override fun deleteCard(card: String, card_id: Long) {
+        val clientId = sharedPreferences.getLong("id", -1)
+        compositeDisposable.add(
+                PurseRetrofitProvider.service.deleteUserCard(clientId, card, card_id)
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe {
+                            presenter.showLoading(true)
+                        }
+                        .subscribeBy(
+                                onNext = {
+                                    presenter.removeCardSuccess()
+                                },
+                                onError = {
+                                    presenter.errorGotFromServer(it.localizedMessage)
+                                }))
     }
 
     override fun makeCryptogram() {
-        TODO("Not yet implemented")
+
     }
 
-    override fun setMain(card: String, id: Long) {
-        TODO("Not yet implemented")
+    override fun setMain(card: String) {
+        val clientId = sharedPreferences.getLong("id", -1)
+        compositeDisposable.add(
+                PurseRetrofitProvider.service.setMainCard(clientId, card)
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe {
+                            presenter.showLoading(true)
+                        }
+                        .subscribeBy(
+                                onNext = {
+                                    presenter.mainSetSuccess()
+                                },
+                                onError = {
+                                    presenter.errorGotFromServer(it.localizedMessage)
+                                }))
     }
 
     override fun confirmCard(MD: String, PaRes: String) {
@@ -146,10 +172,16 @@ class WalletUpBalanceInteractorImpl(val presenter: UpBalancePresenter) : WalletU
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = {
-                        presenter.balanceUpdated()
+                        if (it.Success) {
+                            presenter.balanceUpdated()
+                        } else {
+                            presenter.showMessage("Проверьте наличие средств на карте")
+                        }
+
                     },
                     onError = {
-                        it.printStackTrace()
+                        presenter.showMessage("Проверьте наличие средств на карте")
+
                     }
                 ))
     }
@@ -224,7 +256,7 @@ class WalletAddCardsInteractorImpl(val presenter: AddCardPresenter) : WalletCard
         )
     }
 
-    override fun deleteCard(card: String, card_id: Long, id: Long) {
+    override fun deleteCard(card: String, card_id: Long) {
 
     }
 
@@ -232,7 +264,7 @@ class WalletAddCardsInteractorImpl(val presenter: AddCardPresenter) : WalletCard
         TODO("Not yet implemented")
     }
 
-    override fun setMain(card: String, id: Long) {
+    override fun setMain(card: String) {
         TODO("Not yet implemented")
     }
 

@@ -35,6 +35,7 @@ interface WalletActivityView {
 
     fun needUpdateBalance()
 
+    fun setCardCount(count: Int)
 }
 
 class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
@@ -43,6 +44,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
 
     private var _binding: ActivityPurseBinding? = null
     private val binding get() = _binding!!
+    private var cardListFragment: CardListFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +60,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         fm.beginTransaction().add(binding.host.id, UpBalanceActivity()).commit()
         binding.btnOpenUpBalance.setOnClickListener{
             if(key != 0){
+                binding.editCardsContainer.visibility = View.GONE
                 unCheck(binding.btnOpenCards)
                 unCheck(binding.btnOpenTransactions)
                 check(binding.btnOpenUpBalance)
@@ -67,15 +70,18 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         }
         binding.btnOpenCards.setOnClickListener{
             if(key != 1){
+                binding.editCardsContainer.visibility = View.GONE
                 check(binding.btnOpenCards)
                 unCheck(binding.btnOpenTransactions)
                 unCheck(binding.btnOpenUpBalance)
                 key = 1
-                fm.beginTransaction().replace(binding.host.id, CardListFragment()).commit()
+                cardListFragment = CardListFragment()
+                fm.beginTransaction().replace(binding.host.id, cardListFragment!!).commit()
             }
         }
         binding.btnOpenTransactions.setOnClickListener{
             if(key != 2){
+                binding.editCardsContainer.visibility = View.GONE
                 unCheck(binding.btnOpenCards)
                 check(binding.btnOpenTransactions)
                 unCheck(binding.btnOpenUpBalance)
@@ -89,6 +95,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
 //        }
 
 
+        binding.editCardsContainer.setOnClickListener { cardListFragment?.changeEditMode() }
     }
 
 
@@ -118,12 +125,20 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
 
     override fun setLoading(by: Boolean) {
         runOnUiThread {
-            binding.progressBarDrivingsList.visibility = if (by) View.VISIBLE else View.GONE
+          //  binding.progressBarDrivingsList.visibility = if (by) View.VISIBLE else View.GONE
         }
     }
 
     override fun needUpdateBalance() {
-
         presenter.updateUserBalance()
+    }
+
+    override fun setCardCount(count: Int) {
+        if (count > 1) {
+            binding.editCardsContainer.visibility = View.VISIBLE
+        } else {
+            binding.editCardsContainer.visibility = View.GONE
+            cardListFragment?.cancelEditMode()
+        }
     }
 }

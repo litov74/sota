@@ -96,11 +96,10 @@ class AddCardActivity : MvpAppCompatActivity(), IAddCardView, ThreeDsDialogFragm
     }
 
 
-
     override fun show3dSecure(AcsUrl: String, transactionId: Long, paReq: String) {
         ThreeDsDialogFragment.newInstance(AcsUrl,
-                transactionId.toString(),
-                paReq).show(supportFragmentManager, "3DS")
+                paReq,
+                transactionId.toString()).show(supportFragmentManager, "3DS")
     }
 
     override fun onAuthorizationCompleted(md: String, paRes: String) {

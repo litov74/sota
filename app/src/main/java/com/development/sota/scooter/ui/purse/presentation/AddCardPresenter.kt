@@ -12,10 +12,14 @@ import com.development.sota.scooter.ui.purse.domain.WalletCardsInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletInteractorImpl
 import com.development.sota.scooter.ui.purse.domain.entities.CardPaymentVerificationModel
+import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
 import com.development.sota.scooter.ui.purse.domain.entities.WrapperCardPaymentVerificationModel
 import com.google.gson.Gson
 import moxy.MvpPresenter
+import moxy.MvpView
+import moxy.viewstate.strategy.alias.AddToEnd
 import ru.cloudpayments.sdk.card.Card
+
 
 
 class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), BasePresenter {
@@ -73,6 +77,7 @@ class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), Bas
             if(cardCryptogram == null){
                 viewState.showToast("Пожалуйста, проверьте данные карты")
             }else{
+                System.out.println("crypto "+cardCryptogram)
                 interactor.addCard(cardCryptogram)
             }
         } else {
@@ -82,5 +87,9 @@ class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), Bas
 
     override fun onDestroyCalled() {
         interactor.disposeRequests()
+    }
+
+     fun setMain(userCardModel: UserCardModel) {
+
     }
 }

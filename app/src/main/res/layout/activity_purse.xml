@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/textViewDrivingsListLabel"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -33,6 +33,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewDrivingsListLabel"
         app:srcCompat="@drawable/ic_back_arrow" />
+
+    <TextView
+        android:id="@+id/editCardsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Ред."
+        android:textColor="#9D2CDD"
+        android:textSize="17sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDrivingsListLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintStart_toEndOf="@+id/textViewDrivingsListLabel" />
 
     <FrameLayout
         android:id="@+id/host"

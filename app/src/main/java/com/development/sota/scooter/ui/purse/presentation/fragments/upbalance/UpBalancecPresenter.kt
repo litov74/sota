@@ -38,6 +38,12 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
         getUpBalancePackages()
     }
 
+    fun showMessage(message:String) {
+        viewState.updateUserBalance()
+        viewState.showProgress(false)
+        viewState.showToast(message)
+    }
+
     fun setUpBalancePackages(list: List<UpBalancePackageModel>) {
         viewState.showProgress(false)
         viewState.setListPackages(list)

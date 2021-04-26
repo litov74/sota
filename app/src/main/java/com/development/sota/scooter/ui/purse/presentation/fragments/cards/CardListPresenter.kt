@@ -42,6 +42,23 @@ class CardListPresenter(
         viewState.showProgress(boolean)
     }
 
+    fun mainSetSuccess() {
+        interactor.getCards()
+    }
+
+    fun removeCardSuccess() {
+        interactor.getCards()
+    }
+
+
+    fun setMain(userCardModel: UserCardModel) {
+        interactor.setMain(userCardModel.crypto.toString())
+    }
+
+    fun removeCard(userCardModel: UserCardModel) {
+        interactor.deleteCard(userCardModel.crypto.toString(), userCardModel.card_id)
+    }
+
     @SuppressLint("TimberArgCount")
     fun errorGotFromServer(error: String) {
         Log.w("Error calling server", error)
