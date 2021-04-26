@@ -57,6 +57,11 @@ class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), Bas
 
     }
 
+    fun success3DSecure() {
+        viewState.setLoading(false)
+        viewState.finish()
+    }
+
     fun showProgress(boolean: Boolean) {
         viewState.setLoading(boolean)
     }

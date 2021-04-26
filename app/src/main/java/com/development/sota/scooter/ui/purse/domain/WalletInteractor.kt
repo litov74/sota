@@ -278,7 +278,7 @@ class WalletAddCardsInteractorImpl(val presenter: AddCardPresenter) : WalletCard
                                 onError = {
                                     presenter.showError(it.localizedMessage ?: "") },
                                 onNext = {
-
+                                    presenter.success3DSecure()
                                 }
 
                         )
