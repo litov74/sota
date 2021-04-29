@@ -42,7 +42,7 @@
         android:layout_marginBottom="32dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:hint="XXXX"
+        android:hint="@string/code_phone_hint"
         android:inputType="numberDecimal"
         android:textSize="24dp"
         app:itemCount="4"

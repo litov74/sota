@@ -590,8 +590,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                         getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterMinutePricing.text =
                             ""
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewtextViewItemScooterHourPricing.text =
-                            ""
 
 
                         val scooterPercentage = scooter.getBatteryPercentage()
@@ -616,8 +614,10 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                         getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterId.text =
                             "#${scooter.id}"
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterBatteryPercent.text =
-                            spannable
+
+                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercent.text = scooterPercentage
+                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercentTime.text = "~$scooterInfo"
+                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercentDistance.text = scooter.getScooterPercentDistance()
 
                         currentShowingScooter = scooter.id
 
@@ -647,46 +647,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     override fun setRateForScooterCard(rate: Rate, scooterId: Long) {
         runOnUiThread {
             if (currentShowingScooter == scooterId) {
-                val perMinuteLabel = getString(R.string.scooter_per_minute)
-                val spannableMinute: Spannable =
-                    SpannableString("${rate.minute}₽ $perMinuteLabel")
 
-                spannableMinute.setSpan(
-                    ForegroundColorSpan(Color.BLACK),
-                    0,
-                    rate.minute.length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-                spannableMinute.setSpan(
-                    ForegroundColorSpan(Color.GRAY),
-                    rate.minute.length,
-                    "${rate.minute}₽ $perMinuteLabel".length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-
-                val perHourLabel = getString(R.string.scooter_per_hour)
-                val spannableHours: Spannable = SpannableString("${rate.hour}₽ $perHourLabel")
-
-                spannableHours.setSpan(
-                    ForegroundColorSpan(Color.BLACK),
-                    0,
-                    rate.hour.length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-                spannableHours.setSpan(
-                    ForegroundColorSpan(Color.GRAY),
-                    rate.hour.length,
-                    "${rate.hour}₽ $perHourLabel".length,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-
-                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text =
-                    spannableMinute
-                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewtextViewItemScooterHourPricing.text =
-                    spannableHours
+                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "₽"+rate.minute
             }
         }
     }

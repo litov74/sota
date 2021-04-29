@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:backgroundTint="@color/gray_edit_text"
-            android:hint="Иван"
+            android:hint="@string/login_name_hint"
             android:maxLines="1"
             android:textAlignment="center"
             android:textSize="20dp"

@@ -1,6 +1,7 @@
-package com.development.sota.scooter.net
+ package com.development.sota.scooter.net
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.development.sota.scooter.BuildConfig
 import com.development.sota.scooter.SotaApp
 import com.google.gson.Gson
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
@@ -10,12 +11,13 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import ru.cloudpayments.sdk.BuildConfig.API_HOST
 import java.util.concurrent.TimeUnit
 
 val gson = Gson()
 val interceptor = LoggingInterceptor()
 
-const val BASE_URL = "http://www.scooteradminpanel.ru/API/"
+const val BASE_URL = BuildConfig.API_HOST
 
 class HeadersInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

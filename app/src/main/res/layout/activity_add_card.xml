@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:backgroundTint="@color/gray_edit_text"
-                android:hint="Номер карты"
+                android:hint="@string/card_number"
                 android:maxLines="1"
                 android:paddingTop="16dp"
                 android:singleLine="true"
@@ -69,7 +69,6 @@
                 android:digits="01234 56789"
                 android:inputType="number"
                 android:maxLength="16"
-                android:text="4242424242424242"
                 app:itemCount="1"
                 app:viewType="line"
                 tools:layout_editor_absoluteX="0dp" />
@@ -80,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:backgroundTint="@color/gray_edit_text"
-                android:hint="Имя на карте"
+                android:hint="@string/cardholder_name"
                 android:inputType="textPersonName"
                 android:maxLines="1"
                 android:paddingTop="16dp"
@@ -106,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:backgroundTint="@color/gray_edit_text"
-                android:hint="ММ/ГГ"
+                android:hint="@string/mm_year"
                 android:maxLines="1"
                 android:paddingTop="16dp"
                 android:singleLine="true"
@@ -126,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:backgroundTint="@color/gray_edit_text"
-                android:hint="CVV"
+                android:hint="@string/cvv"
                 android:inputType="numberPassword"
                 android:maxLines="1"
                 android:paddingTop="16dp"
@@ -150,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Мы спишем и тут же вернем 1₽, чтобы\nудостовериться, что твоя карта работает"
+            android:text="@string/first_transaction_description"
             android:textAlignment="center"
             android:textSize="15sp"
             android:layout_marginBottom="32dp"
@@ -168,11 +167,10 @@
             android:id="@+id/buttonRegCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:background="@drawable/ic_curved_gradient"
             android:padding="4dp"
             android:layout_margin="16dp"
-            android:text="Добавить"
+            android:text="@string/add"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp" />
@@ -184,8 +182,5 @@
             android:visibility="gone"/>
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>

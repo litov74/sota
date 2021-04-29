@@ -37,7 +37,7 @@ data class Scooter(
     fun getBatteryPercentage(): String {
         val percents = battery / 60000 * 100
 
-        return "${percents.toInt()} %"
+        return "${percents.toInt()}%"
     }
 
     fun getScooterRideInfo(): String {
@@ -45,9 +45,17 @@ data class Scooter(
         val minutes: Int = (200 * percents).toInt()
         val kms: Int = (45 * percents).toInt()
 
-        return "~${if (minutes / 60 == 0) "" else "${minutes / 60}h"} ${if (minutes % 60 == 0) "" else "${minutes % 60}m"} · ${kms}km"
+        return "${if (minutes / 60 == 0) "" else "${minutes / 60}h"} ${if (minutes % 60 == 0) "" else "${minutes % 60}m"}"
 
     }
+
+    fun getScooterPercentDistance(): String {
+        val percents = battery / 60000
+        val kms: Int = (45 * percents).toInt()
+
+        return "· ${kms}km"
+    }
+
 
 }
 

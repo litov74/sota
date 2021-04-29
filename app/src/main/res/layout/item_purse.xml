@@ -33,7 +33,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Платишь"
+                android:text="@string/pay"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -57,7 +57,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Выгода 0 р"
+                android:text="@string/benefit"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
@@ -67,7 +67,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Получаешь"
+                android:text="@string/get_count"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="16sp" />

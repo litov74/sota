@@ -24,7 +24,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="TextView"
                 android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +48,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center|center_horizontal|center_vertical"
-                    android:text="TextView"
                     android:textColor="@android:color/black"
                     android:textSize="14dp" />
 
@@ -58,7 +56,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center|center_horizontal|center_vertical"
-                    android:text="TextView"
                     android:textColor="@android:color/black" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

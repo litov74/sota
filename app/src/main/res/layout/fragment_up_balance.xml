@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="16dp"
-        android:text="Выберите один из доступных пакетов:"/>
+        android:text="@string/balance_select_up_package"/>
 
 
 
@@ -46,6 +46,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="16dp"
-        android:text="Начало аренды возможно только при положительном балансе"/>
+        android:text="@string/start_rent_instruction"/>
 
 </LinearLayout>

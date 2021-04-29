@@ -26,6 +26,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
+import kotlin.time.minutes
 
 class OrdersAdapter(
     var data: ArrayList<OrderWithStatus>,
@@ -69,9 +70,11 @@ class OrdersAdapter(
         )
 
         holder.textViewItemScooterId.text = "#${data[position].order.scooter}"
-        holder.textViewItemScooterBatteryPercent.text = spannable
+        holder.scooterPercent.text = scooterPercentage
+        holder.scooterPercentTime.text = "~$scooterInfo"
+        holder.scooterPercentDistance.text = data[position].scooter.getScooterPercentDistance()
+        holder.textViewItemScooterMinutePricing.text = "₽"+data[position].order.rate
 
-        System.err.println("STATUS "+data[position].status)
 
         when (data[position].status) {
 
@@ -262,8 +265,14 @@ class OrdersAdapter(
             cardView.findViewById(R.id.linnearLayoutScooterItemFirstBookButtons)
         val textViewItemScooterId: TextView =
             cardView.findViewById(R.id.textViewItemScooterId)
-        val textViewItemScooterBatteryPercent: TextView =
-            cardView.findViewById(R.id.textViewItemScooterBatteryPercent)
+        val scooterPercent: TextView =
+            cardView.findViewById(R.id.scooterPercent)
+        val textViewItemScooterMinutePricing: TextView =
+                cardView.findViewById(R.id.textViewItemScooterMinutePricing)
+        val scooterPercentTime: TextView =
+                cardView.findViewById(R.id.scooterPercentTime)
+        val scooterPercentDistance: TextView =
+                cardView.findViewById(R.id.scooterPercentDistance)
         val textViewItemScooterStateLabel: TextView =
             cardView.findViewById(R.id.textViewItemScooterStateLabel)
         val buttonScooterItemCancelBook: Button =

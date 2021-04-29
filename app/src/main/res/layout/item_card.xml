@@ -37,7 +37,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center|center_horizontal|center_vertical"
-                android:text="TextView"
                 android:textColor="@android:color/black"
                 android:textSize="14dp"
                 />
@@ -47,7 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center|center_horizontal|center_vertical"
-                android:text="TextView"
                 android:textColor="@android:color/black"
                 android:textSize="14dp"
                 />
