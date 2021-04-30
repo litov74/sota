@@ -3,7 +3,7 @@ package com.development.sota.scooter.net
 import com.development.sota.scooter.ui.map.data.Rate
 import com.development.sota.scooter.ui.map.data.Scooter
 import io.reactivex.rxjava3.core.Observable
-import retrofit2.http.GET
+import retrofit2.http.*
 
 interface MapService {
     @GET("getScooter/")
@@ -14,4 +14,8 @@ interface MapService {
 
     @GET("getGeoZone/")
     fun getGeoZone(): Observable<String>
+
+
+    @GET("getScooter/")
+    fun getScooterByCode(@Query("id") idScooter: Long): Observable<List<Scooter>>
 }

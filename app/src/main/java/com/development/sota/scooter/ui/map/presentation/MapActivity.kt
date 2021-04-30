@@ -140,7 +140,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     private lateinit var markerManager: MarkerViewManager
     private lateinit var localizationPlugin: LocalizationPlugin
     private lateinit var geoJsonSource: GeoJsonSource
-
+    private val QR_CODE_REQUEST = 555
     private val disposableJobsBag = hashSetOf<Job>()
 
     private var currentShowingScooter = -1L
@@ -163,7 +163,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                 val intent = Intent(this, DrivingsActivity::class.java)
                 intent.putExtra("aim", DrivingsStartTarget.QRandCode)
 
-                startActivity(intent)
+                startActivityForResult(intent, QR_CODE_REQUEST)
             } else {
                 getCameraPermission()
             }
@@ -352,6 +352,14 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                 )
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == QR_CODE_REQUEST) {
+          //  System.out.println("ACTIVITy SCOOTER "+data.getParcelableExtra("scooter")))
+        }
+
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "TimberArgCount")

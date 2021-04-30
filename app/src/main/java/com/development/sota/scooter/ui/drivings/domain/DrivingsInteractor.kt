@@ -19,6 +19,7 @@ interface DrivingsInteractor : BaseInteractor {
     fun removeOrder(orderId: Long)
     fun activateOrder(orderId: Long)
     fun putScooterCodeToShow(code: Long)
+    fun getScooterByCode(code: Long)
 }
 
 class DrivingsInteractorImpl(private val presenter: DrivingsPresenter) : DrivingsInteractor {
@@ -78,6 +79,24 @@ class DrivingsInteractorImpl(private val presenter: DrivingsPresenter) : Driving
 
     override fun putScooterCodeToShow(code: Long) {
         sharedPreferences.edit().putLong("scooter_show", code).apply()
+    }
+
+    override fun getScooterByCode(code: Long) {
+        compositeDisposable.add(
+                MapRetrofitProvider.service
+                        .getScooterByCode(
+                                code
+                        )
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeBy(
+                                onError = {
+                                    presenter.gotErrorFromAPI(it.localizedMessage ?: "") },
+                                onNext = {
+                                    presenter.scooterResultByCode(it[0])
+                                }
+                        )
+        )
     }
 
     override fun disposeRequests() {

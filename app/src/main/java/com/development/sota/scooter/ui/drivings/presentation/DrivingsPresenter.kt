@@ -20,7 +20,7 @@ class DrivingsPresenter(val context: Context) : MvpPresenter<DrivingsView>() {
         codeToTest = code
         fragmentDelegate = delegate
 
-        interactor.getAllAvailableScooters()
+        interactor.getScooterByCode(code)
     }
 
     fun returnedFromQRSendToCode() {
@@ -50,6 +50,10 @@ class DrivingsPresenter(val context: Context) : MvpPresenter<DrivingsView>() {
 
             fragmentDelegate = null
         }
+    }
+
+    fun scooterResultByCode(scooter: Scooter) {
+
     }
 
     fun gotErrorFromAPI(message: String) {

@@ -6,20 +6,15 @@ import android.util.Log
 import com.development.sota.scooter.R
 import com.development.sota.scooter.common.Constants
 import com.development.sota.scooter.common.base.BasePresenter
-import com.development.sota.scooter.ui.map.data.Client
 import com.development.sota.scooter.ui.purse.domain.WalletAddCardsInteractorImpl
 import com.development.sota.scooter.ui.purse.domain.WalletCardsInteractor
-import com.development.sota.scooter.ui.purse.domain.WalletInteractor
-import com.development.sota.scooter.ui.purse.domain.WalletInteractorImpl
 import com.development.sota.scooter.ui.purse.domain.entities.CardPaymentVerificationModel
 import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
 import com.development.sota.scooter.ui.purse.domain.entities.WrapperCardPaymentVerificationModel
 import com.google.gson.Gson
 import moxy.MvpPresenter
-import moxy.MvpView
-import moxy.viewstate.strategy.alias.AddToEnd
 import ru.cloudpayments.sdk.card.Card
-
+import java.lang.Exception
 
 
 class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), BasePresenter {
@@ -50,9 +45,14 @@ class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), Bas
         if (wrapperCardPaymentVerificationModel.Success) {
             viewState.finish()
         } else {
-            val article = Gson().fromJson(wrapperCardPaymentVerificationModel.Model, CardPaymentVerificationModel::class.java)
-            val parReq = article.PaReq
-            viewState.show3dSecure(article.AcsUrl, article.TransactionId , parReq)
+            try {
+                val article = Gson().fromJson(wrapperCardPaymentVerificationModel.Model, CardPaymentVerificationModel::class.java)
+                val parReq = article.PaReq
+                viewState.show3dSecure(article.AcsUrl, article.TransactionId , parReq)
+            } catch (exception:Exception) {
+                exception.printStackTrace()
+            }
+
         }
 
     }
