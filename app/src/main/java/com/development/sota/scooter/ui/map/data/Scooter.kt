@@ -5,9 +5,10 @@ import com.development.sota.scooter.R
 import com.google.gson.annotations.SerializedName
 import com.mapbox.mapboxsdk.geometry.LatLng
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
-@Parcelize
-data class Scooter(
+
+data class Scooter (
     val id: Long,
     @SerializedName("scooter_name") val name: String,
     val status: String,
@@ -23,7 +24,7 @@ data class Scooter(
     val engine: Boolean,
     @SerializedName("scooter_group") val scooterGroup: List<Int>,
     val rate: Int
-) : Parcelable {
+) : Serializable {
     fun getScooterIcon(): Int {
         return when {
             battery <= 20000.0 -> R.drawable.ic_icon_scooter_third

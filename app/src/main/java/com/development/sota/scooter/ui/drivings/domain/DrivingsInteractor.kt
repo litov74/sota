@@ -93,7 +93,7 @@ class DrivingsInteractorImpl(private val presenter: DrivingsPresenter) : Driving
                                 onError = {
                                     presenter.gotErrorFromAPI(it.localizedMessage ?: "") },
                                 onNext = {
-                                    presenter.scooterResultByCode(it[0])
+                                    presenter.gotScootersFromAPI(it)
                                 }
                         )
         )

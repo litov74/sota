@@ -43,7 +43,7 @@ class DrivingsPresenter(val context: Context) : MvpPresenter<DrivingsView>() {
 
             if (first != null) {
                 fragmentDelegate?.gotResultOfCodeChecking(true)
-                //TODO: Send to Drivings
+                viewState.setResultCodeScooter(first)
             } else {
                 fragmentDelegate?.gotResultOfCodeChecking(false)
             }
@@ -52,9 +52,7 @@ class DrivingsPresenter(val context: Context) : MvpPresenter<DrivingsView>() {
         }
     }
 
-    fun scooterResultByCode(scooter: Scooter) {
 
-    }
 
     fun gotErrorFromAPI(message: String) {
         viewState.showToast(message)

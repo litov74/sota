@@ -172,4 +172,5 @@
     <string name="get_count">Получаешь</string>
     <string name="make_main">Сделать главной</string>
     <string name="card_points">•••</string>
+    <string name="notification">Уведомление</string>
 </resources>

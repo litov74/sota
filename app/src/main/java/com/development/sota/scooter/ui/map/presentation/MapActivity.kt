@@ -356,8 +356,11 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == QR_CODE_REQUEST) {
-          //  System.out.println("ACTIVITy SCOOTER "+data.getParcelableExtra("scooter")))
+
+        if (requestCode == QR_CODE_REQUEST) {
+            System.out.println("RESULT ACTIVITY "+requestCode)
+            System.out.println("SHOW SCO "+data?.getSerializableExtra("scooter") as Scooter)
+            presenter.selectScooterByCode(data?.getSerializableExtra("scooter") as Scooter)
         }
 
     }
@@ -557,99 +560,105 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     }
 
     override fun showScooterCard(scooter: Scooter, status: OrderStatus) {
-        runOnUiThread {
-            if (currentShowingScooter != scooter.id) {
-                getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
-                    View.VISIBLE
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.visibility = View.VISIBLE
+        try {
+            runOnUiThread {
 
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFinishButtons.visibility =
-                    View.GONE
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemBookingButtons.visibility =
-                    View.GONE
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemRentButtons.visibility =
-                    View.GONE
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFirstBookButtons.visibility =
-                    View.GONE
-
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRoute.visibility =
-                    View.GONE
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupLock.visibility =
-                    View.GONE
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupSignal.visibility =
-                    View.GONE
-
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFirstBookButtons.visibility =
-                    View.VISIBLE
-
-                when (status) {
-                    OrderStatus.CANDIDIATE -> {
-                        getBinding.contentOfMap.mapScooterItem.textViewItemScooterStateLabel.visibility =
-                            View.GONE
-                        getBinding.contentOfMap.mapScooterItem.textViewItemScooterStateValue.visibility =
-                            View.GONE
-
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.visibility =
+                if (currentShowingScooter != scooter.id) {
+                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
                             View.VISIBLE
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.clipToOutline =
-                            true
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.imageView2Backgroundless.clipToOutline =
-                            true
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.visibility = View.VISIBLE
 
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterMinutePricing.text =
-                            ""
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFinishButtons.visibility =
+                            View.GONE
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemBookingButtons.visibility =
+                            View.GONE
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemRentButtons.visibility =
+                            View.GONE
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFirstBookButtons.visibility =
+                            View.GONE
+
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRoute.visibility =
+                            View.GONE
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupLock.visibility =
+                            View.GONE
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupSignal.visibility =
+                            View.GONE
+
+                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFirstBookButtons.visibility =
+                            View.VISIBLE
+
+                    when (status) {
+                        OrderStatus.CANDIDIATE -> {
+                            getBinding.contentOfMap.mapScooterItem.textViewItemScooterStateLabel.visibility =
+                                    View.GONE
+                            getBinding.contentOfMap.mapScooterItem.textViewItemScooterStateValue.visibility =
+                                    View.GONE
+
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.visibility =
+                                    View.VISIBLE
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.clipToOutline =
+                                    true
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.imageView2Backgroundless.clipToOutline =
+                                    true
+
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterMinutePricing.text =
+                                    ""
 
 
-                        val scooterPercentage = scooter.getBatteryPercentage()
-                        val scooterInfo = scooter.getScooterRideInfo()
+                            val scooterPercentage = scooter.getBatteryPercentage()
+                            val scooterInfo = scooter.getScooterRideInfo()
 
-                        val spannable: Spannable =
-                            SpannableString("$scooterPercentage $scooterInfo")
+                            val spannable: Spannable =
+                                    SpannableString("$scooterPercentage $scooterInfo")
 
-                        spannable.setSpan(
-                            ForegroundColorSpan(Color.BLACK),
-                            0,
-                            scooterPercentage.length,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
+                            spannable.setSpan(
+                                    ForegroundColorSpan(Color.BLACK),
+                                    0,
+                                    scooterPercentage.length,
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
 
-                        spannable.setSpan(
-                            ForegroundColorSpan(Color.GRAY),
-                            scooterPercentage.length,
-                            "$scooterPercentage $scooterInfo".length,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                        )
+                            spannable.setSpan(
+                                    ForegroundColorSpan(Color.GRAY),
+                                    scooterPercentage.length,
+                                    "$scooterPercentage $scooterInfo".length,
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
 
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterId.text =
-                            "#${scooter.id}"
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterId.text =
+                                    "#${scooter.id}"
 
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercent.text = scooterPercentage
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercentTime.text = "~$scooterInfo"
-                        getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercentDistance.text = scooter.getScooterPercentDistance()
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercent.text = scooterPercentage
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercentTime.text = "~$scooterInfo"
+                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.scooterPercentDistance.text = scooter.getScooterPercentDistance()
 
-                        currentShowingScooter = scooter.id
+                            currentShowingScooter = scooter.id
 
-                        //TODO: remake activate button
+                            //TODO: remake activate button
 
-                        findViewById<Button>(R.id.buttonItemScooterFirstActivate).setOnClickListener {
-                            presenter.clickedOnBookButton(scooter.id)
+                            findViewById<Button>(R.id.buttonItemScooterFirstActivate).setOnClickListener {
+                                presenter.clickedOnBookButton(scooter.id)
 
-                            currentShowingScooter = -1
+                                currentShowingScooter = -1
+                            }
+
+                            findViewById<Button>(R.id.buttonItemScooterBookFirst).setOnClickListener {
+                                presenter.clickedOnBookButton(scooter.id)
+
+                                currentShowingScooter = -1
+                            }
+
+
                         }
 
-                        findViewById<Button>(R.id.buttonItemScooterBookFirst).setOnClickListener {
-                            presenter.clickedOnBookButton(scooter.id)
-
-                            currentShowingScooter = -1
-                        }
-
-
+                        else -> presenter.sendToTheDrivingsList()
                     }
-
-                    else -> presenter.sendToTheDrivingsList()
                 }
             }
+        } catch (exception: Exception){
+            exception.printStackTrace()
         }
+
     }
 
     override fun setRateForScooterCard(rate: Rate, scooterId: Long) {
@@ -666,7 +675,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             when (type) {
                 MapDialogType.NO_MONEY_FOR_START ->
                     AlertDialog.Builder(this)
-                        .setTitle(R.string.dialog_balance)
+                        .setTitle(getString(R.string.notification))
                         .setMessage(R.string.dialog_balance_data)
                         .setNegativeButton(R.string.dialog_cancel) { dialogInterface: DialogInterface, _ ->
                             presenter.cancelDialog(

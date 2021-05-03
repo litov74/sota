@@ -136,6 +136,15 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         }
     }
 
+    fun selectScooterByCode(scooter:Scooter) {
+
+        if (scooter != null) {
+            viewState.showScooterCard(scooter!!, OrderStatus.CANDIDIATE)
+            interactor.getRouteFor(destination = position, origin = scooter!!.getLatLng())
+            interactor.getRate(scooter.id)
+        }
+    }
+
     @SuppressLint("TimberArgCount")
     fun errorGotFromServer(error: String) {
         Log.w("Error calling server", error)
@@ -196,7 +205,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
 
     fun purchaseToBalance() {
-        viewState.showToast("Here will be purse")
+        viewState.sendToWallet()
     }
 
     fun sendToTheDrivingsList() {
@@ -214,7 +223,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     fun onStartEmitted() {
         sendCurrentFBToken()
         interactor.getScootersAndOrders()
-
+        getProfileInfo()
         val id = interactor.getCodeOfScooterAndNull()
 
         if (id != null) {

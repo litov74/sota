@@ -17,5 +17,5 @@ interface MapService {
 
 
     @GET("getScooter/")
-    fun getScooterByCode(@Query("id") idScooter: Long): Observable<List<Scooter>>
+    fun getScooterByCode(@Query("id") idScooter: Long): Observable<ArrayList<Scooter>>
 }

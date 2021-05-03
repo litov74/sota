@@ -7,6 +7,8 @@ import moxy.MvpPresenter
 class QRPresenter : MvpPresenter<QRView>(), BasePresenter {
     private var errorCount = 0
 
+
+
     override fun onDestroyCalled() {
 
     }
@@ -18,15 +20,19 @@ class QRPresenter : MvpPresenter<QRView>(), BasePresenter {
     }
 
     fun getDataFromScanner(data: String) {
-        val parsed = parseQRData(data)?.toLongOrNull()
 
-        if (parsed == null) {
+        val parsed = getQRId(data)
+
+        val parsedInt = parsed.toIntOrNull()
+        if (parsedInt != null) {
+
+            viewState.sendFoundCodeToDrivings(parsed.toLong())
+            viewState.setLoading(true)
+        } else {
             viewState.setLoading(false)
             gotErrorFromScanner()
-        } else {
-            viewState.sendFoundCodeToDrivings(parsed)
-            viewState.setLoading(true)
         }
+
     }
 
     fun gotResponseFromActivity(result: Boolean) {
@@ -48,5 +54,9 @@ class QRPresenter : MvpPresenter<QRView>(), BasePresenter {
         } else {
             return data.substringAfter("id=")
         }
+    }
+
+    private fun getQRId(data: String): String {
+        return data.split("qr/").getOrNull(1).toString()
     }
 }

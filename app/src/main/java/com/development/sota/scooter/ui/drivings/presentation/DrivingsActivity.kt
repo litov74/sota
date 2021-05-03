@@ -1,5 +1,7 @@
 package com.development.sota.scooter.ui.drivings.presentation
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.development.sota.scooter.R
@@ -7,11 +9,13 @@ import com.development.sota.scooter.databinding.ActivityDrivingsBinding
 import com.development.sota.scooter.ui.drivings.presentation.fragments.QRFragment
 import com.development.sota.scooter.ui.drivings.presentation.fragments.code.DrivingsCodeFragment
 import com.development.sota.scooter.ui.drivings.presentation.fragments.list.DrivingsListFragment
+import com.development.sota.scooter.ui.map.data.Scooter
 import moxy.MvpAppCompatActivity
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
+import java.io.Serializable
 
 interface DrivingsView : MvpView {
     @AddToEnd
@@ -19,6 +23,9 @@ interface DrivingsView : MvpView {
 
     @AddToEnd
     fun setFragmentByType(type: DrivingsListFragmentType)
+
+    @AddToEnd
+    fun setResultCodeScooter(scooter: Scooter)
 }
 
 interface DrivingsActivityView {
@@ -123,6 +130,13 @@ class DrivingsActivity : MvpAppCompatActivity(), DrivingsView, DrivingsActivityV
                 }
             }.commitNow()
         }
+    }
+
+    override fun setResultCodeScooter(scooter: Scooter) {
+        val data = Intent()
+        data.putExtra("scooter", scooter as Serializable);
+        setResult(Activity.RESULT_OK, data);
+        finish()
     }
 
     override fun onBackPressed() {
