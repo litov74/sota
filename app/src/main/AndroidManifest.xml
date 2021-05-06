@@ -77,7 +77,7 @@
         <activity
             android:name=".ui.purse.presentation.AddCardActivity"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".ui.tutorial.presentation.TutorialFinishActivity" />
 
 
         <uses-library

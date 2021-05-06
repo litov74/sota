@@ -28,6 +28,10 @@
     <string name="login_tutorial_label_6">Паркуйте ответственно</string>
     <string name="login_tutorial_body_6">Пожалуйста, не блокируйте дороги и оставляйте место для пешеходов.</string>
 
+    <string name="finish_tutorial_title_1">Пристегните замок</string>
+    <string name="finish_tutorial_body_1">Пристегните замок как показано на рисунке и нажмите далее</string>
+    <string name="finish_tutorial_title_2">Поездка завершена!</string>
+    <string name="finish_tutorial_body_2">Спасибо что пользуетесь сервисом SOTA</string>
 
     <string name="privacy_policy_label">Политика конфиденциальности</string>
     <string name="privacy_policy_data">

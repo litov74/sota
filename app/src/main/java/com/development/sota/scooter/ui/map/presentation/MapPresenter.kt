@@ -182,7 +182,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
             interactor.addOrder(
                 startTime = Order.dateFormatter.format(Date()),
                 scooterId = scooterId,
-                withActivation = withActivation
+                withActivation = true
             )
         } else if (info.first.balance.toDouble() <= 0) {
             viewState.setLoading(false)
@@ -244,7 +244,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         val features = arrayListOf<Feature>()
 
         for (i in jsonArray) {
-            Log.w("GEOSTRING", i.toString())
+
             features.add(Feature.fromJson(i.toString()))
         }
 

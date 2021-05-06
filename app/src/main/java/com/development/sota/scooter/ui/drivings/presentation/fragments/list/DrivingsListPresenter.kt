@@ -10,6 +10,11 @@ import com.development.sota.scooter.ui.drivings.domain.entities.OrderStatus
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
 import com.development.sota.scooter.ui.map.data.RateType
 import com.development.sota.scooter.ui.map.data.Scooter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import moxy.MvpPresenter
 
 class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListView>(),
@@ -23,6 +28,18 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
 
         viewState.setLoading(true)
         interactor.getAllOrdersAndScooters()
+        updateScooterInfo()
+    }
+
+    private fun updateScooterInfo() {
+        CoroutineScope(IO).launch {
+            delay(60000)
+            CoroutineScope(Main).launch {
+                viewState.setLoading(true)
+                interactor.getAllOrdersAndScooters()
+                updateScooterInfo()
+            }
+        }
     }
 
     fun gotOrdersAndScootersFromServer(ordersAndScooters: Pair<List<Order>, List<Scooter>>) {
@@ -91,6 +108,10 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
         interactor.cancelOrder(id)
     }
 
+    fun resumeView() {
+
+    }
+
     fun activateOrder(id: Long) {
         viewState.setLoading(true)
 
@@ -116,7 +137,7 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
     }
 
     fun closeSucc() {
-        viewState.clearViewPage()
+        viewState.openFinishTutorial()
         interactor.getAllOrdersAndScooters()
     }
 

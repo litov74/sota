@@ -1,10 +1,8 @@
 package com.development.sota.scooter.ui.map.data
 
-import android.os.Parcelable
 import com.development.sota.scooter.R
 import com.google.gson.annotations.SerializedName
 import com.mapbox.mapboxsdk.geometry.LatLng
-import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
 
@@ -16,6 +14,10 @@ data class Scooter (
     val battery: Double, // Max: 60000.0
     val latitude: Double,
     val longitude: Double,
+    val min_voltage: Double,
+    val max_voltage: Double,
+    val max_distance: Double,
+    val max_time: Double,
     val description: String,
     val photo: String?,
     @SerializedName("tracker_id") val trackerId: String,
@@ -38,23 +40,30 @@ data class Scooter (
     }
 
     fun getBatteryPercentage(): String {
-        val percents = battery / 60000 * 100
+        val percents = getBatteryPercentageValue()
 
         return "${percents.toInt()}%"
     }
 
+    fun getBatteryPercentageValue(): Double {
+        val voltage = battery / 1000
+
+        return (100 * (voltage- min_voltage)/(max_voltage - min_voltage)).toDouble()
+    }
+
     fun getScooterRideInfo(): String {
-        val percents = battery / 60000
-        val minutes: Int = (200 * percents).toInt()
-        val kms: Int = (45 * percents).toInt()
+        var percents = getBatteryPercentageValue()
+        System.out.println("PERCENT "+percents+" max time "+max_time+" min "+(percents/100))
+        val minutes: Int = (max_time*(percents/100)).toInt()
+        val kms: Int = (percents*max_distance).toInt()
 
         return "${if (minutes / 60 == 0) "" else "${minutes / 60}h"} ${if (minutes % 60 == 0) "" else "${minutes % 60}m"}"
 
     }
 
     fun getScooterPercentDistance(): String {
-        val percents = battery / 60000
-        val kms: Int = (45 * percents).toInt()
+        val percents = getBatteryPercentageValue()
+        val kms: Int = (max_distance*(percents/100)).toInt()
 
         return "· ${kms}km"
     }

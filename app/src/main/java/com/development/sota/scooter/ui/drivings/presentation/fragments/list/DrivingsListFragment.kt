@@ -1,17 +1,21 @@
 package com.development.sota.scooter.ui.drivings.presentation.fragments.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.development.sota.scooter.MainActivity
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentDrivingsListBinding
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivityView
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsListFragmentType
 import com.development.sota.scooter.ui.map.data.RateType
+import com.development.sota.scooter.ui.tutorial.presentation.TutorialFinishActivity
+import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
@@ -30,6 +34,9 @@ interface DrivingsListView : MvpView {
 
     @AddToEnd
     fun clearViewPage()
+
+    @AddToEnd
+    fun openFinishTutorial()
 }
 
 interface OrderManipulatorDelegate {
@@ -117,6 +124,11 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.resumeView()
+    }
+
     override fun setLoading(by: Boolean) {
         activity?.runOnUiThread {
             if (by) {
@@ -143,6 +155,12 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
         activity?.runOnUiThread {
             System.out.println("CLEAR VIEWS ")
             binding.viewPager2DrivingsList.setSaveFromParentEnabled(false);
+        }
+    }
+
+    override fun openFinishTutorial() {
+        runOnUiThread {
+            requireActivity().startActivity(Intent(requireContext(), TutorialFinishActivity::class.java))
         }
     }
 
