@@ -132,7 +132,8 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
             viewState.showScooterCard(currentScooter!!, OrderStatus.CANDIDIATE)
 
             interactor.getRouteFor(destination = position, origin = currentScooter!!.getLatLng())
-            interactor.getRate(id)
+
+            interactor.getGeoZoneForRate(currentScooter!!.geozone, id)
         }
     }
 
@@ -244,8 +245,30 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         val features = arrayListOf<Feature>()
 
         for (i in jsonArray) {
-
             features.add(Feature.fromJson(i.toString()))
+        }
+
+        viewState.drawGeoZones(features)
+    }
+
+
+    fun geoZoneForPrice(geoZoneJson: String, scooterZoneId: Int, scooterId: Long) {
+        val type = object : TypeToken<List<JsonObject>>() {}.type
+        val jsonArray = Gson().fromJson<List<JsonObject>>(
+            geoZoneJson.replace(" ", "").replace("[[", "[[[").replace("]]", "]]]"), type
+        )
+        val features = arrayListOf<Feature>()
+
+        for (i in jsonArray) {
+
+           if (i.get("properties").asJsonObject.get("id").asInt == scooterZoneId) {
+
+               viewState.setRateForScooterCard(
+                   i.get("properties").asJsonObject.get("minute_rate").asString,
+                   scooterId
+               )
+           }
+
         }
 
         viewState.drawGeoZones(features)

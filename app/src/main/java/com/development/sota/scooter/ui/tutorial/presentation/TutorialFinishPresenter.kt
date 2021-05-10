@@ -12,6 +12,7 @@ class TutorialFinishPresenter(val context: Context) : MvpPresenter<TutorialFinis
 
 
     fun onNextButtonClicked(index: Int) {
+
         if (index == 2) {
             closeTutorial()
         } else {

@@ -41,6 +41,17 @@
             android:textSize="13sp"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/robotoregular"
+            android:text="@string/receipt"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_height="wrap_content"/>
+
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

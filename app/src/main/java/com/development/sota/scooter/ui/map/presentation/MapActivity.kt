@@ -90,6 +90,9 @@ interface MapView : MvpView {
     fun setRateForScooterCard(rate: Rate, scooterId: Long)
 
     @AddToEnd
+    fun setRateForScooterCard(rate: String, scooterId: Long)
+
+    @AddToEnd
     fun setDialogBy(type: MapDialogType)
 
     @AddToEnd
@@ -358,8 +361,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == QR_CODE_REQUEST) {
-            System.out.println("RESULT ACTIVITY "+requestCode)
-            System.out.println("SHOW SCO "+data?.getSerializableExtra("scooter") as Scooter)
             presenter.selectScooterByCode(data?.getSerializableExtra("scooter") as Scooter)
         }
 
@@ -670,6 +671,15 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
     }
 
+    override fun setRateForScooterCard(rate: String, scooterId: Long) {
+        runOnUiThread {
+            if (currentShowingScooter == scooterId) {
+
+                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "₽"+rate
+            }
+        }
+    }
+
     override fun setDialogBy(type: MapDialogType) {
         runOnUiThread {
             when (type) {
@@ -741,7 +751,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                         val bookOrder = orders.first { it.status == OrderStatus.BOOKED.value }
 
-                        System.out.println("BOOK "+bookOrder.parseStartTime())
 
                         disposableJobsBag.add(
                             GlobalScope.launch {
@@ -762,7 +771,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                                         val time = LocalDateTime.now().atZone(ZoneId.systemDefault())
                                                 .toInstant().toEpochMilli() - orderTime
 
-                                        System.out.println("BOOK TIME "+time)
                                         val rawMinutes = TimeUnit.MILLISECONDS.toMinutes(time)
                                         val totalSeconds = TimeUnit.MINUTES.toSeconds(rawMinutes)
                                         val tickSeconds = 1

@@ -1,11 +1,13 @@
 package com.development.sota.scooter.ui.purse.presentation.fragments.upbalance
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentUpBalanceBinding
 import com.development.sota.scooter.ui.map.data.RateType
+import com.development.sota.scooter.ui.map.presentation.MapDialogType
 import com.development.sota.scooter.ui.purse.domain.entities.UpBalancePackageModel
 import com.development.sota.scooter.ui.purse.presentation.WalletActivity
 import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardListPresenter
@@ -37,10 +40,13 @@ interface UpBalanceView : MvpView {
 
     @AddToEnd
     fun showToast(message: String)
+
+    @AddToEnd
+    fun showAlertPayment(cost: String)
 }
 
 interface UpBalanceManipulatorDelegate {
-    fun selectPackage(id: Long)
+    fun selectPackage(model: UpBalancePackageModel)
 
 }
 
@@ -106,8 +112,23 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         }
     }
 
-    override fun selectPackage(id: Long) {
-        presenter.upBalancePackage(id)
+    override fun showAlertPayment(cost: String) {
+        AlertDialog.Builder(activity!!)
+            .setTitle(R.string.dialog_attention)
+            .setMessage("Подтвердите покупку пакета за $cost руб и на старт!")
+            .setPositiveButton("Подтверждаю") {
+                    dialog, id ->  dialog.cancel()
+                    presenter.confirmUpBalance()
+            }
+            .setNegativeButton("Отмена") {
+                    dialog, id ->  dialog.cancel()
+            }
+            .create()
+            .show()
+    }
+
+    override fun selectPackage(model: UpBalancePackageModel) {
+        presenter.upBalancePackage(model)
     }
 
 }

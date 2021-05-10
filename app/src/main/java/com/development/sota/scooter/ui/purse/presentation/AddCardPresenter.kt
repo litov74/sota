@@ -82,7 +82,6 @@ class AddCardPresenter(val context: Context) : MvpPresenter<IAddCardView>(), Bas
             if(cardCryptogram == null){
                 viewState.showToast("Пожалуйста, проверьте данные карты")
             }else{
-                System.out.println("crypto "+cardCryptogram)
                 interactor.addCard(cardCryptogram)
             }
         } else {

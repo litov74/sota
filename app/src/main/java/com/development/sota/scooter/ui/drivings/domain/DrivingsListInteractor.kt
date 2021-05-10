@@ -41,7 +41,9 @@ class DrivingsListInteractorImpl(private val presenter: DrivingsListPresenter) :
             Observables.zip(
                 OrdersRetrofitProvider.service
                     .getOrders(sharedPreferences.getLong("id", -1L)),
-                MapRetrofitProvider.service.getScooters()
+                MapRetrofitProvider.service.getScooters(),
+
+
             )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -115,8 +117,8 @@ class DrivingsListInteractorImpl(private val presenter: DrivingsListPresenter) :
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeBy(
-                                onComplete = { presenter.actionEnded(true) { getAllOrdersAndScooters() } },
-                                onError = { presenter.actionEnded(false) }
+                                onComplete = { presenter.pauseScooterSuccess() },
+                                onError = { presenter.pauseScooterError() }
                         )
         )
     }

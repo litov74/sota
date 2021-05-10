@@ -11,7 +11,8 @@ import moxy.MvpPresenter
 class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), BasePresenter {
 
     private val interactor: WalletUpBalanceInteractor = WalletUpBalanceInteractorImpl(this)
-
+    private lateinit var selectedModel: UpBalancePackageModel
+    private var currentList: List<UpBalancePackageModel> = ArrayList()
 
     override fun onDestroyCalled() {
         interactor.disposeRequests()
@@ -29,8 +30,14 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
         viewState.showProgress(boolean)
     }
 
-    fun upBalancePackage(id: Long) {
-        interactor.upBalance(id)
+    fun upBalancePackage(model: UpBalancePackageModel) {
+        selectedModel = model
+        viewState.showAlertPayment(selectedModel.cost.toString())
+
+    }
+
+    fun confirmUpBalance() {
+        interactor.upBalance(selectedModel.id)
     }
 
     fun balanceUpdated() {
@@ -45,8 +52,9 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
     }
 
     fun setUpBalancePackages(list: List<UpBalancePackageModel>) {
+        currentList = list
         viewState.showProgress(false)
-        viewState.setListPackages(list)
+        viewState.setListPackages(currentList)
     }
 
 }

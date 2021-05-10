@@ -16,7 +16,7 @@ class TransactionAdapter(private val list: List<TransactionModel>)
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction: TransactionModel = list[position]
-        holder.bind(transaction)
+        holder.bind(transaction, holder.itemView.context)
     }
 
     override fun getItemCount(): Int = list.size

@@ -18,6 +18,7 @@ data class Scooter (
     val max_voltage: Double,
     val max_distance: Double,
     val max_time: Double,
+    val geozone: Int,
     val description: String,
     val photo: String?,
     @SerializedName("tracker_id") val trackerId: String,
@@ -53,7 +54,6 @@ data class Scooter (
 
     fun getScooterRideInfo(): String {
         var percents = getBatteryPercentageValue()
-        System.out.println("PERCENT "+percents+" max time "+max_time+" min "+(percents/100))
         val minutes: Int = (max_time*(percents/100)).toInt()
         val kms: Int = (percents*max_distance).toInt()
 

@@ -33,7 +33,7 @@ class UpBalanceViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recycle
         benefit?.text = "Выгода "+benefitValue.toString()+"  ₽"
         income?.text = model.income?.let { String.format("%.2f", it.toFloat()).plus(" ₽") }
         container?.setOnClickListener({
-            upBalanceManipulatorDelegate.selectPackage(model.id)
+            upBalanceManipulatorDelegate.selectPackage(model)
         })
 
 

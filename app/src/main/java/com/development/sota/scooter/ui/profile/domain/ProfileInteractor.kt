@@ -43,7 +43,6 @@ class ProfileInteractorImpl(private val presenter: ProfilePresenter) : ProfileIn
     override fun setProfileInfo(clientName: String, phone: String) {
         val clientId = sharedPreferences.getLong("id", -1)
 
-        System.out.println(phone)
         ClientRetrofitProvider.service
             .updateClientName(ClientUpdateNameData(clientId, clientName))
             .subscribeOn(Schedulers.io())

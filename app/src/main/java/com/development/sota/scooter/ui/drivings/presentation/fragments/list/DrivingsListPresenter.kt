@@ -21,6 +21,7 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
     BasePresenter {
     private val interactor: DrivingsListInteractor = DrivingsListInteractorImpl(this)
     private var orders = arrayListOf<Order>()
+    private var selectedScooterId: Long = 0
     private var ordersWithStatuses = arrayListOf<OrderWithStatus>()
 
     override fun onFirstViewAttach() {
@@ -113,20 +114,22 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
     }
 
     fun activateOrder(id: Long) {
+        selectedScooterId = id;
         viewState.setLoading(true)
 
         interactor.activateOrder(id)
     }
 
     fun resumeOrder(id: Long) {
+        selectedScooterId = id;
         viewState.setLoading(true)
 
         interactor.resumeOrder(id)
     }
 
     fun pauseOrder(id: Long) {
+        selectedScooterId = id;
         viewState.setLoading(true)
-
         interactor.pauseOrder(id)
     }
 
@@ -155,6 +158,24 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
 
     fun showError(error: String) {
         viewState.showToast(error)
+    }
+
+
+    fun pauseScooterSuccess() {
+        interactor.getAllOrdersAndScooters()
+        viewState.pauseScooterSuccess()
+
+    }
+
+    fun pauseScooterError() {
+        viewState.setLoading(false)
+        viewState.pauseScooterError()
+
+    }
+
+    fun repeatScooterPause() {
+        viewState.setLoading(true)
+        interactor.pauseOrder(selectedScooterId)
     }
 
     fun actionEnded(success: Boolean, actionToPerform: () -> Unit = {}) {

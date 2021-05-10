@@ -6,21 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.development.sota.scooter.MainActivity
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentDrivingsListBinding
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivityView
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsListFragmentType
+import com.development.sota.scooter.ui.help.presentation.HelpActivity
 import com.development.sota.scooter.ui.map.data.RateType
 import com.development.sota.scooter.ui.tutorial.presentation.TutorialFinishActivity
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
+import com.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
-import java.lang.Exception
+
 
 interface DrivingsListView : MvpView {
     @AddToEnd
@@ -34,6 +36,12 @@ interface DrivingsListView : MvpView {
 
     @AddToEnd
     fun clearViewPage()
+
+    @AddToEnd
+    fun pauseScooterSuccess()
+
+    @AddToEnd
+    fun pauseScooterError()
 
     @AddToEnd
     fun openFinishTutorial()
@@ -153,14 +161,54 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
 
     override fun clearViewPage() {
         activity?.runOnUiThread {
-            System.out.println("CLEAR VIEWS ")
             binding.viewPager2DrivingsList.setSaveFromParentEnabled(false);
         }
     }
 
+    override fun pauseScooterSuccess() {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.notification))
+        builder.setMessage(getString(R.string.scooter_pause_success))
+
+
+        builder.setPositiveButton("Ок") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    override fun pauseScooterError() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.notification))
+        builder.setMessage("Не удалось получить ответ от самоката")
+
+
+        builder.setPositiveButton("Повторить") { dialog, which ->
+            presenter.repeatScooterPause()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Поддержка") { dialog, which ->
+            activity?.let{
+                val intent = Intent (it, HelpActivity::class.java)
+                it.startActivity(intent)
+            }
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
     override fun openFinishTutorial() {
         runOnUiThread {
-            requireActivity().startActivity(Intent(requireContext(), TutorialFinishActivity::class.java))
+            requireActivity().startActivity(
+                Intent(
+                    requireContext(),
+                    TutorialFinishActivity::class.java
+                )
+            )
         }
     }
 

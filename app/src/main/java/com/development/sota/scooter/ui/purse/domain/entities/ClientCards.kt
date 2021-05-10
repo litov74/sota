@@ -22,7 +22,8 @@ data class TransactionModel(
                 val cost: String? = null,
                 val verified: Boolean? = null,
                 val id: Long? = null,
-                val used_card: String? = null)
+                val used_card: String? = null,
+                val receipt_link: String?)
 
 
 data class ReplenishmentPacks(val id: Long, val cost: Int, val income: Int)

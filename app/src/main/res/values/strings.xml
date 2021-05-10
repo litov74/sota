@@ -177,4 +177,6 @@
     <string name="make_main">Сделать главной</string>
     <string name="card_points">•••</string>
     <string name="notification">Уведомление</string>
+    <string name="receipt">Чек</string>
+    <string name="scooter_pause_success">Самокат в режиме паузы</string>
 </resources>

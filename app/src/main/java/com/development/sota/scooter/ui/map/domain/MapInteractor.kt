@@ -34,6 +34,7 @@ interface MapInteractor : BaseInteractor {
     fun getOrders()
     fun activateOrder(id: Long)
     fun getScootersAndOrders()
+    fun getGeoZoneForRate(scooterZoneId: Int, scootedId:Long)
     fun getGeoZone()
     fun getCodeOfScooterAndNull(): Long?
     fun getProfileInfo()
@@ -206,6 +207,18 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
                 .subscribeBy(
                     onNext = { presenter.scootersAndOrdersGotFormServer(it) },
                     onError = { presenter.errorGotFromServer(it.localizedMessage) }
+                )
+        )
+    }
+
+    override fun getGeoZoneForRate(scooterZoneId: Int, scootedId:Long) {
+        compositeDisposable.add(
+            MapRetrofitProvider.jsonlessService.getGeoZone()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onNext = { presenter.geoZoneForPrice(it, scooterZoneId, scootedId) },
+                    onError = { presenter.errorGotFromServer(it.localizedMessage ?: "") }
                 )
         )
     }

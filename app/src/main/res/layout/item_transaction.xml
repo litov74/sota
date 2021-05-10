@@ -45,11 +45,20 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:fontFamily="@font/robotoregular"
-            android:layout_gravity="end"
+
             android:gravity="center"
             android:textSize="15sp"
             android:textColor="@color/segment_black"
             android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/receiptContainer"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="24dp"
+            android:gravity="center"
+            android:src="@drawable/ic_receipt"/>
+
 
     </LinearLayout>
 
