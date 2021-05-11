@@ -1,6 +1,7 @@
 package com.development.sota.scooter.ui.drivings.domain.entities
 
 import android.annotation.SuppressLint
+import com.development.sota.scooter.ui.map.data.Rate
 import com.development.sota.scooter.ui.map.data.Scooter
 import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
@@ -47,6 +48,8 @@ data class Order(
 }
 
 data class OrderWithStatus(val order: Order, val scooter: Scooter, var status: OrderStatus)
+
+data class OrderWithStatusRate(val order: Order, val scooter: Scooter, var status: OrderStatus, var rate: Rate)
 
 data class AddOrderResponse(val id: Long)
 

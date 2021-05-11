@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentDrivingsListBinding
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
+import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatusRate
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivityView
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsListFragmentType
 import com.development.sota.scooter.ui.help.presentation.HelpActivity
@@ -32,7 +33,7 @@ interface DrivingsListView : MvpView {
     fun setLoading(by: Boolean)
 
     @AddToEnd
-    fun initViewPager2(data: Pair<ArrayList<OrderWithStatus>, ArrayList<OrderWithStatus>>)
+    fun initViewPager2(data: Pair<ArrayList<OrderWithStatusRate>, ArrayList<OrderWithStatusRate>>)
 
     @AddToEnd
     fun clearViewPage()
@@ -42,6 +43,12 @@ interface DrivingsListView : MvpView {
 
     @AddToEnd
     fun pauseScooterError()
+
+    @AddToEnd
+    fun resumeScooterSuccess()
+
+    @AddToEnd
+    fun resumeScooterError()
 
     @AddToEnd
     fun openFinishTutorial()
@@ -151,7 +158,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
         }
     }
 
-    override fun initViewPager2(data: Pair<ArrayList<OrderWithStatus>, ArrayList<OrderWithStatus>>) {
+    override fun initViewPager2(data: Pair<ArrayList<OrderWithStatusRate>, ArrayList<OrderWithStatusRate>>) {
         activity?.runOnUiThread {
             adapter = DrivingsListViewPager2Adapter(activity!!, data, this)
             binding.viewPager2DrivingsList.adapter = adapter
@@ -168,10 +175,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
     override fun pauseScooterSuccess() {
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(getString(R.string.notification))
         builder.setMessage(getString(R.string.scooter_pause_success))
-
-
         builder.setPositiveButton("Ок") { dialog, which ->
             dialog.dismiss()
         }
@@ -187,6 +191,38 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
 
         builder.setPositiveButton("Повторить") { dialog, which ->
             presenter.repeatScooterPause()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Поддержка") { dialog, which ->
+            activity?.let{
+                val intent = Intent (it, HelpActivity::class.java)
+                it.startActivity(intent)
+            }
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    override fun resumeScooterSuccess() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Самокат готов к поездке")
+        builder.setPositiveButton("Ок") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    override fun resumeScooterError() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.notification))
+        builder.setMessage("Не удалось получить ответ от самоката")
+
+
+        builder.setPositiveButton("Повторить") { dialog, which ->
+            presenter.repeatScooterResume()
             dialog.dismiss()
         }
 

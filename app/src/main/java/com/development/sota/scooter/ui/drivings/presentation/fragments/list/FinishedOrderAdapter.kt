@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.development.sota.scooter.R
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderStatus
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
+import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatusRate
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FinishedOrderAdapter(val data: List<OrderWithStatus>, val context: Context) :
+class FinishedOrderAdapter(val data: List<OrderWithStatusRate>, val context: Context) :
     RecyclerView.Adapter<FinishedOrderAdapter.FinishedOrderViewHolder>() {
     private val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
 

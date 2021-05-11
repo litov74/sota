@@ -326,7 +326,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             }
 
 
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(44.894, 37.316), 8.0))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(55.558741, 37.316259), 8.0))
         }
 
         getLocationPermission()

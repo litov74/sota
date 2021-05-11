@@ -8,6 +8,8 @@ import com.development.sota.scooter.ui.drivings.domain.DrivingsListInteractorImp
 import com.development.sota.scooter.ui.drivings.domain.entities.Order
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderStatus
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
+import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatusRate
+import com.development.sota.scooter.ui.map.data.Rate
 import com.development.sota.scooter.ui.map.data.RateType
 import com.development.sota.scooter.ui.map.data.Scooter
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +24,7 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
     private val interactor: DrivingsListInteractor = DrivingsListInteractorImpl(this)
     private var orders = arrayListOf<Order>()
     private var selectedScooterId: Long = 0
-    private var ordersWithStatuses = arrayListOf<OrderWithStatus>()
+    private var ordersWithStatuses = arrayListOf<OrderWithStatusRate>()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -43,52 +45,57 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
         }
     }
 
-    fun gotOrdersAndScootersFromServer(ordersAndScooters: Pair<List<Order>, List<Scooter>>) {
+    fun gotOrdersAndScootersFromServer(ordersAndScooters: Triple<List<Order>, List<Scooter>, List<Rate>>) {
         this.orders = ordersAndScooters.first as ArrayList<Order>
 
         ordersWithStatuses.clear()
-        val finishedOrders = arrayListOf<OrderWithStatus>()
+        val finishedOrders = arrayListOf<OrderWithStatusRate>()
 
         for (order in orders) {
             when (order.status) {
                 OrderStatus.CLOSED.value ->
                     finishedOrders.add(
-                        OrderWithStatus(
+                        OrderWithStatusRate(
                             order,
                             ordersAndScooters.second.first { it.id == order.scooter },
-                            OrderStatus.CLOSED
+                            OrderStatus.CLOSED,
+                                ordersAndScooters.third.first { it.id == order.rate },
                         )
                     )
                 OrderStatus.CANCELED.value ->
                     finishedOrders.add(
-                        OrderWithStatus(
+                            OrderWithStatusRate(
                             order,
                             ordersAndScooters.second.first { it.id == order.scooter },
-                            OrderStatus.CANCELED
+                            OrderStatus.CANCELED,
+                                ordersAndScooters.third.first { it.id == order.rate },
                         )
                     )
                 OrderStatus.BOOKED.value ->
                     ordersWithStatuses.add(
-                        OrderWithStatus(
+                            OrderWithStatusRate(
                             order,
                             ordersAndScooters.second.first { it.id == order.scooter },
-                            OrderStatus.BOOKED
+                            OrderStatus.BOOKED,
+                                    ordersAndScooters.third.first { it.id == order.rate },
                         )
                     )
                 OrderStatus.ACTIVATED.value ->
                     ordersWithStatuses.add(
-                        OrderWithStatus(
+                            OrderWithStatusRate(
                             order,
                             ordersAndScooters.second.first { it.id == order.scooter },
-                            OrderStatus.ACTIVATED
+                            OrderStatus.ACTIVATED,
+                                    ordersAndScooters.third.first { it.id == order.rate },
                         )
                     )
                 else ->
                     ordersWithStatuses.add(
-                        OrderWithStatus(
+                            OrderWithStatusRate(
                             order,
                             ordersAndScooters.second.first { it.id == order.scooter },
-                            OrderStatus.CLOSED
+                            OrderStatus.CLOSED,
+                                    ordersAndScooters.third.first { it.id == order.rate },
                         )
                     )
             }
@@ -177,6 +184,24 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
         viewState.setLoading(true)
         interactor.pauseOrder(selectedScooterId)
     }
+
+    fun resumeScooterSuccess() {
+        interactor.getAllOrdersAndScooters()
+        viewState.resumeScooterSuccess()
+
+    }
+
+    fun resumeScooterError() {
+        viewState.setLoading(false)
+        viewState.pauseScooterError()
+
+    }
+
+    fun repeatScooterResume() {
+        viewState.setLoading(true)
+        interactor.resumeOrder(selectedScooterId)
+    }
+
 
     fun actionEnded(success: Boolean, actionToPerform: () -> Unit = {}) {
         if (success) {

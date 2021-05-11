@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.development.sota.scooter.R
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderStatus
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
+import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatusRate
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivity
 import com.development.sota.scooter.ui.map.data.RateType
 import kotlinx.coroutines.*
@@ -29,9 +30,9 @@ import java.util.concurrent.TimeUnit
 import kotlin.time.minutes
 
 class OrdersAdapter(
-    var data: ArrayList<OrderWithStatus>,
-    val context: Context,
-    private val manipulatorDelegate: OrderManipulatorDelegate
+        var data: ArrayList<OrderWithStatusRate>,
+        val context: Context,
+        private val manipulatorDelegate: OrderManipulatorDelegate
 ) :
     RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
     private val tickerJobs = hashMapOf<Long, Job>()
@@ -73,10 +74,13 @@ class OrdersAdapter(
         holder.scooterPercent.text = scooterPercentage
         holder.scooterPercentTime.text = "~$scooterInfo"
         holder.scooterPercentDistance.text = data[position].scooter.getScooterPercentDistance()
-        holder.textViewItemScooterMinutePricing.text = "₽"+data[position].order.rate
 
+
+        System.err.println("STATUS ZXC "+data[position].status)
 
         when (data[position].status) {
+
+
 
             OrderStatus.BOOKED -> {
                 holder.linnearLayoutScooterItemBookingButtons.visibility = View.VISIBLE
@@ -168,7 +172,7 @@ class OrdersAdapter(
                 holder.buttonResumeScooter.setOnClickListener {
                     manipulatorDelegate.resumeOrder(data[position].order.id)
                 }
-
+                holder.textViewItemScooterMinutePricing.text = "₽"+data[position].rate.pauseRate
                 holder.buttonCloseOrder.setOnClickListener {
                     manipulatorDelegate.closeOrder(data[position].order.id)
                 }
@@ -232,11 +236,12 @@ class OrdersAdapter(
                 holder.buttonScooterFinish.setOnClickListener {
                     manipulatorDelegate.closeOrder(data[position].order.id)
                 }
-
+                holder.textViewItemScooterMinutePricing.text = "₽"+data[position].rate.minute
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
                 holder.textViewItemScooterStateValue.text =
                     String.format("%.2f", data[position].order.cost).plus(" ₽")
             }
+
 
 
 

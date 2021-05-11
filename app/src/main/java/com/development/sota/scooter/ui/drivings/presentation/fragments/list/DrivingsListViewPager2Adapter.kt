@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.development.sota.scooter.R
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
+import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatusRate
 
 
 class DrivingsListViewPager2Adapter(
-    private val context: Context,
-    private val data: Pair<ArrayList<OrderWithStatus>, ArrayList<OrderWithStatus>>,
-    private val manipulatorDelegate: OrderManipulatorDelegate
+        private val context: Context,
+        private val data: Pair<ArrayList<OrderWithStatusRate>, ArrayList<OrderWithStatusRate>>,
+        private val manipulatorDelegate: OrderManipulatorDelegate
 ) : RecyclerView.Adapter<DrivingsListViewPager2Adapter.DrivingsListViewPager2ViewHolder>() {
 
     override fun onCreateViewHolder(

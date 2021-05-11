@@ -178,5 +178,5 @@
     <string name="card_points">•••</string>
     <string name="notification">Уведомление</string>
     <string name="receipt">Чек</string>
-    <string name="scooter_pause_success">Самокат в режиме паузы</string>
+    <string name="scooter_pause_success">Самокат на паузе</string>
 </resources>

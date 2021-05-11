@@ -33,7 +33,8 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     private var scooters = arrayListOf<Scooter>()
 
     var locationPermissionGranted = false
-    var position: LatLng = LatLng(44.894997, 37.316259)
+
+    var position: LatLng = LatLng(55.558741, 37.316259)
         set(value) {
             if (currentScooter != null) {
                 interactor.getRouteFor(destination = value, origin = currentScooter!!.getLatLng())
@@ -108,7 +109,8 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         val bookCount = orders.count { it.status == OrderStatus.BOOKED.value }
         val rentCount = orders.count { it.status == OrderStatus.ACTIVATED.value }
 
-        viewState.initPopupMapView(orders, bookCount, rentCount)
+        if (rentCount != 0)
+            viewState.initPopupMapView(orders, bookCount, rentCount)
     }
 
     fun ratesGotFromServer(rates: List<Rate>, scooterId: Long) {

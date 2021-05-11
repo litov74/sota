@@ -89,25 +89,29 @@ class LoginCodeFragment(
     }
 
     override fun setTickerTime(time: String) {
-        activity?.runOnUiThread {
-            val tickerLabel = getString(R.string.login_ticker_text)
-            val spannable: Spannable = SpannableString("$tickerLabel $time")
+        try {
+            activity?.runOnUiThread {
+                val tickerLabel = getString(R.string.login_ticker_text)
+                val spannable: Spannable = SpannableString("$tickerLabel $time")
 
-            spannable.setSpan(
-                ForegroundColorSpan(Color.GRAY),
-                0,
-                tickerLabel.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+                spannable.setSpan(
+                        ForegroundColorSpan(Color.GRAY),
+                        0,
+                        tickerLabel.length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
 
-            spannable.setSpan(
-                ForegroundColorSpan(Color.BLACK),
-                tickerLabel.length,
-                "$tickerLabel $time".length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+                spannable.setSpan(
+                        ForegroundColorSpan(Color.BLACK),
+                        tickerLabel.length,
+                        "$tickerLabel $time".length,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
 
-            binding.textViewLoginCodeTimeTicker.text = spannable
+                binding.textViewLoginCodeTimeTicker.text = spannable
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
     }
 
