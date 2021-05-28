@@ -49,6 +49,7 @@ class OrdersAdapter(
         holder.linnearLayoutScooterItemBookingButtons.visibility = View.GONE
         holder.linnearLayoutScooterItemRentButtons.visibility = View.GONE
         holder.linnearLayoutScooterItemFirstBookButtons.visibility = View.GONE
+        holder.constraintLayoutScooterItemPopupLock.visibility = View.GONE
         holder.pausedStateContainer.visibility = View.GONE
 
         val scooterPercentage = data[position].scooter.getBatteryPercentage()
@@ -227,6 +228,7 @@ class OrdersAdapter(
             OrderStatus.ACTIVATED -> {
                 tickerJobs[data[position].order.id]?.cancel()
 
+                holder.constraintLayoutScooterItemPopupLock.visibility = View.VISIBLE
                 holder.linnearLayoutScooterItemFinishButtons.visibility = View.VISIBLE
 
                 holder.buttonScooterItemPause.setOnClickListener {
@@ -235,6 +237,9 @@ class OrdersAdapter(
 
                 holder.buttonScooterFinish.setOnClickListener {
                     manipulatorDelegate.closeOrder(data[position].order.id)
+                }
+                holder.constraintLayoutScooterItemPopupLock.setOnClickListener {
+                    manipulatorDelegate.openLook(data[position].scooter.id)
                 }
                 holder.textViewItemScooterMinutePricing.text = "₽"+data[position].rate.minute
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
@@ -268,6 +273,8 @@ class OrdersAdapter(
             cardView.findViewById(R.id.linnearLayoutScooterItemRentButtons)
         val linnearLayoutScooterItemFirstBookButtons: LinearLayout =
             cardView.findViewById(R.id.linnearLayoutScooterItemFirstBookButtons)
+        val constraintLayoutScooterItemPopupLock: ConstraintLayout =
+            cardView.findViewById(R.id.constraintLayoutScooterItemPopupLock)
         val textViewItemScooterId: TextView =
             cardView.findViewById(R.id.textViewItemScooterId)
         val scooterPercent: TextView =

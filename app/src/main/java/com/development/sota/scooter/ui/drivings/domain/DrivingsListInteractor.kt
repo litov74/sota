@@ -27,6 +27,7 @@ interface DrivingsListInteractor : BaseInteractor {
     fun activateOrder(orderId: Long)
     fun resumeOrder(orderId: Long)
     fun pauseOrder(orderId: Long)
+    fun openLook(scooterId: Long)
     fun setRateAndActivateOrder(orderId: Long, type: RateType)
     fun closeOrder(orderId: Long)
 }
@@ -119,6 +120,22 @@ class DrivingsListInteractorImpl(private val presenter: DrivingsListPresenter) :
                                 onComplete = { presenter.pauseScooterSuccess() },
                                 onError = { presenter.pauseScooterError() }
                         )
+        )
+    }
+
+    override fun openLook(scooterId: Long) {
+        compositeDisposable.add(
+            OrdersRetrofitProvider.service
+                .openScooterLook(
+                    scooterId,
+                    "015"
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onComplete = { presenter.openLookScooterSuccess() },
+                    onError = { presenter.openLookScooterError() }
+                )
         )
     }
 

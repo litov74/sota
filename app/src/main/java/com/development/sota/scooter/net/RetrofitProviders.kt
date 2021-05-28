@@ -3,6 +3,7 @@
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.development.sota.scooter.BuildConfig
 import com.development.sota.scooter.SotaApp
+import com.development.sota.scooter.utils.ChangeableBaseUrlInterceptor
 import com.google.gson.Gson
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.Interceptor
@@ -17,7 +18,9 @@ import java.util.concurrent.TimeUnit
 val gson = Gson()
 val interceptor = LoggingInterceptor()
 
+
 const val BASE_URL = BuildConfig.API_HOST
+const val BASE_DNS = BuildConfig.API_DNS
 
 class HeadersInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -34,6 +37,7 @@ val client: OkHttpClient = OkHttpClient.Builder()
     .readTimeout(1, TimeUnit.MINUTES)
     .writeTimeout(1, TimeUnit.MINUTES)
     .addInterceptor(HeadersInterceptor())
+    .addInterceptor(ChangeableBaseUrlInterceptor())
     .addInterceptor(interceptor)
     .addInterceptor(ChuckerInterceptor(SotaApp.applicationContext()))
     .build()
@@ -45,6 +49,13 @@ val retrofit: Retrofit = Retrofit.Builder()
     .client(client)
     .build()
 
+ val retrofitDNS: Retrofit = Retrofit.Builder()
+     .baseUrl(BASE_DNS)
+     .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
+     .addConverterFactory(GsonConverterFactory.create(gson))
+     .client(client)
+     .build()
+
 val jsonlessRetfofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .addConverterFactory(ScalarsConverterFactory.create())
@@ -54,6 +65,7 @@ val jsonlessRetfofit: Retrofit = Retrofit.Builder()
 
 object LoginRetrofitProvider {
     val service: LoginService = retrofit.create(LoginService::class.java)
+    val serviceDNS: LoginService = retrofitDNS.create(LoginService::class.java)
 }
 
 object MapRetrofitProvider {

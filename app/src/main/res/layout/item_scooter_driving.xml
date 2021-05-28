@@ -524,11 +524,9 @@
                 android:id="@+id/constraintLayoutScooterItemPopupLock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_gray_transparent_color"
-                android:elevation="4dp"
-                android:visibility="invisible"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/ic_background_open_look"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -537,7 +535,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_gray_transparent_color"
                     android:baselineAligned="false"
-                    android:elevation="4dp"
+
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:outlineProvider="background"
@@ -554,20 +552,23 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center|center_horizontal|center_vertical"
-                        android:paddingStart="24dp"
-                        android:paddingEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="6dp"
+                        android:fontFamily="@font/roboto_thin"
+                        android:textSize="13sp"
+
                         android:text="@string/scooter_open"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
                     <ImageView
                         android:id="@+id/imageView4"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_weight="1"
                         android:background="@drawable/ic_white_circle"
                         android:elevation="4dp"
-                        android:padding="4dp"
+                        android:padding="10dp"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/ic_icon_lock" />
 

@@ -179,4 +179,5 @@
     <string name="notification">Уведомление</string>
     <string name="receipt">Чек</string>
     <string name="scooter_pause_success">Самокат на паузе</string>
+    <string name="scooter_open_look_success">Замок открыт</string>
 </resources>

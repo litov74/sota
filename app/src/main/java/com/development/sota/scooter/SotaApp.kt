@@ -10,6 +10,8 @@ class SotaApp : MultiDexApplication() {
         instance = this
     }
 
+    var context: Context = this
+
     companion object {
         private var instance: SotaApp? = null
 

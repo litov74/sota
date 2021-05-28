@@ -34,6 +34,8 @@ class FinishedOrderAdapter(val data: List<OrderWithStatusRate>, val context: Con
             holder.textViewItemFinishedOrderAmount.text =
                 String.format("%.2f", data[position].order.cost).plus(" ₽")
 
+            holder.scooterNumber.text = "Самокат №"+data[position].order.scooter
+
             if (data[position].order.status == OrderStatus.CANCELED.value) {
                 holder.textViewItemFinishedDelta.text =
                     context.getString(R.string.drivings_cancelled)
@@ -53,5 +55,7 @@ class FinishedOrderAdapter(val data: List<OrderWithStatusRate>, val context: Con
             itemView.findViewById(R.id.textViewItemFinishedOrderAmount)
         val textViewItemFinishedDelta: TextView =
             itemView.findViewById(R.id.textViewItemFinishedDelta)
+        val scooterNumber: TextView =
+            itemView.findViewById(R.id.scooterNumber)
     }
 }

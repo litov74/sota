@@ -166,7 +166,7 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = { presenter.newOrderGotFromServer(it.id, scooterId, withActivation) },
-                    onError = { presenter.errorGotFromServer(it.localizedMessage) }
+                    onError = { presenter.addOrderError(it.localizedMessage) }
                 )
         )
     }

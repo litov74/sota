@@ -1,17 +1,13 @@
 package com.development.sota.scooter.services
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.os.Build
-import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.development.sota.scooter.MainActivity
 import com.development.sota.scooter.R

@@ -52,11 +52,20 @@
                     android:textSize="14dp" />
 
                 <TextView
+                    android:id="@+id/scooterNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:textColor="@android:color/black" />
+
+                <TextView
                     android:id="@+id/textViewItemFinishedDelta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:textColor="@android:color/black" />
+
+
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

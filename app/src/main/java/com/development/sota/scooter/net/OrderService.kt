@@ -46,6 +46,13 @@ interface OrderService {
             @Field("id") orderId: Long
     ): Completable
 
+    @POST("executeScooterCommand/")
+    @FormUrlEncoded
+    fun openScooterLook(
+        @Field("id") id: Long,
+        @Field("command") command: String
+    ): Completable
+
     @POST("resumeOrder/")
     @FormUrlEncoded
     fun resumeOrder(

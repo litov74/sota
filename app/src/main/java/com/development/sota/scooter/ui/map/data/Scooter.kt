@@ -48,7 +48,7 @@ data class Scooter (
 
     fun getBatteryPercentageValue(): Double {
         val voltage = battery / 1000
-
+    
         return (100 * (voltage- min_voltage)/(max_voltage - min_voltage)).toDouble()
     }
 

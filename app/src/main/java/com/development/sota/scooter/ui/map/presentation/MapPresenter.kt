@@ -33,6 +33,8 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     private var scooters = arrayListOf<Scooter>()
 
     var locationPermissionGranted = false
+    var parkingIsVisible = false
+    var features = arrayListOf<Feature>()
 
     var position: LatLng = LatLng(55.558741, 37.316259)
         set(value) {
@@ -148,10 +150,26 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         }
     }
 
+    fun selectShowParking() {
+        if (parkingIsVisible) {
+            viewState.clearParkingZone()
+        } else {
+            viewState.drawGeoZones(features)
+        }
+        parkingIsVisible = !parkingIsVisible
+    }
+
     @SuppressLint("TimberArgCount")
     fun errorGotFromServer(error: String) {
         Log.w("Error calling server", error)
         viewState.showToast(context.getString(R.string.error_api))
+        viewState.setLoading(false)
+    }
+
+    @SuppressLint("TimberArgCount")
+    fun addOrderError(error: String) {
+
+        viewState.showAddOrderError(context.getString(R.string.error_api))
         viewState.setLoading(false)
     }
 
@@ -244,13 +262,13 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         val jsonArray = Gson().fromJson<List<JsonObject>>(
             geoZoneJson.replace(" ", "").replace("[[", "[[[").replace("]]", "]]]"), type
         )
-        val features = arrayListOf<Feature>()
+
 
         for (i in jsonArray) {
             features.add(Feature.fromJson(i.toString()))
         }
 
-        viewState.drawGeoZones(features)
+
     }
 
 

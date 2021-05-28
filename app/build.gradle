@@ -13,8 +13,8 @@ android {
         applicationId "com.development.sota.scooter"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 166
-        versionName "1.6.6_beta"
+        versionCode 172
+        versionName "1.7.2_beta"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,11 +28,13 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "API_HOST", '"http://www.scooteradminpanel.ru/API/"'
+            buildConfigField "String", "API_HOST", '"https://dev.sota.world/API/"'
+            buildConfigField "String", "API_DNS", '"https://dns.google/"'
         }
         release {
             minifyEnabled false
-            buildConfigField "String", "API_HOST", '"http://www.scooteradminpanel.ru/API/"'
+            buildConfigField "String", "API_HOST", '"https://dev.sota.world/API/"'
+            buildConfigField "String", "API_DNS", '"https://dns.google/"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

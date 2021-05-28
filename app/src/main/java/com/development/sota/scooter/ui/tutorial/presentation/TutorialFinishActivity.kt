@@ -8,12 +8,9 @@ import android.view.MotionEvent
 import android.view.View
 import com.development.sota.scooter.MainActivity
 import com.development.sota.scooter.databinding.ActivityTutorialBinding
-import com.development.sota.scooter.ui.tutorial.domain.TutorialInteractor
-import com.development.sota.scooter.ui.tutorial.domain.TutorialInteractorImpl
 import kotlinx.android.synthetic.main.activity_tutorial.*
 import kotlinx.android.synthetic.main.fragment_tutorial.*
 import moxy.MvpAppCompatActivity
-import moxy.MvpPresenter
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd

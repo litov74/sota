@@ -140,6 +140,12 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
         interactor.pauseOrder(id)
     }
 
+    fun openLook(id: Long) {
+        selectedScooterId = id;
+        viewState.setLoading(true)
+        interactor.openLook(id)
+    }
+
     fun setRateAndActivate(id: Long, type: RateType) {
         viewState.setLoading(true)
 
@@ -171,6 +177,17 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
     fun pauseScooterSuccess() {
         interactor.getAllOrdersAndScooters()
         viewState.pauseScooterSuccess()
+    }
+
+    fun openLookScooterSuccess() {
+        interactor.getAllOrdersAndScooters()
+        viewState.openLookScooterSuccess()
+    }
+
+
+    fun openLookScooterError() {
+        viewState.setLoading(false)
+        viewState.openLookScooterError()
 
     }
 
@@ -183,6 +200,11 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
     fun repeatScooterPause() {
         viewState.setLoading(true)
         interactor.pauseOrder(selectedScooterId)
+    }
+
+    fun repeatOpenLook() {
+        viewState.setLoading(true)
+        interactor.openLook(selectedScooterId)
     }
 
     fun resumeScooterSuccess() {

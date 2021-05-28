@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -99,6 +100,12 @@ interface MapView : MvpView {
     fun showToast(text: String)
 
     @AddToEnd
+    fun showAddOrderError(text: String)
+
+    @AddToEnd
+    fun clearParkingZone()
+
+    @AddToEnd
     fun setLoading(by: Boolean)
 
     @AddToEnd
@@ -151,6 +158,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         Mapbox.getInstance(this, getString(R.string.mabox_access_token))
 
         _binding = ActivityMapBinding.inflate(layoutInflater)
@@ -178,6 +186,9 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
         getBinding.contentOfMap.imageButtonMapMessage.setOnClickListener {
             sendToHelp()
+        }
+        getBinding.contentOfMap.parkingButton.setOnClickListener {
+            presenter.selectShowParking()
         }
 
         getBinding.contentOfMap.imageButtonMapMenu.setOnClickListener {
@@ -267,21 +278,21 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                     ) as List<MutableList<Point>>
                 )
 
-                style.addSource(
-                    GeoJsonSource(
-                        GEOZONE_BACKGROUND_SOURCE,
-                        Feature.fromGeometry(polygon),
-                        GeoJsonOptions()
-                    )
-                )
-
-                val layer = FillLayer(
-                    GEOZONE_BACKGROUND_LAYER, GEOZONE_BACKGROUND_SOURCE
-                ).withProperties(
-                    fillColor(GEOZONE_COLOR)
-                )
-
-                style.addLayer(layer)
+//                style.addSource(
+//                    GeoJsonSource(
+//                        GEOZONE_BACKGROUND_SOURCE,
+//                        Feature.fromGeometry(polygon),
+//                        GeoJsonOptions()
+//                    )
+//                )
+//
+//                val layer = FillLayer(
+//                    GEOZONE_BACKGROUND_LAYER, GEOZONE_BACKGROUND_SOURCE
+//                ).withProperties(
+//                    fillColor(GEOZONE_COLOR)
+//                )
+//
+//                style.addLayer(layer)
             }
 
             markerManager = MarkerViewManager(getBinding.contentOfMap.mapView, map)
@@ -717,6 +728,26 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
     }
 
+    override fun showAddOrderError(text: String) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.notification))
+            .setMessage("Разряжен, жду заправщика")
+            .setPositiveButton("Ok") { dialogInterface: DialogInterface, _ -> dialogInterface.dismiss() }
+            .create()
+            .show()
+    }
+
+    override fun clearParkingZone() {
+        runOnUiThread {
+            map?.style?.removeLayer(GEOZONE_LAYER)
+            map?.style?.removeLayer(PARKING_LAYER)
+            map?.style?.removeLayer(PARKING_BONUS_LAYER)
+            map?.style?.removeSource(GEOZONE_SOURCE)
+            map?.style?.removeSource(PARKING_SOURCE)
+            map?.style?.removeSource(PARKING_BONUS_SOURCE)
+        }
+    }
+
     override fun setLoading(by: Boolean) {
         runOnUiThread {
             getBinding.contentOfMap.progressBarMap.visibility = if (by) View.VISIBLE else View.GONE
@@ -912,25 +943,28 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             map?.style?.addSource(parkingJsonSource)
             map?.style?.addSource(parkingBonusJsonSource)
 
-            val geoZoneLayer = FillLayer(GEOZONE_LAYER, GEOZONE_SOURCE)
+            val geoZoneLayer = LineLayer(GEOZONE_LAYER, GEOZONE_SOURCE)
             geoZoneLayer.setProperties(
-                fillColor(TRANSPARENT_COLOR)
+                lineColor(TRANSPARENT_COLOR),
+                lineWidth(4f),
             )
 
-            val parkingZoneLayer = FillLayer(PARKING_LAYER, PARKING_SOURCE)
+            val parkingZoneLayer = LineLayer(PARKING_LAYER, PARKING_SOURCE)
             parkingZoneLayer.setProperties(
-                fillColor(PARKING_LINE_COLOR)
+                lineColor(PARKING_LINE_COLOR),
+                lineWidth(4f),
             )
 
-            val parkingBonusZoneLayer = FillLayer(PARKING_BONUS_LAYER, PARKING_BONUS_SOURCE)
+            val parkingBonusZoneLayer = LineLayer(PARKING_BONUS_LAYER, PARKING_BONUS_SOURCE)
             parkingZoneLayer.setProperties(
-                fillColor(PARKING_BONUS_COLOR)
+                lineColor(PARKING_BONUS_COLOR),
+                lineWidth(4f),
             )
 
 
-            map?.style?.addLayerAbove(geoZoneLayer, GEOZONE_BACKGROUND_LAYER)
-            map?.style?.addLayerAbove(parkingZoneLayer, GEOZONE_BACKGROUND_LAYER)
-            map?.style?.addLayerAbove(parkingBonusZoneLayer, GEOZONE_BACKGROUND_LAYER)
+            map?.style?.addLayer(geoZoneLayer)
+            map?.style?.addLayer(parkingZoneLayer)
+            map?.style?.addLayer(parkingBonusZoneLayer)
         }
     }
 
@@ -1089,8 +1123,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
         val GEOZONE_COLOR = Color.parseColor("#40FF453A")
         val GEOZONE_LINE_COLOR = Color.parseColor("#FF453A")
-        val PARKING_LINE_COLOR = Color.parseColor("#402F80ED")
-        val PARKING_BONUS_COLOR = Color.parseColor("#4014D53D")
+        val PARKING_LINE_COLOR = Color.parseColor("#2F80ED")
+        val PARKING_BONUS_COLOR = Color.parseColor("#14D53D")
 
         val GEOZONE_LABEL = "Allowed"
         val PARKING_LABEL = "Parking"

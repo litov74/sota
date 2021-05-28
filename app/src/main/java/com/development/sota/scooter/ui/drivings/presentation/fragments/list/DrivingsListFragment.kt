@@ -42,6 +42,12 @@ interface DrivingsListView : MvpView {
     fun pauseScooterSuccess()
 
     @AddToEnd
+    fun openLookScooterSuccess()
+
+    @AddToEnd
+    fun openLookScooterError()
+
+    @AddToEnd
     fun pauseScooterError()
 
     @AddToEnd
@@ -62,6 +68,8 @@ interface OrderManipulatorDelegate {
     fun resumeOrder(id: Long)
 
     fun pauseOrder(id: Long)
+
+    fun openLook(id: Long)
 
     fun setRateAndActivate(id: Long, type: RateType)
 
@@ -183,6 +191,37 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
         builder.show()
     }
 
+    override fun openLookScooterSuccess() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(getString(R.string.scooter_open_look_success))
+        builder.setPositiveButton("Ок") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    override fun openLookScooterError() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.notification))
+        builder.setMessage("Не удалось открыть замок")
+
+        builder.setPositiveButton("Повторить") { dialog, which ->
+            presenter.repeatOpenLook()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Поддержка") { dialog, which ->
+            activity?.let{
+                val intent = Intent (it, HelpActivity::class.java)
+                it.startActivity(intent)
+            }
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
     override fun pauseScooterError() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.notification))
@@ -262,6 +301,10 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
 
     override fun pauseOrder(id: Long) {
         presenter.pauseOrder(id)
+    }
+
+    override fun openLook(id: Long) {
+        presenter.openLook(id)
     }
 
     override fun setRateAndActivate(id: Long, type: RateType) {
