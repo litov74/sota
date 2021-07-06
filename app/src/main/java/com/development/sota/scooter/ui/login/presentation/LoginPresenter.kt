@@ -13,6 +13,7 @@ class LoginPresenter(val context: Context) : MvpPresenter<LoginView>(), BasePres
     private var phone = ""
     private var name = ""
     private var id = -1L
+    private var token = ""
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -31,8 +32,9 @@ class LoginPresenter(val context: Context) : MvpPresenter<LoginView>(), BasePres
         viewState.setLoginProgressBarVisibility(true)
     }
 
-    fun gotCodeAndIDFromAPI(code: Int, id: Long) {
+    fun gotCodeAndIDFromAPI(code: Int, id: Long, token:String ) {
         this.id = id
+        this.token = token
         viewState.setLoginProgressBarVisibility(false)
 
         viewState.setFragmentCode(code)
@@ -47,7 +49,7 @@ class LoginPresenter(val context: Context) : MvpPresenter<LoginView>(), BasePres
 
     fun onCloseCodeFragment(result: Boolean) {
         if (result) {
-            interactor.saveCredentials(phone, name, id)
+            interactor.saveCredentials(phone, name, id, token)
             viewState.finishActivity()
         } else {
             viewState.setFragmentInput()

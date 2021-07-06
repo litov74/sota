@@ -1,25 +1,17 @@
 package com.development.sota.scooter.ui.purse.presentation.fragments.upbalance
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentUpBalanceBinding
-import com.development.sota.scooter.ui.map.data.RateType
-import com.development.sota.scooter.ui.map.presentation.MapDialogType
 import com.development.sota.scooter.ui.purse.domain.entities.UpBalancePackageModel
 import com.development.sota.scooter.ui.purse.presentation.WalletActivity
-import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardListPresenter
-import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionAdapter
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
@@ -43,6 +35,9 @@ interface UpBalanceView : MvpView {
 
     @AddToEnd
     fun showAlertPayment(cost: String)
+
+    @AddToEnd
+    fun showUpBalanceOk(income: String)
 }
 
 interface UpBalanceManipulatorDelegate {
@@ -58,7 +53,7 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
     }
     private var _binding: FragmentUpBalanceBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var progressDialog: MaterialDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,8 +92,9 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
     override fun setListPackages(list: List<UpBalancePackageModel>) {
         runOnUiThread {
                 val grid = GridLayoutManager(context, 2)
+
                 binding.listPacks.layoutManager = grid
-                binding.listPacks.adapter = UpBalanceAdapter(list, this)
+                binding.listPacks.adapter = UpBalanceAdapter(list.sortedBy { it.cost }, this)
         }
     }
 
@@ -113,7 +109,7 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
     }
 
     override fun showAlertPayment(cost: String) {
-        AlertDialog.Builder(activity!!)
+        AlertDialog.Builder(requireContext())
             .setTitle(R.string.dialog_attention)
             .setMessage("Подтвердите покупку пакета за $cost руб и на старт!")
             .setPositiveButton("Подтверждаю") {
@@ -125,6 +121,20 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
             }
             .create()
             .show()
+    }
+
+    override fun showUpBalanceOk(income: String) {
+        requireActivity().runOnUiThread({
+            AlertDialog.Builder(requireContext())
+                .setTitle("Уведомление")
+                .setMessage("Баланс пополнен на $income руб ")
+                .setPositiveButton("Ок") {
+                        dialog, id ->  dialog.cancel()
+                }
+                .create()
+                .show()
+        })
+
     }
 
     override fun selectPackage(model: UpBalancePackageModel) {

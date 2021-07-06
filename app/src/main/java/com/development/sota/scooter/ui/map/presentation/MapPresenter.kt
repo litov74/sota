@@ -35,7 +35,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     var locationPermissionGranted = false
     var parkingIsVisible = false
     var features = arrayListOf<Feature>()
-
+    var firstAttachGeo = true
     var position: LatLng = LatLng(55.558741, 37.316259)
         set(value) {
             if (currentScooter != null) {
@@ -44,6 +44,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
             field = value
         }
 
+    val isNeedFirstScroll = false
     var rates = arrayListOf<Rate>() //Minute, Hour
     var scootersWithOrders = hashMapOf<Long, Long>() //Minute, Hour
     lateinit var scootersGeoJsonSource: List<Feature>
@@ -96,14 +97,14 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
     fun scootersAndOrdersGotFormServer(scootersAndOrders: Pair<List<Scooter>, List<Order>>) {
         GlobalScope.launch {
-            usingScooters.addAll(scootersAndOrders.second.map { it.scooter })
-            scooters =
-                scootersAndOrders.first.filter { it.status == ScooterStatus.ONLINE.value || it.id in usingScooters } as ArrayList<Scooter>
+                usingScooters.addAll(scootersAndOrders.second.map { it.scooter })
+                scooters = scootersAndOrders.first.filter { it.status == ScooterStatus.ONLINE.value || it.id in usingScooters } as ArrayList<Scooter>
 
-            viewState.setLoading(false)
+                viewState.setLoading(false)
 
-            makeFeaturesFromScootersAndSendToMap()
-            initMapPopupView(scootersAndOrders.second)
+                makeFeaturesFromScootersAndSendToMap()
+                initMapPopupView(scootersAndOrders.second)
+
         }
     }
 
@@ -133,10 +134,10 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         currentScooter = scooters.firstOrNull { it.id == id }
 
         if (currentScooter != null) {
+            viewState.showBottomActionButtons(false)
             viewState.showScooterCard(currentScooter!!, OrderStatus.CANDIDIATE)
 
             interactor.getRouteFor(destination = position, origin = currentScooter!!.getLatLng())
-
             interactor.getGeoZoneForRate(currentScooter!!.geozone, id)
         }
     }
@@ -144,9 +145,11 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     fun selectScooterByCode(scooter:Scooter) {
 
         if (scooter != null) {
+            currentScooter = scooter
+            viewState.showBottomActionButtons(false)
             viewState.showScooterCard(scooter!!, OrderStatus.CANDIDIATE)
             interactor.getRouteFor(destination = position, origin = scooter!!.getLatLng())
-            interactor.getRate(scooter.id)
+            interactor.getGeoZoneForRate(currentScooter!!.geozone, currentScooter!!.id)
         }
     }
 
@@ -162,13 +165,14 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     @SuppressLint("TimberArgCount")
     fun errorGotFromServer(error: String) {
         Log.w("Error calling server", error)
-        viewState.showToast(context.getString(R.string.error_api))
+      //  viewState.showToast(context.getString(R.string.error_api))
+        viewState.setActivatingScooter(false)
         viewState.setLoading(false)
     }
 
     @SuppressLint("TimberArgCount")
     fun addOrderError(error: String) {
-
+        viewState.setActivatingScooter(false)
         viewState.showAddOrderError(context.getString(R.string.error_api))
         viewState.setLoading(false)
     }
@@ -179,12 +183,14 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     }
 
     fun activateSucc() {
-        viewState.setLoading(false)
-
-        viewState.sendToDrivingsList()
+        viewState.setActivatingScooter(false)
+        viewState.hideScooterCard()
+        viewState.sendToLookTutorial()
+       // viewState.sendToDrivingsList()
     }
 
     fun updateLocationPermission(permission: Boolean) {
+        Log.w("MapPresenter", "permission location is grant: "+permission)
         locationPermissionGranted = permission
 
         if (locationPermissionGranted) viewState.initLocationRelationships()
@@ -199,19 +205,24 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
         scooterId: Long,
         withActivation: Boolean
     ) {
-        if (info.first.balance.toDouble() > 0 && !info.second.blocked) {
-            interactor.addOrder(
-                startTime = Order.dateFormatter.format(Date()),
-                scooterId = scooterId,
-                withActivation = true
-            )
-        } else if (info.first.balance.toDouble() <= 0) {
-            viewState.setLoading(false)
-            viewState.setDialogBy(MapDialogType.NO_MONEY_FOR_START)
+        try {
+            if (info.first.balance.toDouble() > 0 && !info.second.blocked) {
+                Log.w("MapOrder", "addOrder ")
+                interactor.addOrder(
+                    startTime = Order.dateFormatter.format(Date()),
+                    scooterId = scooterId,
+                    withActivation = false
+                )
+            } else if (info.first.balance.toDouble() <= 0) {
+                viewState.setActivatingScooter(false)
+                viewState.setDialogBy(MapDialogType.NO_MONEY_FOR_START)
 
-        } else if (info.second.blocked) {
-            viewState.setLoading(false)
-            viewState.setDialogBy(MapDialogType.BANNED_FOR_BOOKING)
+            } else if (info.second.blocked) {
+                viewState.setActivatingScooter(false)
+                viewState.setDialogBy(MapDialogType.BANNED_FOR_BOOKING)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -220,7 +231,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     }
 
     fun clickedOnBookButton(scooterId: Long) {
-        viewState.setLoading(true)
+        viewState.setActivatingScooter(true)
         interactor.checkNoneNullBalanceAndBookBan(scooterId)
     }
 
@@ -234,11 +245,21 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     }
 
     fun sendCurrentFBToken() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
 
-            interactor.sendFirebaseToken(task.result)
+                    return@OnCompleteListener
+                }
 
-        })
+                // Get new FCM registration token
+                val token = task.result
+                interactor.sendFirebaseToken(token)
+
+            })
+        } catch (e: Exception) {
+
+        }
     }
 
     fun onStartEmitted() {
@@ -253,21 +274,31 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
     }
 
+    fun mapIsReady() {
+        viewState.initLocationRelationships()
+        interactor.getGeoZone()
+    }
+
     fun scooterUnselected() {
         currentScooter = null
+        viewState.showBottomActionButtons(true)
     }
 
     fun geoZoneGot(geoZoneJson: String) {
-        val type = object : TypeToken<List<JsonObject>>() {}.type
-        val jsonArray = Gson().fromJson<List<JsonObject>>(
-            geoZoneJson.replace(" ", "").replace("[[", "[[[").replace("]]", "]]]"), type
-        )
 
 
-        for (i in jsonArray) {
-            features.add(Feature.fromJson(i.toString()))
-        }
+            val type = object : TypeToken<List<JsonObject>>() {}.type
+            val jsonArray = Gson().fromJson<List<JsonObject>>(
+                geoZoneJson.replace(" ", "").replace("[[", "[[[").replace("]]", "]]]"), type
+            )
 
+
+            for (i in jsonArray) {
+                features.add(Feature.fromJson(i.toString()))
+            }
+
+            viewState.drawGeoZones(features)
+            firstAttachGeo = false
 
     }
 
@@ -291,7 +322,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
         }
 
-        viewState.drawGeoZones(features)
+        //viewState.drawGeoZones(features)
     }
 
     private fun makeFeaturesFromScootersAndSendToMap() {
@@ -359,6 +390,11 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        interactor.disposeRequests()
+    }
+
 
 
     fun sendToHelp() {
@@ -371,6 +407,10 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
     fun sendToPromo() {
         viewState.sendToPromo()
+    }
+
+    fun sendToDoc() {
+        viewState.sendToDoc()
     }
 
     fun getProfileInfo() {

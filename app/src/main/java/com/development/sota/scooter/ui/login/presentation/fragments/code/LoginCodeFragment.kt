@@ -3,8 +3,10 @@ package com.development.sota.scooter.ui.login.presentation.fragments.code
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +42,9 @@ interface LoginCodeView : MvpView {
     fun showErrorToast()
 
     @AddToEnd
+    fun showErrorCode()
+
+    @AddToEnd
     fun closeFragment(result: Boolean)
 }
 
@@ -67,11 +72,15 @@ class LoginCodeFragment(
     ): View {
         _binding = FragmentLoginCodeBinding.inflate(inflater, container, false)
 
+
         binding.loginCodePinView.doAfterTextChanged {
+
             if (it != null && it.length == 4) {
                 presenter.onPinEntered(it.toString())
             }
         }
+
+
 
         binding.buttonLoginRequestCodeAgain.setOnClickListener { presenter.onRequestCodeAgainButtonClicked() }
         binding.imageButtonLoginCodeBackButton.setOnClickListener { presenter.closeCodeFragmentByUser() }
@@ -139,6 +148,14 @@ class LoginCodeFragment(
         activity?.runOnUiThread {
             Toast.makeText(context!!, R.string.error_api, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun showErrorCode() {
+        binding.loginCodePinView.setHintTextColor(resources.getColor(R.color.red_edit_text))
+        binding.loginCodePinView.hint = binding.loginCodePinView.text.toString()
+        binding.loginCodePinView.text?.clear()
+        binding.loginCodePinView.setSelection(0)
+        binding.loginCodePinView.isCursorVisible = false
     }
 
     override fun closeFragment(result: Boolean) {

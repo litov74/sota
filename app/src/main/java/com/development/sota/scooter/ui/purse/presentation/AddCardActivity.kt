@@ -4,18 +4,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityAddCardBinding
-import com.development.sota.scooter.databinding.ActivityPurseBinding
-import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardListFragment
-
-import com.development.sota.scooter.ui.purse.presentation.fragments.transactions.TransactionsActivity
-import com.development.sota.scooter.ui.purse.presentation.fragments.upbalance.UpBalanceActivity
-import com.microsoft.appcenter.utils.HandlerUtils
 import kotlinx.android.synthetic.main.activity_purse.*
 import kotlinx.android.synthetic.main.fragment_cards.*
 import moxy.MvpAppCompatActivity
@@ -23,6 +13,11 @@ import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
 import ru.cloudpayments.sdk.ui.dialogs.ThreeDsDialogFragment
+import ru.tinkoff.decoro.MaskImpl
+import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
+import ru.tinkoff.decoro.slots.PredefinedSlots
+import ru.tinkoff.decoro.watchers.FormatWatcher
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 
 
 interface IAddCardView: MvpView {
@@ -54,6 +49,11 @@ class AddCardActivity : MvpAppCompatActivity(), IAddCardView, ThreeDsDialogFragm
     }
 
     private fun initView() {
+
+        val mask = MaskImpl.createTerminated(PredefinedSlots.CARD_NUMBER_STANDARD)
+        val watcher: FormatWatcher = MaskFormatWatcher(mask)
+        watcher.installOn(binding.cardNumberInput)
+
         binding.cardDateInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}
 
@@ -70,7 +70,7 @@ class AddCardActivity : MvpAppCompatActivity(), IAddCardView, ThreeDsDialogFragm
             }
         })
         binding.buttonRegCard.setOnClickListener{
-            presenter.attachCard(binding.cardNumberInput.text.toString(), binding.cardDateInput.text.toString(), binding.cardCodeInput.text.toString())
+            presenter.attachCard(binding.cardNumberInput.text.toString().replace(" ", ""), binding.cardDateInput.text.toString(), binding.cardCodeInput.text.toString())
         }
         binding.imageButtonAddCardBack.setOnClickListener{
             finish()

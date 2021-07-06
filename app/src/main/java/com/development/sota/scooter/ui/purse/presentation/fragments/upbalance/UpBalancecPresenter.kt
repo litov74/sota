@@ -37,10 +37,11 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
     }
 
     fun confirmUpBalance() {
-        interactor.upBalance(selectedModel.id)
+        interactor.upBalance(selectedModel)
     }
 
-    fun balanceUpdated() {
+    fun balanceUpdated(updatedModel: UpBalancePackageModel) {
+        viewState.showUpBalanceOk(updatedModel.income.toString())
         viewState.updateUserBalance()
         getUpBalancePackages()
     }

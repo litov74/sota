@@ -6,6 +6,7 @@ import com.development.sota.scooter.net.ClientRetrofitProvider
 import com.development.sota.scooter.net.PurseRetrofitProvider
 import com.development.sota.scooter.ui.purse.domain.entities.AddCardModel
 import com.development.sota.scooter.ui.purse.domain.entities.ConfirmCardLinkingModel
+import com.development.sota.scooter.ui.purse.domain.entities.UpBalancePackageModel
 import com.development.sota.scooter.ui.purse.presentation.AddCardPresenter
 import com.development.sota.scooter.ui.purse.presentation.WalletPresenter
 import com.development.sota.scooter.ui.purse.presentation.fragments.cards.CardListPresenter
@@ -41,7 +42,7 @@ interface WalletCardsInteractor : BaseInteractor{
 
 interface WalletUpBalanceInteractor : BaseInteractor{
 
-    fun upBalance(packageId: Long)
+    fun upBalance(selectedModel: UpBalancePackageModel)
 
     fun getReplenishmentPackages()
 }
@@ -165,15 +166,15 @@ class WalletUpBalanceInteractorImpl(val presenter: UpBalancePresenter) : WalletU
     private val compositeDisposable = CompositeDisposable()
     private val sharedPreferences = SharedPreferencesProvider(presenter.context).sharedPreferences
 
-    override fun upBalance(upBalance: Long) {
+    override fun upBalance(selectedModel: UpBalancePackageModel) {
         compositeDisposable.add(
-            PurseRetrofitProvider.service.topUpBalance(sharedPreferences.getLong("id", -1),upBalance)
+            PurseRetrofitProvider.service.topUpBalance(sharedPreferences.getLong("id", -1),selectedModel.id)
                 .doOnSubscribe({presenter.showProgress(true)})
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = {
                         if (it.Success) {
-                            presenter.balanceUpdated()
+                            presenter.balanceUpdated(selectedModel)
                         } else {
                             presenter.showMessage("Проверьте наличие средств на карте")
                         }

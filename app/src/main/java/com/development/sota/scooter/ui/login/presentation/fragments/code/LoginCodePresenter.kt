@@ -29,7 +29,7 @@ class LoginCodePresenter(
         val pinInt = pin.toIntOrNull()
 
         if (pinInt == null || pinInt != code) {
-            viewState.lightPinView(LoginCodeState.RED)
+            viewState.showErrorCode()
         } else {
             viewState.lightPinView(LoginCodeState.GREEN)
             viewState.closeFragment(true)
@@ -74,7 +74,7 @@ class LoginCodePresenter(
         interactor.sendLoginRequest(phoneAndName.first, phoneAndName.second)
     }
 
-    fun gotCodeFromAPI(code: Int) {
+    fun gotCodeFromAPI(code: Int, token: String) {
         viewState.setProgressBarLoginCodeVisibility(false)
 
         this.code = code

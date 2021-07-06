@@ -37,9 +37,34 @@ data class Order(
         }
     }
 
-    fun parseEndTime(): Date {
-        return decodeDateFormatter.parse(finishTime) ?: Date()
+
+    fun parseStartTimeWithoutOffset(): Long? {
+        return try {
+            val tz = TimeZone.getDefault()
+            val now = Date()
+
+            return Instant.parse(startTime).toEpochMilli()
+        } catch (e: Exception) {
+            null
+        }
     }
+
+    fun parseEndTime(): Long? {
+        return try {
+            val tz = TimeZone.getDefault()
+            val now = Date()
+
+            return Instant.parse(finishTime).toEpochMilli() - tz.getOffset(now.time)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+
+
+//    fun parseEndTime(): Date {
+//        return decodeDateFormatter.parse(finishTime) ?: Date()
+//    }
 
     fun parseActivationTime(): Date {
         return decodeDateFormatter.parse(activationTime) ?: Date()

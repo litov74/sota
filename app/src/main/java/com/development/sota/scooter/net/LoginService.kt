@@ -18,6 +18,9 @@ interface LoginService {
 
     @GET("resolve?name=sota.world&type=TXT")
     fun getDNS(): Observable<WrapperDns>
+
+    @GET("getSupportContacts/")
+    fun getSupportContacts(): Observable<JsonElement>
 }
 
 data class LoginData(

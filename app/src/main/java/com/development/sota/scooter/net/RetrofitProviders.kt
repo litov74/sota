@@ -3,7 +3,9 @@
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.development.sota.scooter.BuildConfig
 import com.development.sota.scooter.SotaApp
+import com.development.sota.scooter.utils.AuthInterceptor
 import com.development.sota.scooter.utils.ChangeableBaseUrlInterceptor
+import com.development.sota.scooter.utils.UnauthorizedInterceptor
 import com.google.gson.Gson
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import okhttp3.Interceptor
@@ -32,15 +34,27 @@ class HeadersInterceptor : Interceptor {
 }
 
 val client: OkHttpClient = OkHttpClient.Builder()
-    .connectTimeout(1, TimeUnit.MINUTES)
-    .callTimeout(1, TimeUnit.MINUTES)
-    .readTimeout(1, TimeUnit.MINUTES)
-    .writeTimeout(1, TimeUnit.MINUTES)
+    .connectTimeout(2, TimeUnit.MINUTES)
+    .callTimeout(2, TimeUnit.MINUTES)
+    .readTimeout(2, TimeUnit.MINUTES)
+    .writeTimeout(2, TimeUnit.MINUTES)
     .addInterceptor(HeadersInterceptor())
-    .addInterceptor(ChangeableBaseUrlInterceptor())
+    .addInterceptor(AuthInterceptor())
+    .addInterceptor(UnauthorizedInterceptor())
+   // .addInterceptor(ChangeableBaseUrlInterceptor())
     .addInterceptor(interceptor)
     .addInterceptor(ChuckerInterceptor(SotaApp.applicationContext()))
     .build()
+
+ val clientDNS: OkHttpClient = OkHttpClient.Builder()
+     .connectTimeout(1, TimeUnit.MINUTES)
+     .callTimeout(1, TimeUnit.MINUTES)
+     .readTimeout(1, TimeUnit.MINUTES)
+     .writeTimeout(1, TimeUnit.MINUTES)
+     .addInterceptor(HeadersInterceptor())
+   //  .addInterceptor(interceptor)
+     .addInterceptor(ChuckerInterceptor(SotaApp.applicationContext()))
+     .build()
 
 val retrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
@@ -53,7 +67,7 @@ val retrofit: Retrofit = Retrofit.Builder()
      .baseUrl(BASE_DNS)
      .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
      .addConverterFactory(GsonConverterFactory.create(gson))
-     .client(client)
+     .client(clientDNS)
      .build()
 
 val jsonlessRetfofit: Retrofit = Retrofit.Builder()

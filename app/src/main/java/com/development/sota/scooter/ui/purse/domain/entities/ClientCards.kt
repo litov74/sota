@@ -23,6 +23,7 @@ data class TransactionModel(
                 val verified: Boolean? = null,
                 val id: Long? = null,
                 val used_card: String? = null,
+                val last_four: String? = null,
                 val receipt_link: String?)
 
 

@@ -8,17 +8,11 @@ import com.development.sota.scooter.net.OrdersRetrofitProvider
 import com.development.sota.scooter.ui.drivings.domain.entities.Order
 import com.development.sota.scooter.ui.drivings.presentation.fragments.list.DrivingsListPresenter
 import com.development.sota.scooter.ui.map.data.RateType
-import com.google.gson.Gson
-import com.google.gson.JsonElement
-import com.google.gson.TypeAdapter
-import com.squareup.okhttp.ResponseBody
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
-import retrofit2.HttpException
-import java.io.IOException
 
 interface DrivingsListInteractor : BaseInteractor {
     fun getAllOrdersAndScooters()
@@ -42,7 +36,7 @@ class DrivingsListInteractorImpl(private val presenter: DrivingsListPresenter) :
             Observables.zip(
                 OrdersRetrofitProvider.service
                     .getOrders(sharedPreferences.getLong("id", -1L)),
-                MapRetrofitProvider.service.getScooters(),
+                MapRetrofitProvider.service.getAllScooters(),
                     MapRetrofitProvider.service.getRate(),
             )
                 .subscribeOn(Schedulers.io())

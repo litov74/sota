@@ -46,6 +46,7 @@ class OrdersAdapter(
     override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) {
         holder.constaraintViewParent.elevation = 0f
         holder.linnearLayoutScooterItemFinishButtons.visibility = View.GONE
+        holder.constaraintViewParent.visibility = View.VISIBLE
         holder.linnearLayoutScooterItemBookingButtons.visibility = View.GONE
         holder.linnearLayoutScooterItemRentButtons.visibility = View.GONE
         holder.linnearLayoutScooterItemFirstBookButtons.visibility = View.GONE
@@ -76,8 +77,7 @@ class OrdersAdapter(
         holder.scooterPercentTime.text = "~$scooterInfo"
         holder.scooterPercentDistance.text = data[position].scooter.getScooterPercentDistance()
 
-
-        System.err.println("STATUS ZXC "+data[position].status)
+        Log.w("OrdersAdapter", data[position].status.value)
 
         when (data[position].status) {
 
@@ -88,7 +88,7 @@ class OrdersAdapter(
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_booked)
 
                 holder.buttonScooterItemCancelBook.setOnClickListener {
-                    Log.w("FIRST ACTIVATE", "CLICK")
+
                     manipulatorDelegate.cancelOrder(data[position].order.id)
 
                     tickerJobs[data[position].order.id]?.cancel()
@@ -178,7 +178,7 @@ class OrdersAdapter(
                     manipulatorDelegate.closeOrder(data[position].order.id)
                 }
 
-                holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
+                holder.textViewItemScooterStateLabel.setText("ПАУЗА: ")
                 holder.textViewItemScooterStateValue.text =
                         String.format("%.2f", data[position].order.cost).plus(" ₽")
             }
@@ -241,6 +241,9 @@ class OrdersAdapter(
                 holder.constraintLayoutScooterItemPopupLock.setOnClickListener {
                     manipulatorDelegate.openLook(data[position].scooter.id)
                 }
+
+
+
                 holder.textViewItemScooterMinutePricing.text = "₽"+data[position].rate.minute
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
                 holder.textViewItemScooterStateValue.text =
@@ -269,6 +272,8 @@ class OrdersAdapter(
             cardView.findViewById(R.id.linnearLayoutScooterItemFinishButtons)
         val linnearLayoutScooterItemBookingButtons: LinearLayout =
             cardView.findViewById(R.id.linnearLayoutScooterItemBookingButtons)
+
+
         val linnearLayoutScooterItemRentButtons: LinearLayout =
             cardView.findViewById(R.id.linnearLayoutScooterItemRentButtons)
         val linnearLayoutScooterItemFirstBookButtons: LinearLayout =

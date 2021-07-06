@@ -44,13 +44,13 @@ class TransactionViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recyc
         costTransaction?.text  = transactionModel.cost?.let { String.format("%.2f", it.toFloat()).plus(
             " ₽"
         ) }
-        cardTransaction?.text  = transactionModel.used_card
+        cardTransaction?.text  = transactionModel.last_four
         receiptContainer?.setOnClickListener(View.OnClickListener {
             var webpage = Uri.parse(transactionModel.receipt_link)
 
-            if (transactionModel.receipt_link?.startsWith("http://") != true || transactionModel.receipt_link?.startsWith("https://") != true) {
-                webpage = Uri.parse("https://${transactionModel.receipt_link}")
-            }
+//            if (transactionModel.receipt_link?.startsWith("http://") != true && transactionModel.receipt_link?.startsWith("https://") != true) {
+//                webpage = Uri.parse("https://${transactionModel.receipt_link}")
+//            }
 
             val intent = Intent(Intent.ACTION_VIEW, webpage)
             if (intent.resolveActivity(context.getPackageManager()) != null) {

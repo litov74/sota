@@ -53,7 +53,7 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="@string/mock_zero_balance"
-        android:textColor="@color/purple_text"
+        android:textColor="#09047E"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView7"

@@ -1,6 +1,7 @@
 package com.development.sota.scooter.ui.map.presentation
 
 import android.Manifest
+import android.R.style
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
@@ -13,6 +14,9 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -25,6 +29,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.GravityCompat
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityMapBinding
+import com.development.sota.scooter.ui.doc.LoginUserAgreementActivity
 import com.development.sota.scooter.ui.drivings.domain.entities.Order
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderStatus
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivity
@@ -34,8 +39,9 @@ import com.development.sota.scooter.ui.map.data.Rate
 import com.development.sota.scooter.ui.map.data.Scooter
 import com.development.sota.scooter.ui.profile.presentation.ProfileActivity
 import com.development.sota.scooter.ui.promo.presentation.PromoActivity
-import com.development.sota.scooter.ui.tutorial.presentation.TutorialActivity
 import com.development.sota.scooter.ui.purse.presentation.WalletActivity
+import com.development.sota.scooter.ui.tutorial.presentation.TutorialActivity
+import com.development.sota.scooter.ui.tutorial.presentation.TutorialStartRentActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.mapbox.core.constants.Constants
@@ -54,6 +60,8 @@ import com.mapbox.mapboxsdk.style.layers.*
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory.*
 import com.mapbox.mapboxsdk.style.sources.GeoJsonOptions
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource
+import com.mapbox.mapboxsdk.style.sources.ImageSource
+import gone
 import kotlinx.android.synthetic.main.item_popup_map.view.*
 import kotlinx.android.synthetic.main.item_scooter_driving.view.*
 import kotlinx.coroutines.GlobalScope
@@ -65,6 +73,7 @@ import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
 import timber.log.Timber
+import visible
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -73,6 +82,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+
 
 interface MapView : MvpView {
     @AddToEnd
@@ -100,13 +110,22 @@ interface MapView : MvpView {
     fun showToast(text: String)
 
     @AddToEnd
+    fun showBottomActionButtons(visible: Boolean)
+
+    @AddToEnd
     fun showAddOrderError(text: String)
 
     @AddToEnd
     fun clearParkingZone()
 
     @AddToEnd
+    fun hideScooterCard()
+
+    @AddToEnd
     fun setLoading(by: Boolean)
+
+    @AddToEnd
+    fun setActivatingScooter(by: Boolean)
 
     @AddToEnd
     fun initPopupMapView(orders: List<Order>, bookCount: Int, rentCount: Int)
@@ -121,7 +140,13 @@ interface MapView : MvpView {
     fun sendToDrivingsList()
 
     @AddToEnd
+    fun sendToLookTutorial()
+
+    @AddToEnd
     fun sendToPromo()
+
+    @AddToEnd
+    fun sendToDoc()
 
     @AddToEnd
     fun sendToTutorial()
@@ -152,6 +177,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     private lateinit var geoJsonSource: GeoJsonSource
     private val QR_CODE_REQUEST = 555
     private val disposableJobsBag = hashSetOf<Job>()
+    private lateinit var slideTop: Animation
+    private lateinit var slideBottom: Animation
 
     private var currentShowingScooter = -1L
 
@@ -221,6 +248,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                 R.id.menuMapItemProfile -> presenter.sendToProfile()
                 R.id.menuMapItemPurse -> presenter.sendToWallet()
                 R.id.menuMapItemDrivings -> presenter.sendToTheDrivingsList()
+                R.id.menuMapDoc -> presenter.sendToDoc()
                 R.id.menuMapItemPromo -> presenter.sendToPromo()
                 R.id.menuMapItemLearn -> presenter.sendToLearn()
                 R.id.menuMapItemHelp -> presenter.sendToHelp()
@@ -234,10 +262,47 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
 
         fusedLocationProviderClient = FusedLocationProviderClient(this)
+        slideTop = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_top)
+
+        slideTop.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {
+
+                Log.w("MapActivity", "start slide top animation")
+                getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
+                        View.VISIBLE
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                Log.w("MapActivity", "end slide top animation")
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {
+
+            }
+
+        })
+        slideBottom = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_to_bottom)
+        slideBottom.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {
+                Log.w("MapActivity", "start slide bottom animation")
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
+                    View.GONE
+                Log.w("MapActivity", "end slide bottom animation")
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {
+
+            }
+
+        })
 
         getBinding.contentOfMap.mapView.getMapAsync { map ->
             this.map = map
-            map.setStyle(Style.LIGHT) { style ->
+            presenter.mapIsReady()
+            map.setStyle(Style.MAPBOX_STREETS) { style ->
 
                 style.addImageAsync(
                     SCOOTERS_ICON_THIRD,
@@ -248,12 +313,22 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                     bitmapIconFromVector(R.drawable.ic_icon_scooter_second)
                 )
                 style.addImageAsync(
+                    PARKING_IMAGE,
+                    bitmapIconFromVector(R.drawable.ic_chosen_scooter_icon))
+                style.addImageAsync(
                     SCOOTERS_ICON_FIRST,
                     bitmapIconFromVector(R.drawable.ic_icon_scooter_first)
                 )
                 style.addImageAsync(
                     SCOOTERS_ICON_CHOSEN,
                     getBitmapFromVectorDrawable(R.drawable.ic_chosen_scooter_icon)!!
+                )
+                style.addImageAsync(
+                    PARKING_ICON_ID,
+                    BitmapFactory.decodeResource(
+                        resources,
+                        R.drawable.parking
+                    )
                 )
                 style.addImageAsync(
                     MY_MARKER_IMAGE, BitmapFactory.decodeResource(
@@ -298,7 +373,10 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             markerManager = MarkerViewManager(getBinding.contentOfMap.mapView, map)
 
             map.addOnMapClickListener {
-                getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.visibility = View.GONE
+//                if (getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE )
+//                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.startAnimation(slideBottom)
+
+              //  getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility = View.GONE
 
                 val pointf: PointF = map.projection.toScreenLocation(it)
                 val rectF = RectF(pointf.x - 10, pointf.y - 10, pointf.x + 10, pointf.y + 10)
@@ -306,6 +384,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                     map.queryRenderedFeatures(rectF, CIRCLES_LAYER)
 
                 val mapClickScootersList = map.queryRenderedFeatures(rectF, SCOOTERS_LAYER)
+
+                Log.w("MapActivity", "map cluster size "+mapClickFeatureList.size)
 
                 if (mapClickFeatureList.isNotEmpty()) {
                     val clusterLeavesFeatureCollection: FeatureCollection =
@@ -327,6 +407,23 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                 } else {
                     currentShowingScooter = -1L
 
+                    if (getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE) {
+
+                        val animate = TranslateAnimation(
+                            0f,  // fromXDelta
+                            0f,  // toXDelta
+                            0f,  // fromYDelta
+                            getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.height.toFloat()  // toYDelta
+                        )
+
+                        animate.duration = 500
+                        animate.fillAfter = true
+                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.startAnimation(
+                            animate
+                        )
+                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.gone()
+                    }
+
                     presenter.scooterUnselected()
 
                     map.style?.removeLayer(ROUTE_LAYER)
@@ -341,10 +438,13 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
 
         getLocationPermission()
-        initLocationRelationships()
+        getBackgroundLocationPermission()
+
 
         presenter.getProfileInfo()
     }
+
+
 
     private fun moveCameraToLeavesBounds(featureCollectionToInspect: FeatureCollection) {
         val latLngList: MutableList<LatLng> = ArrayList()
@@ -412,7 +512,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             val circles = CircleLayer(CLUSTERS_LAYER, SCOOTERS_SOURCE)
             circles.setProperties(
                 circleColor(layer[1]),
-                circleRadius(18f)
+                circleRadius(14f)
             )
             val pointCount = toNumber(get("point_count"))
 
@@ -442,19 +542,38 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     }
 
     private fun getLocationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)  {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                ActivityCompat.requestPermissions(
+//                    this, arrayOf( Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+//                    PERMISSIONS_REQUEST_ACCESS_FINE_BACKGROUND_LOCATION,
+//                )
+//            }
             presenter.updateLocationPermission(true)
         } else {
+
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION,
             )
         }
+    }
+
+    private fun getBackgroundLocationPermission() {
+//        if (ContextCompat.checkSelfPermission(
+//                this.applicationContext,
+//                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED
+//        ) {
+//            presenter.updateLocationPermission(true)
+//        } else {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                ActivityCompat.requestPermissions(
+//                   this, arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+//                    PERMISSIONS_REQUEST_ACCESS_FINE_BACKGROUND_LOCATION,
+//                )
+//            }
+//        }
     }
 
     private fun getCameraPermission() {
@@ -508,16 +627,34 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
     override fun initLocationRelationships() {
         runOnUiThread {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Log.w("MapActivity", "initLocationRelationships")
                 try {
+//                    if (ContextCompat.checkSelfPermission(
+//                            this.applicationContext,
+//                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+//                        ) == PackageManager.PERMISSION_GRANTED
+//                    ) {
+//
+//                    } else {
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                            ActivityCompat.requestPermissions(
+//                                this, arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+//                                PERMISSIONS_REQUEST_ACCESS_FINE_BACKGROUND_LOCATION,
+//                            )
+//                        }
+//                    }
+
                     LocationServices.getFusedLocationProviderClient(this).lastLocation.addOnSuccessListener {
+                        Log.w("MapActivity", "last location "+it)
+
                         if (it != null) {
                             val latLng = LatLng(it.latitude, it.longitude)
                             presenter.position = latLng
+
+                            Log.w("MapActivity", "map is init "+map)
+
+
 
                             map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0))
 
@@ -543,7 +680,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                         }
                     }
                 } catch (e: Exception) {
-                    Log.w("map? location error", e.localizedMessage)
+                   e.printStackTrace()
                 }
             }
         }
@@ -558,15 +695,15 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             source.setGeoJson(LineString.fromPolyline(polyline, Constants.PRECISION_6))
             map?.style?.addSource(source)
 
-            map?.style?.addLayerBelow(
+            map?.style?.addLayer(
                 LineLayer(ROUTE_LAYER, ROUTE_SOURCE)
                     .withProperties(
                         lineCap(Property.LINE_CAP_ROUND),
                         lineJoin(Property.LINE_JOIN_ROUND),
-                        lineWidth(5f),
-                        lineColor(Color.parseColor("#0565D7"))
+                        lineWidth(2f),
+                        lineColor(Color.parseColor("#09047E"))
                     ),
-                SCOOTERS_LAYER
+
             )
         }
     }
@@ -575,10 +712,28 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         try {
             runOnUiThread {
 
+                Log.w("MapActivity", "showScooter currentId: "+currentShowingScooter+" income: "+scooter.id)
+                Log.w("MapActivity", "visible container: "+(getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE))
                 if (currentShowingScooter != scooter.id) {
-                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
-                            View.VISIBLE
-                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.visibility = View.VISIBLE
+
+
+                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visible()
+                    val animate = TranslateAnimation(
+                        0f,
+                        0f,
+                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.height.toFloat(),  // fromYDelta
+                        0f
+                    )
+
+                    animate.duration = 500
+                    animate.fillAfter = true
+                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.startAnimation(animate)
+
+                    //getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility = View.VISIBLE
+
+//                    if (getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.GONE)
+//                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.startAnimation(slideTop)
+
 
                     getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFinishButtons.visibility =
                             View.GONE
@@ -646,8 +801,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                             currentShowingScooter = scooter.id
 
-                            //TODO: remake activate button
-
                             findViewById<Button>(R.id.buttonItemScooterFirstActivate).setOnClickListener {
                                 presenter.clickedOnBookButton(scooter.id)
 
@@ -665,6 +818,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                         else -> presenter.sendToTheDrivingsList()
                     }
+
                 }
             }
         } catch (exception: Exception){
@@ -674,6 +828,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     }
 
     override fun setRateForScooterCard(rate: Rate, scooterId: Long) {
+        Log.w("MapActivity", "set rate model")
         runOnUiThread {
             if (currentShowingScooter == scooterId) {
 
@@ -683,6 +838,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     }
 
     override fun setRateForScooterCard(rate: String, scooterId: Long) {
+        Log.w("MapActivity", "set rate string")
         runOnUiThread {
             if (currentShowingScooter == scooterId) {
 
@@ -728,10 +884,22 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
     }
 
+    override fun showBottomActionButtons(visible: Boolean) {
+        if (visible) {
+            getBinding.contentOfMap.imageButtonMapMessage.visible()
+            getBinding.contentOfMap.imageButtonMapLocation.visible()
+            getBinding.contentOfMap.imageButtonMapQr.visible()
+        } else {
+            getBinding.contentOfMap.imageButtonMapMessage.gone()
+            getBinding.contentOfMap.imageButtonMapLocation.gone()
+            getBinding.contentOfMap.imageButtonMapQr.gone()
+        }
+    }
+
     override fun showAddOrderError(text: String) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.notification))
-            .setMessage("Разряжен, жду заправщика")
+            .setMessage("Не готов к аренде, жду обслуживание")
             .setPositiveButton("Ok") { dialogInterface: DialogInterface, _ -> dialogInterface.dismiss() }
             .create()
             .show()
@@ -740,6 +908,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     override fun clearParkingZone() {
         runOnUiThread {
             map?.style?.removeLayer(GEOZONE_LAYER)
+            map?.style?.removeLayer(GEOZONE_LAYER_LINE)
+            map?.style?.removeLayer(PARKING_IMAGE_LAYER)
             map?.style?.removeLayer(PARKING_LAYER)
             map?.style?.removeLayer(PARKING_BONUS_LAYER)
             map?.style?.removeSource(GEOZONE_SOURCE)
@@ -748,10 +918,26 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
     }
 
+    override fun hideScooterCard() {
+        if (getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE)
+            getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.startAnimation(slideBottom)
+    }
+
     override fun setLoading(by: Boolean) {
         runOnUiThread {
             getBinding.contentOfMap.progressBarMap.visibility = if (by) View.VISIBLE else View.GONE
         }
+    }
+
+    override fun setActivatingScooter(by: Boolean) {
+        if (by) {
+            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.buttonItemScooterFirstActivate.visibility = View.GONE
+            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.progressActivate.visibility = View.VISIBLE
+        } else {
+            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.buttonItemScooterFirstActivate.visibility = View.VISIBLE
+            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.progressActivate.visibility = View.GONE
+        }
+
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -907,80 +1093,110 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
     override fun drawGeoZones(feauters: ArrayList<Feature>) {
         runOnUiThread {
-            map?.style?.removeLayer(GEOZONE_LAYER)
-            map?.style?.removeLayer(PARKING_LAYER)
-            map?.style?.removeLayer(PARKING_BONUS_LAYER)
+            try {
+                map?.style?.removeSource(GEOZONE_SOURCE)
+                map?.style?.removeSource(PARKING_SOURCE)
+                map?.style?.removeSource(PARKING_BONUS_SOURCE)
 
-            map?.style?.removeSource(GEOZONE_SOURCE)
-            map?.style?.removeSource(PARKING_SOURCE)
-            map?.style?.removeSource(PARKING_BONUS_SOURCE)
-
-            val geozoneJsonSource = GeoJsonSource(
-                GEOZONE_SOURCE,
-                FeatureCollection.fromFeatures(
-                    feauters.filter { it.getStringProperty("geoType") == GEOZONE_LABEL }
-                ),
-                GeoJsonOptions()
-            )
-
-            val parkingJsonSource = GeoJsonSource(
-                PARKING_SOURCE,
-                FeatureCollection.fromFeatures(
-                    feauters.filter { it.getStringProperty("geoType") == PARKING_LABEL }
-                ),
-                GeoJsonOptions()
-            )
-
-            val parkingBonusJsonSource = GeoJsonSource(
-                PARKING_BONUS_SOURCE,
-                FeatureCollection.fromFeatures(
-                    feauters.filter { it.getStringProperty("geoType") == PARKING_BONUS_LABEL }
-                ),
-                GeoJsonOptions()
-            )
-
-            map?.style?.addSource(geozoneJsonSource)
-            map?.style?.addSource(parkingJsonSource)
-            map?.style?.addSource(parkingBonusJsonSource)
-
-            val geoZoneLayer = LineLayer(GEOZONE_LAYER, GEOZONE_SOURCE)
-            geoZoneLayer.setProperties(
-                lineColor(TRANSPARENT_COLOR),
-                lineWidth(4f),
-            )
-
-            val parkingZoneLayer = LineLayer(PARKING_LAYER, PARKING_SOURCE)
-            parkingZoneLayer.setProperties(
-                lineColor(PARKING_LINE_COLOR),
-                lineWidth(4f),
-            )
-
-            val parkingBonusZoneLayer = LineLayer(PARKING_BONUS_LAYER, PARKING_BONUS_SOURCE)
-            parkingZoneLayer.setProperties(
-                lineColor(PARKING_BONUS_COLOR),
-                lineWidth(4f),
-            )
+                map?.style?.removeLayer(GEOZONE_LAYER)
+                map?.style?.removeLayer(GEOZONE_LAYER_LINE)
+                map?.style?.removeLayer(PARKING_LAYER)
+                map?.style?.removeLayer(PARKING_IMAGE_LAYER)
+                map?.style?.removeLayer(PARKING_BONUS_LAYER)
 
 
-            map?.style?.addLayer(geoZoneLayer)
-            map?.style?.addLayer(parkingZoneLayer)
-            map?.style?.addLayer(parkingBonusZoneLayer)
+
+                val geozoneJsonSource = GeoJsonSource(
+                    GEOZONE_SOURCE,
+                    FeatureCollection.fromFeatures(
+                        feauters.filter { it.getStringProperty("geoType") == GEOZONE_LABEL }
+                    ),
+                    GeoJsonOptions()
+                )
+
+                val parkingJsonSource = GeoJsonSource(
+                    PARKING_SOURCE,
+                    FeatureCollection.fromFeatures(
+                        feauters.filter { it.getStringProperty("geoType") == PARKING_LABEL }
+                    ),
+                    GeoJsonOptions()
+                )
+
+                val parkingBonusJsonSource = GeoJsonSource(
+                    PARKING_BONUS_SOURCE,
+                    FeatureCollection.fromFeatures(
+                        feauters.filter { it.getStringProperty("geoType") == PARKING_BONUS_LABEL }
+                    ),
+                    GeoJsonOptions()
+                )
+
+
+                map?.style?.addSource(geozoneJsonSource)
+                map?.style?.addSource(parkingJsonSource)
+                map?.style?.addSource(parkingBonusJsonSource)
+
+                val geoZoneLayer = FillLayer(GEOZONE_LAYER, GEOZONE_SOURCE)
+                geoZoneLayer.setProperties(
+                    fillColor(PARKING_COLOR),
+                    fillOpacity(0.3f),
+                    fillOutlineColor(PARKING_BONUS_COLOR)
+                )
+
+                val geoZoneLine = LineLayer(GEOZONE_LAYER_LINE, GEOZONE_SOURCE)
+                geoZoneLine.setProperties(
+                    lineColor(PARKING_BONUS_COLOR),
+                    lineWidth(1f),
+                )
+
+                val parkingZoneLayer = LineLayer(PARKING_LAYER, PARKING_SOURCE)
+                parkingZoneLayer.setProperties(
+                    lineColor(PARKING_LINE_COLOR),
+
+                    lineWidth(1f),
+                )
+
+
+                val parkingLayer = SymbolLayer(PARKING_IMAGE_LAYER, PARKING_SOURCE)
+                parkingLayer.setProperties(
+                    iconImage(PARKING_ICON_ID),
+                )
+
+                val parkingBonusZoneLayer = LineLayer(PARKING_BONUS_LAYER, PARKING_BONUS_SOURCE)
+                parkingZoneLayer.setProperties(
+                    lineColor(PARKING_LINE_COLOR),
+                    lineWidth(1f),
+                )
+
+
+                map?.style?.addLayer(geoZoneLayer)
+                map?.style?.addLayer(parkingLayer)
+                map?.style?.addLayer(geoZoneLine)
+                map?.style?.addLayer(parkingZoneLayer)
+                map?.style?.addLayer(parkingBonusZoneLayer)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
     override fun setProfileInfo(clientName: String, balance: String) {
-        val name = getBinding.navView.findViewById<TextView>(R.id.textView6)
-        getBinding.navView.findViewById<TextView>(R.id.balanceUser).text = resources.getString(R.string.balance_user, balance)
-        name.text = clientName
+        try {
+            val name = getBinding.navView.findViewById<TextView>(R.id.textView6)
+            getBinding.navView.findViewById<TextView>(R.id.balanceUser).text = resources.getString(R.string.balance_user, balance)
+            name.text = clientName
+         } catch (e: Exception) {
+             e.printStackTrace()
+         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
     }
 
     override fun showError(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.onStartEmitted()
     }
 
 
@@ -993,9 +1209,23 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
     }
 
+    override fun sendToLookTutorial() {
+        runOnUiThread {
+            val intent = Intent(this, TutorialStartRentActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     override fun sendToPromo() {
         runOnUiThread {
             startActivity(Intent(this, PromoActivity::class.java))
+        }
+    }
+
+    override fun sendToDoc() {
+        runOnUiThread {
+            val intent = Intent(this, LoginUserAgreementActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -1094,6 +1324,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
     companion object {
         const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 99
+        const val PERMISSIONS_REQUEST_ACCESS_FINE_BACKGROUND_LOCATION = 111
         const val PERMISSIONS_REQUEST_ACCESS_CAMERA = 100
         const val MAX_CLUSTER_ZOOM_LEVEL = 14
         const val CLUSTER_RADIUS = 50
@@ -1115,16 +1346,21 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         const val GEOZONE_BACKGROUND_LAYER = "geozone-background"
         const val GEOZONE_BACKGROUND_SOURCE = "geozone-background-source"
         const val GEOZONE_LAYER = "geozone"
+        const val GEOZONE_LAYER_LINE = "geozone-line"
         const val GEOZONE_SOURCE = "geozone-source"
         const val PARKING_LAYER = "parking"
+        const val PARKING_IMAGE_LAYER = "parking-image"
         const val PARKING_SOURCE = "parking-source"
         const val PARKING_BONUS_LAYER = "parking-bonus"
         const val PARKING_BONUS_SOURCE = "parking-bonus-source"
+        const val PARKING_IMAGE = "parking-image"
+        const val PARKING_ICON_ID = "parking-icon"
 
         val GEOZONE_COLOR = Color.parseColor("#40FF453A")
         val GEOZONE_LINE_COLOR = Color.parseColor("#FF453A")
         val PARKING_LINE_COLOR = Color.parseColor("#2F80ED")
         val PARKING_BONUS_COLOR = Color.parseColor("#14D53D")
+        val PARKING_COLOR = Color.parseColor("#b0f8bf")
 
         val GEOZONE_LABEL = "Allowed"
         val PARKING_LABEL = "Parking"

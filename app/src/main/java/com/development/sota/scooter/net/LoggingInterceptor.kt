@@ -26,7 +26,7 @@ class LoggingInterceptor : Interceptor {
         )
         val requestBuffer = Buffer()
         request.body?.writeTo(requestBuffer)
-        Log.d("OkHttp", requestBuffer.readUtf8())
+       // Log.d("OkHttp", requestBuffer.readUtf8())
         val response: Response = chain.proceed(request)
         val t2 = System.nanoTime()
         Log.d(

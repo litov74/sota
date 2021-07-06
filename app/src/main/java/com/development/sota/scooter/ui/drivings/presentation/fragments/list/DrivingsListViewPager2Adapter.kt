@@ -32,7 +32,11 @@ class DrivingsListViewPager2Adapter(
                 data.first,
                 context,
                 manipulatorDelegate
-            ) else FinishedOrderAdapter(data.second, context)
+            ) else {
+
+                var data: List<OrderWithStatusRate> = data.second.reversed()
+                FinishedOrderAdapter(data, context)
+            }
         }
 
     override fun getItemCount(): Int = 2

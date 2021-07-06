@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import com.development.sota.scooter.net.LoginRetrofitProvider
 import com.development.sota.scooter.ui.login.presentation.LoginActivity
 import com.development.sota.scooter.ui.map.presentation.MapActivity
@@ -40,25 +41,42 @@ class MainActivity : MvpAppCompatActivity() {
                         if (it.data.contains("backend")) {
                             var dev = it.data.split("p=").get(1).split("t=").first().trim()
                             val prod = it.data.split("t=").get(1).trim()
+
+                            Log.w("MainActivity", "dev host "+dev+" prod host "+prod)
                             if (BuildConfig.BUILD_TYPE.compareTo("debug") == 0) {
                                 sharedPreferences.edit().putString("host", dev).apply()
-                            } else if (BuildConfig.BUILD_TYPE.compareTo("relese") == 0) {
+                            } else if (BuildConfig.BUILD_TYPE.compareTo("release") == 0) {
                                 sharedPreferences.edit().putString("host", prod).apply()
                             }
                         }
                     }
 
+//                    LoginRetrofitProvider.service
+//                        .getSupportContacts()
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribeBy(
+//                            onError = {  },
+//                            onNext = {
+//
+//                                sharedPreferences.edit().putString("telegramLink", it.asJsonObject.get("tg").toString()).apply()
+//                                sharedPreferences.edit().putString("phoneNumberSupport", it.asJsonObject.get("phone").toString()).apply()
+//
+//
+//                            })
+
+                    var token = sharedPreferences.getString("token", "")
                     val classActivity: Class<*> =
                         if (!sharedPreferences.getBoolean(SP_KEY_FIRST_INIT, false)) {
                             LoginActivity::class.java
                         } else if (!sharedPreferences.getBoolean(SP_KEY_WAS_TUTORIAL, false)) {
                             TutorialActivity::class.java
-                        } else {
+                        } else if (token!!.length > 0) {
                             MapActivity::class.java
+                        } else {
+                            LoginActivity::class.java
                         }
                     startActivity(Intent(this, classActivity))
-                })
-
+        })
 
     }
 

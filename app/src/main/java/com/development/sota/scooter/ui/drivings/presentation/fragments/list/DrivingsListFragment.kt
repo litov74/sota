@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.afollestad.materialdialogs.MaterialDialog
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentDrivingsListBinding
-import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatus
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatusRate
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivityView
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsListFragmentType
@@ -18,7 +18,6 @@ import com.development.sota.scooter.ui.help.presentation.HelpActivity
 import com.development.sota.scooter.ui.map.data.RateType
 import com.development.sota.scooter.ui.tutorial.presentation.TutorialFinishActivity
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
-import com.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
@@ -89,6 +88,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
     private var adapter: DrivingsListViewPager2Adapter? = null
 
     private var segmentId = 0
+    private lateinit var progressDialog: MaterialDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -158,7 +158,17 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
                 binding.progressBarDrivingsList.visibility = View.VISIBLE
                 binding.linnearLayoutSegmentContol.isEnabled = false
                 binding.viewPager2DrivingsList.isEnabled = false
+
+                progressDialog = MaterialDialog.Builder(requireContext())
+                    .title("Уведомление")
+                    .content("Пожалуйста подождите")
+                    .cancelable(false)
+                    .progress(true, 0)
+                    .show()
+
             } else {
+                progressDialog.cancel()
+
                 binding.progressBarDrivingsList.visibility = View.GONE
                 binding.linnearLayoutSegmentContol.isEnabled = true
                 binding.viewPager2DrivingsList.isEnabled = true

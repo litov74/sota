@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
@@ -78,6 +80,11 @@
             android:name=".ui.purse.presentation.AddCardActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.tutorial.presentation.TutorialFinishActivity" />
+        <activity android:name=".ui.tutorial.presentation.TutorialStartRentActivity" />
+        <activity android:name=".ui.doc.LoginUserAgreementActivity" />
+        <activity android:name=".ui.promo.presentation.PromoInviteActivity" />
+        <activity android:name=".ui.promo.presentation.PromoListActivity" />
+        <activity android:name=".ui.promo.presentation.PromoAttachActivity" />
 
 
         <uses-library

@@ -3,28 +3,27 @@ package com.development.sota.scooter.ui.help.presentation
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.development.sota.scooter.R
-import com.development.sota.scooter.common.Constants.TELEGRAM
-import com.development.sota.scooter.common.Constants.WHATSAPP_PHONE_NUMBER
 
 
 class HelpAdapter internal constructor(
     var context: Context,
     title: List<String>,
+    var telegramLink: String
 ) : RecyclerView.Adapter<HelpAdapter.ViewHolder>() {
     private val title: List<String>
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var item: View? = null
     private var mClickListener: ItemClickListener? = null
+
 
     // inflates the row layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,26 +40,34 @@ class HelpAdapter internal constructor(
             when (position) {
                 0 -> {
                     // use country code with your phone number
-                    val telegram = Intent(Intent.ACTION_VIEW, Uri.parse("https://telegram.me/$TELEGRAM"))
+                    var telegramUrl = telegramLink.replace("@","").replace("\"", "")
+                    val telegram = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/"+telegramUrl))
                     context.startActivity(telegram)
 
                 }
                 1 -> {
-                    val url = "https://api.whatsapp.com/send?phone=$WHATSAPP_PHONE_NUMBER"
-                    try {
-                        val pm: PackageManager = context.packageManager
-                        pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
-                        val i = Intent(Intent.ACTION_VIEW)
-                        i.data = Uri.parse(url)
-                        context.startActivity(i)
-                    } catch (e: PackageManager.NameNotFoundException) {
-                        Toast.makeText(
-                            context,
-                            "Приложение WhatsApp не установлено на ваше устройство",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        e.printStackTrace()
-                    }
+
+                    val emailIntent = Intent(Intent.ACTION_SEND)
+                    emailIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    emailIntent.type = "vnd.android.cursor.item/email"
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("team@sota.world"))
+
+                    holder.itemView.context.startActivity(Intent.createChooser(emailIntent, "Отправить email с помощью"))
+//                    val url = "https://api.whatsapp.com/send?phone=$WHATSAPP_PHONE_NUMBER"
+//                    try {
+//                        val pm: PackageManager = context.packageManager
+//                        pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
+//                        val i = Intent(Intent.ACTION_VIEW)
+//                        i.data = Uri.parse(url)
+//                        context.startActivity(i)
+//                    } catch (e: PackageManager.NameNotFoundException) {
+//                        Toast.makeText(
+//                            context,
+//                            "Приложение WhatsApp не установлено на ваше устройство",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                        e.printStackTrace()
+//                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.development.sota.scooter.ui.map.domain
 
+import android.util.Log
 import com.development.sota.scooter.R
 import com.development.sota.scooter.common.base.BaseInteractor
 import com.development.sota.scooter.db.SharedPreferencesProvider
@@ -9,7 +10,6 @@ import com.development.sota.scooter.net.OrdersRetrofitProvider
 import com.development.sota.scooter.ui.map.data.ClientUpdateToken
 import com.development.sota.scooter.ui.map.data.Scooter
 import com.development.sota.scooter.ui.map.presentation.MapPresenter
-import com.development.sota.scooter.ui.profile.domain.entities.ClientUpdateNameData
 import com.mapbox.api.directions.v5.DirectionsCriteria
 import com.mapbox.api.directions.v5.MapboxDirections
 import com.mapbox.api.directions.v5.models.DirectionsResponse
@@ -75,14 +75,14 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
                     },
                     onError = {
                         it.printStackTrace()
-                         }
+                    }
                 )
         )
     }
 
     override fun getAllScooters() {
         compositeDisposable.add(
-            MapRetrofitProvider.service.getScooters()
+            MapRetrofitProvider.service.getActiveScooters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -156,6 +156,7 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
     }
 
     override fun addOrder(startTime: String, scooterId: Long, withActivation: Boolean) {
+        Log.w("MapInteractor", "addOrder")
         compositeDisposable.add(
             OrdersRetrofitProvider.service.addOrder(
                 startTime = startTime,
@@ -166,7 +167,10 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = { presenter.newOrderGotFromServer(it.id, scooterId, withActivation) },
-                    onError = { presenter.addOrderError(it.localizedMessage) }
+                    onError = {
+                        Log.w("MapInteractor", "error "+it.localizedMessage)
+                        presenter.addOrderError(it.localizedMessage)
+                    }
                 )
         )
     }
@@ -199,7 +203,7 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
     override fun getScootersAndOrders() {
         compositeDisposable.add(
             Observables.zip(
-                MapRetrofitProvider.service.getScooters(),
+                MapRetrofitProvider.service.getActiveScooters(),
                 OrdersRetrofitProvider.service.getOrders(sharedPreferences.getLong("id", -1L))
             )
                 .subscribeOn(Schedulers.io())

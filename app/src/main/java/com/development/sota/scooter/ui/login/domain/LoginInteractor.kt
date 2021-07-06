@@ -14,7 +14,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 interface LoginInteractor : BaseInteractor {
     fun sendLoginRequest(phone: String, name: String)
-    fun saveCredentials(phone: String, name: String, id: Long)
+    fun saveCredentials(phone: String, name: String, id: Long, token: String)
 }
 
 class LoginInteractorImpl(val presenter: LoginPresenter) : LoginInteractor {
@@ -32,12 +32,12 @@ class LoginInteractorImpl(val presenter: LoginPresenter) : LoginInteractor {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onError = { presenter.gotErrorFromAPI(it.localizedMessage ?: "") },
-                    onNext = { presenter.gotCodeAndIDFromAPI(it.code, it.id) })
+                    onNext = { presenter.gotCodeAndIDFromAPI(it.code, it.id, it.token) })
         )
     }
 
-    override fun saveCredentials(phone: String, name: String, id: Long) {
-        sharedPreferences.edit().putString("phone", phone).putString("name", name).putLong("id", id)
+    override fun saveCredentials(phone: String, name: String, id: Long, token: String) {
+        sharedPreferences.edit().putString("phone", phone).putString("token", token).putString("name", name).putLong("id", id)
             .putBoolean("firstInit", true).apply()
     }
 
@@ -62,11 +62,11 @@ class LoginCodeInteractorImpl(val presenter: LoginCodePresenter) : LoginInteract
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onError = { presenter.gotErrorFromAPI() },
-                    onNext = { presenter.gotCodeFromAPI(it.code) })
+                    onNext = { presenter.gotCodeFromAPI(it.code, it.token) })
         )
     }
 
-    override fun saveCredentials(phone: String, name: String, id: Long) {}
+    override fun saveCredentials(phone: String, name: String, id: Long, token: String) {}
 
     override fun disposeRequests() {
         compositeDisposable.dispose()

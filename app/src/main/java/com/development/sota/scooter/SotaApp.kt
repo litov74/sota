@@ -2,7 +2,9 @@ package com.development.sota.scooter
 
 import android.content.Context
 import androidx.multidex.MultiDexApplication
+import androidx.startup.AppInitializer
 import com.google.firebase.analytics.FirebaseAnalytics
+import net.danlew.android.joda.JodaTimeInitializer
 
 class SotaApp : MultiDexApplication() {
 
@@ -24,6 +26,7 @@ class SotaApp : MultiDexApplication() {
         super.onCreate()
 
         val context: Context = SotaApp.applicationContext()
+        AppInitializer.getInstance(this).initializeComponent(JodaTimeInitializer::class.java)
     }
 
 }

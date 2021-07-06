@@ -102,7 +102,7 @@ class DrivingsListPresenter(val context: Context) : MvpPresenter<DrivingsListVie
         }
 
         viewState.setLoading(false)
-        viewState.initViewPager2(Pair(ordersWithStatuses, finishedOrders))
+        viewState.initViewPager2(Pair(ordersWithStatuses, ArrayList(finishedOrders.sortedBy { it.order.parseStartTime() })))
     }
 
     fun gotErrorFromServer(message: String) {

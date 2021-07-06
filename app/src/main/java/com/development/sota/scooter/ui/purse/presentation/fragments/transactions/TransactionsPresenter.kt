@@ -20,7 +20,7 @@ class TransactionsPresenter(val context: Context) : MvpPresenter<TransactionsVie
 
 
     fun getTransactions(card: List<TransactionModel>){
-        viewState.showTransactions(card)
+        viewState.showTransactions(card.reversed())
 
     }
 

@@ -66,11 +66,7 @@
                 android:textAlignment="center"
                 android:textSize="20dp"
                 android:lines="1"
-                android:digits="01234 56789"
-                android:inputType="number"
-                android:maxLength="16"
-                app:itemCount="1"
-                app:viewType="line"
+
                 tools:layout_editor_absoluteX="0dp" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -128,6 +124,7 @@
                 android:hint="@string/cvv"
                 android:inputType="numberPassword"
                 android:maxLines="1"
+                android:maxLength="4"
                 android:paddingTop="16dp"
                 android:singleLine="true"
                 android:textAlignment="center"

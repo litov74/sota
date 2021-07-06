@@ -29,7 +29,7 @@ class DrivingsInteractorImpl(private val presenter: DrivingsPresenter) : Driving
     override fun getAllAvailableScooters() {
         compositeDisposable.add(
             MapRetrofitProvider.service
-                .getScooters()
+                .getAllScooters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { list ->

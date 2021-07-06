@@ -15,6 +15,11 @@ import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
+import ru.tinkoff.decoro.MaskImpl
+import ru.tinkoff.decoro.slots.PredefinedSlots
+import ru.tinkoff.decoro.watchers.FormatWatcher
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher
+
 
 interface LoginInputView : MvpView {
     @AddToEnd
@@ -34,6 +39,7 @@ interface LoginInputView : MvpView {
 
     @AddToEnd
     fun startUserAgreementFragment()
+
 }
 
 class LoginInputFragment(private val loginActivityView: LoginActivityView) : MvpAppCompatFragment(),
@@ -72,42 +78,51 @@ class LoginInputFragment(private val loginActivityView: LoginActivityView) : Mvp
 
             presenter.onPhoneCodeChanged(getCurrentNumber())
         }
-        binding.loginPhonePinViewCodeFirstThreeNumbers.doAfterTextChanged {
-            if (it!!.count() == 3) {
-                activity!!.runOnUiThread {
-                    binding.loginPhonePinViewCodeSecondThreeNumbers.requestFocus()
-                }
-            }
 
-            presenter.onPhoneCodeChanged(getCurrentNumber())
-        }
-        binding.loginPhonePinViewCodeSecondThreeNumbers.doAfterTextChanged {
-            if (it!!.count() == 3) {
-                activity!!.runOnUiThread {
-                    binding.loginPhonePinViewCodeFirstTwoNumbers.requestFocus()
-                }
-            }
+        val mask = MaskImpl.createTerminated(PredefinedSlots.RUS_PHONE_NUMBER)
+        val watcher: FormatWatcher = MaskFormatWatcher(mask)
+        watcher.installOn(binding.mobilePhone)
 
-            presenter.onPhoneCodeChanged(getCurrentNumber())
-        }
-        binding.loginPhonePinViewCodeFirstTwoNumbers.doAfterTextChanged {
-            if (it!!.count() == 2) {
-                activity!!.runOnUiThread {
-                    binding.loginPhonePinViewCodeSecondTwoNumbers.requestFocus()
-                }
-            }
-
-            presenter.onPhoneCodeChanged(getCurrentNumber())
-        }
-        binding.loginPhonePinViewCodeSecondTwoNumbers.doAfterTextChanged {
-            if (it!!.count() == 2) {
-                activity!!.runOnUiThread {
-                    binding.loginNamePinInput.requestFocus()
-                }
-            }
-
-            presenter.onPhoneCodeChanged(getCurrentNumber())
-        }
+        binding.mobilePhone.doAfterTextChanged({
+            var phone = it.toString().replace("+", "").replace("(","").replace(")","").replace("-","").replace(" ","")
+            presenter.setUserPhoneNumber(phone.trim());
+        })
+//        binding.loginPhonePinViewCodeFirstThreeNumbers.doAfterTextChanged {
+//            if (it!!.count() == 3) {
+//                activity!!.runOnUiThread {
+//                    binding.loginPhonePinViewCodeSecondThreeNumbers.requestFocus()
+//                }
+//            }
+//
+//            presenter.onPhoneCodeChanged(getCurrentNumber())
+//        }
+//        binding.loginPhonePinViewCodeSecondThreeNumbers.doAfterTextChanged {
+//            if (it!!.count() == 3) {
+//                activity!!.runOnUiThread {
+//                    binding.loginPhonePinViewCodeFirstTwoNumbers.requestFocus()
+//                }
+//            }
+//
+//            presenter.onPhoneCodeChanged(getCurrentNumber())
+//        }
+//        binding.loginPhonePinViewCodeFirstTwoNumbers.doAfterTextChanged {
+//            if (it!!.count() == 2) {
+//                activity!!.runOnUiThread {
+//                    binding.loginPhonePinViewCodeSecondTwoNumbers.requestFocus()
+//                }
+//            }
+//
+//            presenter.onPhoneCodeChanged(getCurrentNumber())
+//        }
+//        binding.loginPhonePinViewCodeSecondTwoNumbers.doAfterTextChanged {
+//            if (it!!.count() == 2) {
+//                activity!!.runOnUiThread {
+//                    binding.loginNamePinInput.requestFocus()
+//                }
+//            }
+//
+//            presenter.onPhoneCodeChanged(getCurrentNumber())
+//        }
         binding.loginNamePinInput.doAfterTextChanged {
             presenter.onNameChanged(it?.toString() ?: "")
         }

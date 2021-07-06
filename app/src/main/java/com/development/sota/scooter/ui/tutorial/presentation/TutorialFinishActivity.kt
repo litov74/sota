@@ -7,7 +7,9 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import com.development.sota.scooter.MainActivity
+import com.development.sota.scooter.databinding.ActivityFinishTutorialBinding
 import com.development.sota.scooter.databinding.ActivityTutorialBinding
+import com.development.sota.scooter.ui.help.presentation.HelpActivity
 import kotlinx.android.synthetic.main.activity_tutorial.*
 import kotlinx.android.synthetic.main.fragment_tutorial.*
 import moxy.MvpAppCompatActivity
@@ -26,12 +28,12 @@ interface TutorialFinishView : MvpView {
 
 class TutorialFinishActivity : MvpAppCompatActivity(), TutorialFinishView {
     private val presenter by moxyPresenter { TutorialFinishPresenter(this) }
-    private var _binding: ActivityTutorialBinding? = null
+    private var _binding: ActivityFinishTutorialBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityTutorialBinding.inflate(layoutInflater)
+        _binding = ActivityFinishTutorialBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
@@ -50,12 +52,13 @@ class TutorialFinishActivity : MvpAppCompatActivity(), TutorialFinishView {
         binding.viewPager2Tutorial.adapter = TutorialFinishAdapter()
         binding.viewPager2Tutorial.isUserInputEnabled = false
 
-        binding.buttonTutorialNext.setOnClickListener { presenter.onNextButtonClicked(binding.viewPager2Tutorial.currentItem) }
-
         binding.buttonTutorialSkip.setOnClickListener { presenter.onSkipButtonClicked() }
 
-        binding.springDotsIndicatorTutorial.setViewPager2(binding.viewPager2Tutorial)
-
+        binding.done.setOnClickListener { presenter.onSkipButtonClicked() }
+        binding.needSupport.setOnClickListener {
+            val intent = Intent (getApplicationContext(), HelpActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun nextPage(index: Int) {

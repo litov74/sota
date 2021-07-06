@@ -15,11 +15,6 @@ class TutorialFinishAdapter : RecyclerView.Adapter<TutorialFinishAdapter.Tutoria
             R.string.finish_tutorial_body_1,
             R.drawable.ic_finish_scooter
         ),
-        Triple(
-            R.string.login_tutorial_label_2,
-            R.string.login_tutorial_body_2,
-            R.drawable.ic_finish_ok
-        ),
 
     )
 
