@@ -32,8 +32,9 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
 
     fun upBalancePackage(model: UpBalancePackageModel) {
         selectedModel = model
-        viewState.showAlertPayment(selectedModel.cost.toString())
-
+    //    viewState.showPaymentTypeDialog("zxc")
+     //   viewState.showAlertPayment(selectedModel.cost.toString())
+        viewState.showUpBalanceOk("250")
     }
 
     fun confirmUpBalance() {

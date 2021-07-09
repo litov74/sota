@@ -14,8 +14,8 @@ android {
         applicationId "com.development.sota.scooter"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 183
-        versionName "1.8.3_beta"
+        versionCode 184
+        versionName "1.8.4_beta"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,6 +29,7 @@ android {
 
     buildTypes {
         debug {
+            minifyEnabled false
             buildConfigField "String", "API_HOST", '"https://dev.sota.world/API2/"'
             buildConfigField "String", "API_DNS", '"https://dns.google/"'
         }

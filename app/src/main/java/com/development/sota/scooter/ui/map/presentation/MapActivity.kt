@@ -1094,15 +1094,16 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     override fun drawGeoZones(feauters: ArrayList<Feature>) {
         runOnUiThread {
             try {
-                map?.style?.removeSource(GEOZONE_SOURCE)
-                map?.style?.removeSource(PARKING_SOURCE)
-                map?.style?.removeSource(PARKING_BONUS_SOURCE)
 
                 map?.style?.removeLayer(GEOZONE_LAYER)
                 map?.style?.removeLayer(GEOZONE_LAYER_LINE)
                 map?.style?.removeLayer(PARKING_LAYER)
                 map?.style?.removeLayer(PARKING_IMAGE_LAYER)
                 map?.style?.removeLayer(PARKING_BONUS_LAYER)
+
+                map?.style?.removeSource(GEOZONE_SOURCE)
+                map?.style?.removeSource(PARKING_SOURCE)
+                map?.style?.removeSource(PARKING_BONUS_SOURCE)
 
 
 
