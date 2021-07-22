@@ -28,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/card_logo"
-            android:text="**** 5412"
             android:layout_marginStart="8dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

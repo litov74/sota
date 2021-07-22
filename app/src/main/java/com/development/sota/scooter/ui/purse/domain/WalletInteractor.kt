@@ -44,7 +44,11 @@ interface WalletUpBalanceInteractor : BaseInteractor{
 
     fun upBalance(selectedModel: UpBalancePackageModel)
 
+    fun upBalanceGooglePay(selectedModel: UpBalancePackageModel, token: String)
+
     fun getReplenishmentPackages()
+
+    fun getCards()
 }
 
 interface WalletTransactionsInteractor : BaseInteractor{
@@ -187,6 +191,27 @@ class WalletUpBalanceInteractorImpl(val presenter: UpBalancePresenter) : WalletU
                 ))
     }
 
+    override fun upBalanceGooglePay(selectedModel: UpBalancePackageModel, token: String) {
+        compositeDisposable.add(
+            PurseRetrofitProvider.service.topUpBalanceGooglePay(sharedPreferences.getLong("id", -1),selectedModel.id, true, token)
+                .doOnSubscribe({presenter.showProgress(true)})
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onNext = {
+                        if (it.Success) {
+                            presenter.balanceUpdated(selectedModel)
+                        } else {
+                            presenter.showMessage("Проверьте наличие средств на карте")
+                        }
+
+                    },
+                    onError = {
+                        presenter.showMessage("Проверьте наличие средств на карте")
+
+                    }
+                ))
+    }
+
     override fun getReplenishmentPackages() {
         compositeDisposable.add(
                 PurseRetrofitProvider.service.getReplenishmentPackages()
@@ -200,6 +225,21 @@ class WalletUpBalanceInteractorImpl(val presenter: UpBalancePresenter) : WalletU
                                     it.printStackTrace()
                                 }
                         ))
+    }
+
+    override fun getCards() {
+        val clientId = sharedPreferences.getLong("id", -1)
+        compositeDisposable.add(
+            PurseRetrofitProvider.service.getClientCards(clientId)
+                .subscribeOn(AndroidSchedulers.mainThread())
+
+                .subscribeBy(
+                    onNext = {
+                        presenter.setCards(it)
+                    },
+                    onError = {
+
+                    }))
     }
 
     override fun disposeRequests(){

@@ -1,10 +1,13 @@
 package com.development.sota.scooter.ui.purse.presentation.fragments.upbalance
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -13,17 +16,21 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentUpBalanceBinding
 import com.development.sota.scooter.ui.purse.domain.entities.UpBalancePackageModel
+import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
 import com.development.sota.scooter.ui.purse.presentation.WalletActivity
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
+import gone
+import kotlinx.android.synthetic.main.layout_payment_dialog.view.*
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Exception
 
 
 interface UpBalanceView : MvpView {
@@ -44,7 +51,7 @@ interface UpBalanceView : MvpView {
     fun showAlertPayment(cost: String)
 
     @AddToEnd
-    fun showPaymentTypeDialog(cost: String)
+    fun showPaymentTypeDialog(cost: String, userCard: UserCardModel?)
 
     @AddToEnd
     fun showUpBalanceOk(income: String)
@@ -80,8 +87,8 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
     private val tokenizationSpecification = JSONObject().apply {
         put("type", "PAYMENT_GATEWAY")
         put("parameters", JSONObject(mapOf(
-            "gateway" to "example",
-            "gatewayMerchantId" to "exampleGatewayMerchantId")))
+            "gateway" to "cloudpayments",
+            "gatewayMerchantId" to "BCR2DN6T5655JZJH")))
     }
     private val cardPaymentMethod = JSONObject().apply {
         put("type", "CARD")
@@ -94,18 +101,13 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         })
     }
     private val merchantInfo = JSONObject().apply {
-        put("merchantName", "Example Merchant")
-        put("merchantId", "01234567890123456789")
+        put("merchantName", "cloudpayments")
+        put("merchantId", "BCR2DN6T5655JZJH")
     }
-    private val transactionInfo = JSONObject().apply {
-        put("totalPrice", "123.45")
-        put("totalPriceStatus", "FINAL")
-        put("currencyCode", "RUB")
-    }
-    private val paymentDataRequestJson = JSONObject(googlePayBaseConfiguration.toString()).apply {
-        put("allowedPaymentMethods", JSONArray().put(cardPaymentMethod))
-        put("transactionInfo", transactionInfo)
-        put("merchantInfo", merchantInfo)
+
+
+    public fun setPaymentToken(token: String) {
+        presenter.setGooglePayToken(token)
     }
 
     override fun onCreateView(
@@ -182,33 +184,83 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         return Wallet.getPaymentsClient(activity, walletOptions)
     }
 
-    private fun setGooglePayAvailable(available: Boolean) {
-        if (available) {
-            val dialog = BottomSheetDialog(requireContext())
-            var view: View = layoutInflater.inflate(R.layout.layout_payment_dialog, null)
-            val btnClose = view.findViewById<ConstraintLayout>(R.id.googlePayContainer)
-            btnClose.setOnClickListener {
-                requestPayment()
-                dialog.dismiss()
-            }
-            dialog.setContentView(view)
-            dialog.show()
-
+    private fun setGooglePayAvailable(available: Boolean, cost: String, userCard: UserCardModel?) {
+        val dialog = BottomSheetDialog(requireContext())
+        var view: View = layoutInflater.inflate(R.layout.layout_payment_dialog, null)
+        val btnCard = view.findViewById<ConstraintLayout>(R.id.cardContainer)
+        if (userCard == null) {
+            btnCard.gone()
         } else {
 
+            var cardTextView = view.findViewById<ConstraintLayout>(R.id.cardText) as TextView
+            cardTextView.text = userCard.last_four
+
+        }
+
+        val btnGooglePay = view.findViewById<ConstraintLayout>(R.id.googlePayContainer)
+        btnGooglePay.setOnClickListener {
+            requestPayment(cost)
+            dialog.dismiss()
+        }
+
+        btnCard.setOnClickListener {
+            presenter.selectCardPayment()
+            dialog.dismiss()
+        }
+        if (!available) {
+            view.visibility = View.GONE
+        }
+        dialog.setContentView(view)
+        dialog.show()
+
+    }
+
+    private fun requestPayment(cost: String) {
+
+        try {
+            Log.d("UpBalanceActivity", "cost "+cost)
+            val transactionInfo = JSONObject().apply {
+                put("totalPrice", cost)
+                put("totalPriceStatus", "FINAL")
+                put("currencyCode", "RUB")
+            }
+            val paymentDataRequestJson = JSONObject(googlePayBaseConfiguration.toString()).apply {
+                put("allowedPaymentMethods", JSONArray().put(cardPaymentMethod))
+                put("transactionInfo", transactionInfo)
+                put("merchantInfo", merchantInfo)
+            }
+
+            val paymentDataRequest =
+                PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
+
+            AutoResolveHelper.resolveTask(
+                paymentsClient.loadPaymentData(paymentDataRequest),
+                requireActivity(), 123
+            )
+        }catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
-    private fun requestPayment() {
-        val paymentDataRequest =
-            PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
-
-        AutoResolveHelper.resolveTask(
-            paymentsClient.loadPaymentData(paymentDataRequest),
-            requireActivity(), 123)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("UpBalanceActivity","result "+resultCode)
+        when (requestCode) {
+            123 -> when (resultCode) {
+                Activity.RESULT_OK -> {
+                    val paymentData = PaymentData.getFromIntent(data!!)
+                    val token = paymentData!!.paymentMethodToken!!.token
+                    Log.d("UpBalanceActivity","google pay token "+token)
+                }
+                Activity.RESULT_CANCELED -> {
+                }
+            }
+            else -> {
+            }
+        }
     }
 
-    override fun showPaymentTypeDialog(cost: String) {
+    override fun showPaymentTypeDialog(cost: String, userCard: UserCardModel?) {
         paymentsClient = createPaymentsClient(requireActivity())
         val readyToPayRequest =
             IsReadyToPayRequest.fromJson(googlePayBaseConfiguration.toString())
@@ -216,9 +268,10 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         val readyToPayTask = paymentsClient.isReadyToPay(readyToPayRequest)
         readyToPayTask.addOnCompleteListener { task ->
             try {
-                task.getResult(ApiException::class.java)?.let(::setGooglePayAvailable)
-            } catch (exception: ApiException) {
+                setGooglePayAvailable(task.getResult(ApiException::class.java),cost, userCard)
 
+            } catch (exception: ApiException) {
+                exception.printStackTrace()
             }
         }
 
@@ -227,7 +280,7 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
                 WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY
             )
             .addParameter("gateway", "cloudpayments")
-            .addParameter("gatewayMerchantId", "Ваш Public ID")
+            .addParameter("gatewayMerchantId", "BCR2DN6T5655JZJH")
             .build()
 
 

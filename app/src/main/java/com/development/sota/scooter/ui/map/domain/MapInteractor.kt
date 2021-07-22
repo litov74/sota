@@ -22,6 +22,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 
 
@@ -168,7 +169,10 @@ class MapInteractorImpl(private val presenter: MapPresenter) : MapInteractor {
                 .subscribeBy(
                     onNext = { presenter.newOrderGotFromServer(it.id, scooterId, withActivation) },
                     onError = {
-                        Log.w("MapInteractor", "error "+it.localizedMessage)
+//                        if  (it is HttpException) {
+//                            it.response().errorBody().
+//                        }
+
                         presenter.addOrderError(it.localizedMessage)
                     }
                 )

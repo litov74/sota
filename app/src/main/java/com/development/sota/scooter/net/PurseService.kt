@@ -52,6 +52,12 @@ interface PurseService {
     fun topUpBalance( @Field("id") clientId: Long,
                       @Field("package") packageId: Long): Observable<WrapperCardPaymentVerificationModel>
 
+
+    @POST("topUpBalanceCrypto/")
+    @FormUrlEncoded
+    fun topUpBalanceGooglePay( @Field("id") clientId: Long,
+                      @Field("package") packageId: Long, @Field("google_pay")google_pay: Boolean, @Field("crypto") crypto: String): Observable<WrapperCardPaymentVerificationModel>
+
     @POST("SetCardAsMain/")
     @FormUrlEncoded
     fun setMainCard( @Field("id") clientId: Long,

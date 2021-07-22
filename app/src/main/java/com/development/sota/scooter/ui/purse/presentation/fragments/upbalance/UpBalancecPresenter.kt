@@ -6,19 +6,25 @@ import com.development.sota.scooter.common.base.BasePresenter
 import com.development.sota.scooter.ui.purse.domain.WalletUpBalanceInteractor
 import com.development.sota.scooter.ui.purse.domain.WalletUpBalanceInteractorImpl
 import com.development.sota.scooter.ui.purse.domain.entities.UpBalancePackageModel
+import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
 import moxy.MvpPresenter
+import java.lang.Exception
 
 class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), BasePresenter {
 
     private val interactor: WalletUpBalanceInteractor = WalletUpBalanceInteractorImpl(this)
     private lateinit var selectedModel: UpBalancePackageModel
     private var currentList: List<UpBalancePackageModel> = ArrayList()
+    private  var mainCard: UserCardModel? = null
+
+
 
     override fun onDestroyCalled() {
         interactor.disposeRequests()
     }
 
     fun resumeView() {
+        interactor.getCards()
         getUpBalancePackages()
     }
 
@@ -30,14 +36,35 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
         viewState.showProgress(boolean)
     }
 
+    fun setCards(userCardModels: List<UserCardModel>) {
+        Log.d("UpBalancePresenter", userCardModels.toString())
+        try {
+            if (userCardModels.size > 0) {
+                mainCard = userCardModels.find { it.is_main == true }
+                if (mainCard == null)
+                    mainCard = userCardModels.get(0)
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+
+    }
+
     fun upBalancePackage(model: UpBalancePackageModel) {
         selectedModel = model
-    //    viewState.showPaymentTypeDialog("zxc")
-     //   viewState.showAlertPayment(selectedModel.cost.toString())
-        viewState.showUpBalanceOk("250")
+
+        viewState.showAlertPayment(selectedModel.cost.toString())
     }
 
     fun confirmUpBalance() {
+        viewState.showPaymentTypeDialog(selectedModel.cost.toString(), mainCard)
+
+    }
+
+    fun selectCardPayment() {
         interactor.upBalance(selectedModel)
     }
 
@@ -57,6 +84,11 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
         currentList = list
         viewState.showProgress(false)
         viewState.setListPackages(currentList)
+    }
+
+    fun setGooglePayToken(token: String) {
+        viewState.showProgress(false)
+        interactor.upBalanceGooglePay(selectedModel, token)
     }
 
 }

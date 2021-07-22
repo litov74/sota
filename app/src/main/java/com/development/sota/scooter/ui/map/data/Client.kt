@@ -8,6 +8,7 @@ data class Client(
     val surname: String,
     val status: String,
     val balance: String,
+    val bonus_balance: String,
     @SerializedName("client_photo") val clientPhoto: String?,
     val phone: String,
     @SerializedName("failed_books") val failedBooks: Long,
