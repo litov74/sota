@@ -42,7 +42,7 @@ class TransactionViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recyc
     fun bind(transactionModel: TransactionModel, context: Context) {
         dateTransaction?.text = dateFormatter.format(transactionModel.date_time)
         costTransaction?.text  = transactionModel.cost?.let { String.format("%.2f", it.toFloat()).plus(
-            " ₽"
+            " р"
         ) }
         cardTransaction?.text  = transactionModel.last_four
         receiptContainer?.setOnClickListener(View.OnClickListener {

@@ -1,5 +1,6 @@
 package com.development.sota.scooter.ui.purse.domain
 
+import android.util.Log
 import com.development.sota.scooter.common.base.BaseInteractor
 import com.development.sota.scooter.db.SharedPreferencesProvider
 import com.development.sota.scooter.net.ClientRetrofitProvider
@@ -192,7 +193,9 @@ class WalletUpBalanceInteractorImpl(val presenter: UpBalancePresenter) : WalletU
     }
 
     override fun upBalanceGooglePay(selectedModel: UpBalancePackageModel, token: String) {
+        Log.d("WalletInteractor", token.toString())
         compositeDisposable.add(
+
             PurseRetrofitProvider.service.topUpBalanceGooglePay(sharedPreferences.getLong("id", -1),selectedModel.id, true, token)
                 .doOnSubscribe({presenter.showProgress(true)})
                 .subscribeOn(AndroidSchedulers.mainThread())

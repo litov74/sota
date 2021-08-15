@@ -74,7 +74,7 @@ class FinishedOrderAdapter(val data: List<OrderWithStatusRate>, val context: Con
             holder.textViewItemFinishedOrderDate.text = dateFormatter.format(data[position].order.parseStartTimeWithoutOffset())+" "+period.minutes+" минут"
 
             holder.textViewItemFinishedOrderAmount.text =
-                String.format("%.2f", data[position].order.cost).plus(" ₽")
+                String.format("%.2f", data[position].order.cost).plus(" р")
 
             holder.scooterNumber.text = "Самокат №"+data[position].order.scooter
 

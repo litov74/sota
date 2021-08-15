@@ -8,10 +8,10 @@ import android.view.MotionEvent
 import android.view.View
 import com.development.sota.scooter.MainActivity
 import com.development.sota.scooter.databinding.ActivityStartRentTutorialBinding
-import com.development.sota.scooter.databinding.ActivityTutorialBinding
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivity
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsStartTarget
 import com.development.sota.scooter.ui.help.presentation.HelpActivity
+import com.development.sota.scooter.ui.map.presentation.MapActivity
 import kotlinx.android.synthetic.main.activity_tutorial.*
 import kotlinx.android.synthetic.main.fragment_tutorial.*
 import moxy.MvpAppCompatActivity
@@ -70,6 +70,10 @@ class TutorialStartRentActivity : MvpAppCompatActivity(), TutorialStartRentView 
         }
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainActivity::class.java))
+    }
+
     override fun finishActivity() {
         runOnUiThread {
             val intent = Intent(this, DrivingsActivity::class.java)
@@ -126,6 +130,8 @@ open class OnSwipeStartRentTouchListener(ctx: Context): View.OnTouchListener {
             return result
         }
     }
+
+
 
     open fun onSwipeRight() {}
 

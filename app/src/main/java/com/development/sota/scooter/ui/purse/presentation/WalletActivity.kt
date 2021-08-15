@@ -132,7 +132,8 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
             Log.d("WalletActivity", paymentData.toJson())
 
             val paymentMethodData = JSONObject(paymentInformation).getJSONObject("paymentMethodData")
-            upBalanceActivity?.setPaymentToken( paymentMethodData
+
+            Log.d("GooglePaymentToken", paymentMethodData
                 .getJSONObject("tokenizationData")
                 .getString("token"))
 
@@ -160,7 +161,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
     }
 
     override fun setUserBalance(value: String) {
-        (binding.balance as TextView).text = "$value ₽ "
+        (binding.balance as TextView).text = "$value р "
 
     }
 

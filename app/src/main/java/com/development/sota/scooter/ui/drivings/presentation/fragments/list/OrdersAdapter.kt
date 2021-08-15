@@ -173,14 +173,14 @@ class OrdersAdapter(
                 holder.buttonResumeScooter.setOnClickListener {
                     manipulatorDelegate.resumeOrder(data[position].order.id)
                 }
-                holder.textViewItemScooterMinutePricing.text = "₽"+data[position].rate.pauseRate
+                holder.textViewItemScooterMinutePricing.text = "р"+data[position].rate.pauseRate
                 holder.buttonCloseOrder.setOnClickListener {
                     manipulatorDelegate.closeOrder(data[position].order.id)
                 }
 
                 holder.textViewItemScooterStateLabel.setText("ПАУЗА: ")
                 holder.textViewItemScooterStateValue.text =
-                        String.format("%.2f", data[position].order.cost).plus(" ₽")
+                        String.format("%.2f", data[position].order.cost).plus(" р")
             }
 
             OrderStatus.CHOOSE_RATE -> {
@@ -244,10 +244,10 @@ class OrdersAdapter(
 
 
 
-                holder.textViewItemScooterMinutePricing.text = "₽"+data[position].rate.minute
+                holder.textViewItemScooterMinutePricing.text = "р"+data[position].rate.minute
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
                 holder.textViewItemScooterStateValue.text =
-                    String.format("%.2f", data[position].order.cost).plus(" ₽")
+                    String.format("%.2f", data[position].order.cost).plus(" р")
             }
 
 

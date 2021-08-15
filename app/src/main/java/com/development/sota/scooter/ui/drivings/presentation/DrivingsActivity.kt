@@ -1,9 +1,15 @@
 package com.development.sota.scooter.ui.drivings.presentation
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.development.sota.scooter.MainActivity
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityDrivingsBinding
 import com.development.sota.scooter.ui.drivings.presentation.fragments.QRFragment
@@ -16,6 +22,7 @@ import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
 import java.io.Serializable
+
 
 interface DrivingsView : MvpView {
     @AddToEnd
@@ -64,10 +71,21 @@ class DrivingsActivity : MvpAppCompatActivity(), DrivingsView, DrivingsActivityV
         }
 
         setContentView(binding.root)
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+             IntentFilter("show_qr")
+        );
     }
+
+
 
     override fun gotCode(code: Long, delegate: DrivingsFragmentView) {
         presenter.testCode(code, delegate)
+    }
+
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            setFragmentByType(DrivingsListFragmentType.QR)
+        }
     }
 
     override fun showToast(string: String) {
@@ -140,7 +158,7 @@ class DrivingsActivity : MvpAppCompatActivity(), DrivingsView, DrivingsActivityV
     }
 
     override fun onBackPressed() {
-        onBackPressedByType(presenter.fragmentType)
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     override fun onBackPressedByType(type: DrivingsListFragmentType) {
@@ -167,6 +185,7 @@ class DrivingsActivity : MvpAppCompatActivity(), DrivingsView, DrivingsActivityV
     }
 
     override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         presenter.onDestroy()
         super.onDestroy()
     }

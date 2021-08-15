@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.development.sota.scooter.R
+import com.development.sota.scooter.common.Constants
 import com.development.sota.scooter.databinding.FragmentUpBalanceBinding
 import com.development.sota.scooter.ui.purse.domain.entities.UpBalancePackageModel
 import com.development.sota.scooter.ui.purse.domain.entities.UserCardModel
@@ -23,14 +24,12 @@ import com.google.android.gms.wallet.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import gone
-import kotlinx.android.synthetic.main.layout_payment_dialog.view.*
 import moxy.MvpAppCompatFragment
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.Exception
 
 
 interface UpBalanceView : MvpView {
@@ -72,6 +71,7 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
     private val binding get() = _binding!!
     private lateinit var progressDialog: MaterialDialog
     private lateinit var paymentsClient: PaymentsClient
+
     private val baseCardPaymentMethod = JSONObject().apply {
         put("type", "CARD")
         put("parameters", JSONObject().apply {
@@ -88,7 +88,7 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         put("type", "PAYMENT_GATEWAY")
         put("parameters", JSONObject(mapOf(
             "gateway" to "cloudpayments",
-            "gatewayMerchantId" to "BCR2DN6T5655JZJH")))
+            "gatewayMerchantId" to Constants.MERCHANT_PUBLIC_ID)))
     }
     private val cardPaymentMethod = JSONObject().apply {
         put("type", "CARD")
@@ -96,13 +96,11 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         put("parameters", JSONObject().apply {
             put("allowedCardNetworks", JSONArray(listOf("VISA", "MASTERCARD")))
             put("allowedAuthMethods", JSONArray(listOf("PAN_ONLY", "CRYPTOGRAM_3DS")))
-            put("billingAddressRequired", true)
-            put("billingAddressParameters", JSONObject(mapOf("format" to "FULL")))
         })
     }
     private val merchantInfo = JSONObject().apply {
-        put("merchantName", "cloudpayments")
-        put("merchantId", "BCR2DN6T5655JZJH")
+        put("merchantName", "Sota")
+    //    put("merchantId", "BCR2DN6TZ6RLRH3M")
     }
 
 
@@ -215,23 +213,48 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
 
     }
 
+
+
+//    fun createPaymentDataRequest(transactionInfo: TransactionInfo?): PaymentDataRequest {
+//        val paramsBuilder = PaymentMethodTokenizationParameters.newBuilder()
+//            .setPaymentMethodTokenizationType(
+//                WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY
+//            )
+//            .addParameter("gateway", "ConstantsGPay.GATEWAY_TOKENIZATION_NAME")
+//
+//        return createPaymentDataRequest(transactionInfo, paramsBuilder.build())
+//    }
+
+
     private fun requestPayment(cost: String) {
 
         try {
-            Log.d("UpBalanceActivity", "cost "+cost)
+
+
             val transactionInfo = JSONObject().apply {
                 put("totalPrice", cost)
                 put("totalPriceStatus", "FINAL")
                 put("currencyCode", "RUB")
             }
+
+            val params = PaymentMethodTokenizationParameters.newBuilder()
+                .setPaymentMethodTokenizationType(
+                    WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY
+                )
+                .addParameter("gateway", "cloudpayments")
+                .addParameter("gatewayMerchantId", Constants.MERCHANT_PUBLIC_ID)
+                .build()
+
             val paymentDataRequestJson = JSONObject(googlePayBaseConfiguration.toString()).apply {
                 put("allowedPaymentMethods", JSONArray().put(cardPaymentMethod))
                 put("transactionInfo", transactionInfo)
                 put("merchantInfo", merchantInfo)
             }
 
-            val paymentDataRequest =
-                PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
+
+            Log.d("UpBalanceActivity", paymentDataRequestJson.toString())
+
+            val paymentDataRequest = PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
 
             AutoResolveHelper.resolveTask(
                 paymentsClient.loadPaymentData(paymentDataRequest),
@@ -275,13 +298,7 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
             }
         }
 
-        val params = PaymentMethodTokenizationParameters.newBuilder()
-            .setPaymentMethodTokenizationType(
-                WalletConstants.PAYMENT_METHOD_TOKENIZATION_TYPE_PAYMENT_GATEWAY
-            )
-            .addParameter("gateway", "cloudpayments")
-            .addParameter("gatewayMerchantId", "BCR2DN6T5655JZJH")
-            .build()
+
 
 
     }

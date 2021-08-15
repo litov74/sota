@@ -231,6 +231,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     }
 
     fun clickedOnBookButton(scooterId: Long) {
+        Log.d("MapPresenter", "click id "+scooterId)
         viewState.setActivatingScooter(true)
         interactor.checkNoneNullBalanceAndBookBan(scooterId)
     }

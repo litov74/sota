@@ -25,8 +25,7 @@
         android:testOnly="false"
         android:name=".SotaApp"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        tools:ignore="AllowBackup,UnusedAttribute">
+        android:usesCleartextTraffic="true">
 
         <!-- Main activity description part -->
         <activity
@@ -51,6 +50,7 @@
 
         <activity
             android:name=".ui.map.presentation.MapActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <activity

@@ -311,8 +311,8 @@
     <string name="error_api">Произошла ошибка при подключении к серверу. Попробуйте перезапустить приложение</string>
     <string name="wallet_label">Кошелёк</string>
     <string name="connect_with">Связаться через:</string>
-    <string name="mock_zero_balance">0.00 ₽</string>
-    <string name="balance_user">%s ₽</string>
+    <string name="mock_zero_balance">0.00р</string>
+    <string name="balance_user">%sр</string>
     <string name="date">Дата</string>
     <string name="card">Карта</string>
     <string name="sum">Сумма</string>
@@ -321,7 +321,7 @@
     <string name="cardholder_name">Имя на карте</string>
     <string name="mm_year">ММ/ГГ</string>
     <string name="cvv">CVV</string>
-    <string name="first_transaction_description">Мы спишем и тут же вернем 1₽, чтобы\nудостовериться, что твоя карта работает</string>
+    <string name="first_transaction_description">Мы спишем и тут же вернем 1р, чтобы\nудостовериться, что твоя карта работает</string>
     <string name="add">Добавить</string>
     <string name="help">Помощь</string>
     <string name="call_to_free_number">Позвонить по бесплатному номеру</string>
@@ -363,4 +363,5 @@
     <string name="send_to">Отправить</string>
     <string name="my_promo">Мои промоакции</string>
     <string name="attach_promotional">Добавить промокод</string>
+    <string name="back">Назад</string>
 </resources>

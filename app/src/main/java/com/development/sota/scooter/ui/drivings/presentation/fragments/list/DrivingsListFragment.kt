@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.development.sota.scooter.MainActivity
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.FragmentDrivingsListBinding
 import com.development.sota.scooter.ui.drivings.domain.entities.OrderWithStatusRate
@@ -98,13 +100,20 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
         _binding = FragmentDrivingsListBinding.inflate(inflater, container, false)
 
         binding.imageButtonDrivingsListBack.setOnClickListener {
-            drivingsView.onBackPressedByType(DrivingsListFragmentType.LIST)
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
+
+        binding.addScooter.setOnClickListener {
+            val intent =  Intent("show_qr");
+            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+        }
+
 
         binding.viewPager2DrivingsList.isUserInputEnabled = false
 
         binding.buttonDrivingsListActive.setOnClickListener {
             if (segmentId == 1) {
+                binding.addScooter.visibility = View.VISIBLE
                 binding.buttonDrivingsListActive.background =
                     ContextCompat.getDrawable(context!!, R.drawable.ic_white_corner)
                 binding.buttonDrivingsListActive.elevation = 4f
@@ -120,6 +129,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
 
         binding.buttonDrivingsListHistory.setOnClickListener {
             if (segmentId == 0) {
+                binding.addScooter.visibility = View.INVISIBLE
                 binding.buttonDrivingsListHistory.background =
                     ContextCompat.getDrawable(context!!, R.drawable.ic_white_corner)
                 binding.buttonDrivingsListHistory.elevation = 4f

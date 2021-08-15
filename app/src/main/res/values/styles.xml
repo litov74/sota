@@ -3,12 +3,15 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/icon_purple</item>
-        <item name="colorPrimaryDark">@color/blue_indicator</item>
+        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/icon_purple</item>
         <item name="font">@font/roboto</item>
         <item name="fontFamily">@font/roboto</item>
+        <item name="android:actionButtonStyle">@style/MyActionButtonStyle</item>
         <item name="android:textSize">14dp</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
+
 
     <style name="FullscreenAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -21,11 +24,19 @@
         <item name="android:windowBackground">@drawable/ic_launch_screen</item>
     </style>
 
+    <style name="MyActionButtonStyle" parent="AppTheme">
+
+        <item name="android:paddingTop">32dp</item>
+    </style>
+
     <style name="MenuItem" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:fontFamily">@font/robotoregular</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">22sp</item>
+        <item name="fontFamily">@font/geometria</item>
 
     </style>
+
+
 
     <style name="SCBSwitch" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/green_switch</item>

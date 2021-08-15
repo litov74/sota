@@ -741,8 +741,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                             View.GONE
                     getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemRentButtons.visibility =
                             View.GONE
-                    getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFirstBookButtons.visibility =
-                            View.GONE
+
 
                     getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRoute.visibility =
                             View.GONE
@@ -753,6 +752,13 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                     getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.linnearLayoutScooterItemFirstBookButtons.visibility =
                             View.VISIBLE
+
+                    findViewById<Button>(R.id.buttonItemScooterFirstActivate).setOnClickListener {
+                        Log.d("MapActivity", "select activate 3 ")
+                        presenter.clickedOnBookButton(scooter.id)
+                        currentShowingScooter = -1
+                    }
+                    Log.d("MapActivity", "status "+status.toString())
 
                     when (status) {
                         OrderStatus.CANDIDIATE -> {
@@ -801,19 +807,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                             currentShowingScooter = scooter.id
 
-                            findViewById<Button>(R.id.buttonItemScooterFirstActivate).setOnClickListener {
-                                presenter.clickedOnBookButton(scooter.id)
-
-                                currentShowingScooter = -1
-                            }
-
-                            findViewById<Button>(R.id.buttonItemScooterBookFirst).setOnClickListener {
-                                presenter.clickedOnBookButton(scooter.id)
-
-                                currentShowingScooter = -1
-                            }
-
-
                         }
 
                         else -> presenter.sendToTheDrivingsList()
@@ -832,7 +825,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         runOnUiThread {
             if (currentShowingScooter == scooterId) {
 
-                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "₽"+rate.minute
+                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "р"+rate.minute
             }
         }
     }
@@ -842,7 +835,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         runOnUiThread {
             if (currentShowingScooter == scooterId) {
 
-                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "₽"+rate
+                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "р"+rate
             }
         }
     }
@@ -1010,7 +1003,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                             "${getString(R.string.map_book)} $bookCount"
                         getBinding.contentOfMap.mapPopupItem.textViewPopupMenuUpValue.text =
                             orders.filter { it.status == OrderStatus.BOOKED.value }.map { it.cost }
-                                .sum().toString() + " ₽"
+                                .sum().toString() + " р"
                     }
 
                     if (rentCount >= 1) {
@@ -1019,7 +1012,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                         getBinding.contentOfMap.mapPopupItem.textViewPopupMenuUpValue.text =
                             orders.filter { it.status == OrderStatus.ACTIVATED.value }
                                 .map { it.cost }
-                                .sum().toString() + " ₽"
+                                .sum().toString() + " р"
                     }
                 } else {
                     getBinding.contentOfMap.mapPopupItem.textViewPopupMenuDownBordered.visibility =
@@ -1069,7 +1062,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                             "${getString(R.string.map_book)} $bookCount"
                         getBinding.contentOfMap.mapPopupItem.textViewPopupMenuUpValue.text =
                             orders.filter { it.status == OrderStatus.BOOKED.value }.map { it.cost }
-                                .sum().toString() + " ₽"
+                                .sum().toString() + " р"
                     }
 
                     if (rentCount >= 1) {
@@ -1078,7 +1071,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                         getBinding.contentOfMap.mapPopupItem.textViewPopupMenuDownValue.text =
                             orders.filter { it.status == OrderStatus.ACTIVATED.value }
                                 .map { it.cost }
-                                .sum().toString() + " ₽"
+                                .sum().toString() + " р"
                     }
                 }
             }
@@ -1215,6 +1208,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         runOnUiThread {
             val intent = Intent(this, TutorialStartRentActivity::class.java)
             startActivity(intent)
+
         }
     }
 
