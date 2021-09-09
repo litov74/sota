@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.GravityCompat
 import com.development.sota.scooter.R
 import com.development.sota.scooter.databinding.ActivityMapBinding
@@ -306,22 +307,22 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
                 style.addImageAsync(
                     SCOOTERS_ICON_THIRD,
-                    bitmapIconFromVector(R.drawable.ic_icon_scooter_third)
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_first).toBitmap()
                 )
                 style.addImageAsync(
                     SCOOTERS_ICON_SECOND,
-                    bitmapIconFromVector(R.drawable.ic_icon_scooter_second)
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_first).toBitmap()
                 )
                 style.addImageAsync(
                     PARKING_IMAGE,
-                    bitmapIconFromVector(R.drawable.ic_chosen_scooter_icon))
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_selected).toBitmap())
                 style.addImageAsync(
                     SCOOTERS_ICON_FIRST,
-                    bitmapIconFromVector(R.drawable.ic_icon_scooter_first)
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_first).toBitmap()
                 )
                 style.addImageAsync(
                     SCOOTERS_ICON_CHOSEN,
-                    getBitmapFromVectorDrawable(R.drawable.ic_chosen_scooter_icon)!!
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_selected).toBitmap()
                 )
                 style.addImageAsync(
                     PARKING_ICON_ID,
@@ -507,7 +508,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
             map?.style?.addLayer(scootersLayer)
 
-            val layer = intArrayOf(1, ContextCompat.getColor(this, R.color.purple_text))
+            val layer = intArrayOf(1, ContextCompat.getColor(this, R.color.white))
 
             val circles = CircleLayer(CLUSTERS_LAYER, SCOOTERS_SOURCE)
             circles.setProperties(
@@ -530,7 +531,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             count.setProperties(
                 textField(toString(get("point_count"))),
                 textSize(12f),
-                textColor(Color.WHITE),
+                textColor(Color.GREEN),
                 textIgnorePlacement(true),
                 textAllowOverlap(true)
             )
@@ -767,16 +768,15 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                             getBinding.contentOfMap.mapScooterItem.textViewItemScooterStateValue.visibility =
                                     View.GONE
 
-                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.visibility =
-                                    View.VISIBLE
-                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.clipToOutline =
-                                    true
-                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.imageView2Backgroundless.clipToOutline =
-                                    true
+//                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.visibility =
+//                                    View.VISIBLE
+//                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.clipToOutline =
+//                                    true
+//                            getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.constraintLayoutScooterItemPopupRouteBackgroundless.imageView2Backgroundless.clipToOutline =
+//                                    true
 
                             getBinding.contentOfMap.mapScooterItem.cardViewScooterItem.textViewItemScooterMinutePricing.text =
                                     ""
-
 
                             val scooterPercentage = scooter.getBatteryPercentage()
                             val scooterInfo = scooter.getScooterRideInfo()
@@ -825,7 +825,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         runOnUiThread {
             if (currentShowingScooter == scooterId) {
 
-                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "р"+rate.minute
+                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = rate.minute+"р"
             }
         }
     }
@@ -835,7 +835,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         runOnUiThread {
             if (currentShowingScooter == scooterId) {
 
-                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = "р"+rate
+                getBinding.contentOfMap.mapScooterItem.linearLayoutScooterItemInfoTextView.textViewItemScooterMinutePricing.text = rate+"р"
             }
         }
     }

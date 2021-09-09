@@ -14,8 +14,8 @@ android {
         applicationId "com.development.sota.scooter"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 188
-        versionName "1.8.8_beta"
+        versionCode 191
+        versionName "1.9.1_beta"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.github.cloudpayments:CloudPayments-SDK-Android:1.0.2'
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-perf:20.0.1'
+    implementation 'com.google.firebase:firebase-appindexing:20.0.0'
 
 
     // Pay support

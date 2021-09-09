@@ -25,21 +25,21 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:text="Добавить способ оплаты"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="@color/purple_secondary_text"
+                app:fontFamily="@font/geometria"
+                android:textSize="17sp"
+                android:textColor="@color/red"
                 android:layout_height="wrap_content" />
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_gravity="center_vertical"
-                app:tint="@color/purple_secondary_text"
+                android:layout_marginStart="8dp"
+                app:tint="@color/red"
                 android:src="@drawable/ic_add"/>
 
         </LinearLayout>

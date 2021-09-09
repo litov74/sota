@@ -3,17 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,6 +17,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:textColor="@android:color/black"
+                app:fontFamily="@font/geometria_bold"
+                android:textSize="17sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,14 +41,17 @@
                     android:id="@+id/textViewItemFinishedOrderDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:fontFamily="@font/geometria"
+                    android:textSize="17sp"
                     android:gravity="center|center_horizontal|center_vertical"
-                    android:textColor="@android:color/black"
-                    android:textSize="14dp" />
+                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:id="@+id/scooterNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:fontFamily="@font/geometria"
+                    android:textSize="15sp"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:textColor="@android:color/black" />
 
@@ -62,11 +59,13 @@
                     android:id="@+id/textViewItemFinishedDelta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:fontFamily="@font/geometria"
+                    android:textSize="15sp"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:textColor="@android:color/black" />
 
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

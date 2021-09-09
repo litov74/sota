@@ -23,7 +23,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textViewAddCardLabel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textViewAddCardLabel"
-                app:srcCompat="@drawable/ic_back_arrow" />
+                app:srcCompat="@drawable/ic_back_new"
+                />
 
             <TextView
                 android:id="@+id/textViewAddCardLabel"
@@ -34,7 +35,7 @@
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:textStyle="bold"
+                app:fontFamily="@font/geometria"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,6 +63,7 @@
                 android:hint="@string/card_number"
                 android:maxLines="1"
                 android:paddingTop="16dp"
+                app:fontFamily="@font/geometria"
                 android:singleLine="true"
                 android:textAlignment="center"
                 android:textSize="20dp"
@@ -76,6 +78,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:backgroundTint="@color/gray_edit_text"
                 android:hint="@string/cardholder_name"
+                app:fontFamily="@font/geometria"
                 android:inputType="textPersonName"
                 android:maxLines="1"
                 android:paddingTop="16dp"
@@ -103,6 +106,7 @@
                 android:backgroundTint="@color/gray_edit_text"
                 android:hint="@string/mm_year"
                 android:maxLines="1"
+                app:fontFamily="@font/geometria"
                 android:paddingTop="16dp"
                 android:singleLine="true"
                 android:textAlignment="center"
@@ -125,6 +129,7 @@
                 android:inputType="numberPassword"
                 android:maxLines="1"
                 android:maxLength="4"
+                app:fontFamily="@font/geometria"
                 android:paddingTop="16dp"
                 android:singleLine="true"
                 android:textAlignment="center"
@@ -152,6 +157,7 @@
             android:layout_marginBottom="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
+            app:fontFamily="@font/geometria"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/buttonRegCard"/>
 
@@ -160,16 +166,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonRegCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_curved_gradient"
+            android:background="@drawable/background_stroke_red"
             android:padding="4dp"
             android:layout_margin="16dp"
             android:text="@string/add"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/red"
             android:textSize="15sp" />
 
         <ProgressBar

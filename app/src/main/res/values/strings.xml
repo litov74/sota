@@ -6,7 +6,7 @@
 
     <string name="login_label">Введите свой номер</string>
     <string name="login_sub_label">Мы отправим код для подтверждения номера телефона.</string>
-    <string name="login_agree"><u>Cогласен с пользовательским соглашением</u></string>
+    <string name="login_agree">Cогласен с пользовательским соглашением</string>
     <string name="login_get_code">Запросить код</string>
     <string name="login_agree_and_get_code">Согласиться и запросить код</string>
     <string name="login_oops">Что-то пошло не так. Проверьте правильность введённых данных</string>
@@ -310,7 +310,7 @@
 
     <string name="error_api">Произошла ошибка при подключении к серверу. Попробуйте перезапустить приложение</string>
     <string name="wallet_label">Кошелёк</string>
-    <string name="connect_with">Связаться через:</string>
+    <string name="connect_with">Связаться через</string>
     <string name="mock_zero_balance">0.00р</string>
     <string name="balance_user">%sр</string>
     <string name="date">Дата</string>
@@ -347,7 +347,7 @@
     <string name="invite_friend_description">Пригласи друга и получите оба бонусы на поездки</string>
     <string name="promo_look">Посмотреть</string>
     <string name="pay">Платишь</string>
-    <string name="benefit">Выгода 0 р</string>
+    <string name="benefit">Выгода</string>
     <string name="get_count">Получаешь</string>
     <string name="make_main">Сделать главной</string>
     <string name="card_points">•••</string>

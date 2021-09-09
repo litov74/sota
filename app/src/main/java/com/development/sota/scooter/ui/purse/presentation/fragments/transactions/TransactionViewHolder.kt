@@ -23,11 +23,14 @@ class TransactionViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recyc
     )
 ) {
 
-    private val dateFormatter = SimpleDateFormat("dd-M-yyyy hh:mm", Locale.getDefault())
+    private val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    private val dateFormatterTime = SimpleDateFormat("hh:mm", Locale.getDefault())
+  //  private val dateFormatter = SimpleDateFormat("dd-M-yyyy hh:mm", Locale.getDefault())
 
     private var dateTransaction: TextView? = null
     private var cardTransaction: TextView? = null
     private var costTransaction: TextView? = null
+    private var time: TextView? = null
     private var receiptContainer: View? = null
     init {
          dateTransaction =
@@ -38,13 +41,16 @@ class TransactionViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recyc
                 itemView.findViewById(R.id.costTransaction)
         receiptContainer =
             itemView.findViewById(R.id.receiptContainer)
+        time =
+            itemView.findViewById(R.id.time)
     }
     fun bind(transactionModel: TransactionModel, context: Context) {
         dateTransaction?.text = dateFormatter.format(transactionModel.date_time)
+        time?.text = dateFormatterTime.format(transactionModel.date_time)
         costTransaction?.text  = transactionModel.cost?.let { String.format("%.2f", it.toFloat()).plus(
             " р"
         ) }
-        cardTransaction?.text  = transactionModel.last_four
+        cardTransaction?.text  = "* "+transactionModel.last_four
         receiptContainer?.setOnClickListener(View.OnClickListener {
             var webpage = Uri.parse(transactionModel.receipt_link)
 

@@ -31,25 +31,25 @@ class MainActivity : MvpAppCompatActivity() {
         )
         sharedPreferences = getSharedPreferences(SP_KEY_ACCOUNT, Context.MODE_PRIVATE)
 
-        LoginRetrofitProvider.serviceDNS
-            .getDNS()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onError = {  },
-                onNext = {
-                    it.Answer.forEach{
-                        if (it.data.contains("backend")) {
-                            var dev = it.data.split("p=").get(1).split("t=").first().trim()
-                            val prod = it.data.split("t=").get(1).trim()
-
-                            Log.w("MainActivity", "dev host "+dev+" prod host "+prod)
-                            if (BuildConfig.BUILD_TYPE.compareTo("debug") == 0) {
-                                sharedPreferences.edit().putString("host", dev).apply()
-                            } else if (BuildConfig.BUILD_TYPE.compareTo("release") == 0) {
-                                sharedPreferences.edit().putString("host", prod).apply()
-                            }
-                        }
-                    }
+//        LoginRetrofitProvider.serviceDNS
+//            .getDNS()
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeBy(
+//                onError = {  },
+//                onNext = {
+//                    it.Answer.forEach{
+//                        if (it.data.contains("backend")) {
+//                            var dev = it.data.split("p=").get(1).split("t=").first().trim()
+//                            val prod = it.data.split("t=").get(1).trim()
+//
+//                            Log.w("MainActivity", "dev host "+dev+" prod host "+prod)
+//                            if (BuildConfig.BUILD_TYPE.compareTo("debug") == 0) {
+//                                sharedPreferences.edit().putString("host", dev).apply()
+//                            } else if (BuildConfig.BUILD_TYPE.compareTo("release") == 0) {
+//                                sharedPreferences.edit().putString("host", prod).apply()
+//                            }
+//                        }
+//                    }
 
 //                    LoginRetrofitProvider.service
 //                        .getSupportContacts()
@@ -65,6 +65,7 @@ class MainActivity : MvpAppCompatActivity() {
 //                            })
 
                     var token = sharedPreferences.getString("token", "")
+
                     val classActivity: Class<*> =
                         if (!sharedPreferences.getBoolean(SP_KEY_FIRST_INIT, false)) {
                             LoginActivity::class.java
@@ -76,7 +77,7 @@ class MainActivity : MvpAppCompatActivity() {
                             LoginActivity::class.java
                         }
                     startActivity(Intent(this, classActivity))
-        })
+    //    })
 
     }
 

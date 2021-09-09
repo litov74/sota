@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:animateLayoutChanges="true">
 
     <ImageButton
@@ -17,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewDrivingsListLabel"
         app:layout_constraintVertical_bias="0.0"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_menu_icon_help" />
 
     <TextView
@@ -29,6 +31,7 @@
         android:text="@string/drivings_label"
         android:textAlignment="center"
         android:textColor="#000000"
+        app:fontFamily="@font/geometria"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textViewDrivingsListLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewDrivingsListLabel"
-        app:srcCompat="@drawable/ic_back_arrow" />
+        app:srcCompat="@drawable/ic_back_new" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2DrivingsList"
@@ -59,19 +62,19 @@
         app:layout_constraintTop_toBottomOf="@+id/linnearLayoutSegmentContol"
        />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addScooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_weight="1"
-        android:background="@drawable/ic_white_circle_with_purple_corner"
+        android:background="@drawable/background_green_red"
         android:padding="4dp"
         android:text="Добавить самокат"
         android:textAllCaps="false"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="@color/purple_secondary_text"
+        android:textColor="@color/text_green"
         android:textSize="15sp" />
 
 
@@ -84,23 +87,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/red"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linnearLayoutSegmentContol"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/ic_gray_segment_corner"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDrivingsListLabel">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonDrivingsListActive"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
@@ -108,14 +112,15 @@
             android:layout_marginVertical="4dp"
             android:layout_marginStart="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_white_corners_with_border"
+            android:background="@drawable/background_stroke_red"
             android:elevation="4dp"
+            android:textColor="@color/red"
             android:text="@string/drivings_active"
             android:textAllCaps="false"
             tools:layout_editor_absoluteX="35dp"
             tools:layout_editor_absoluteY="210dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonDrivingsListHistory"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
@@ -123,7 +128,8 @@
             android:layout_marginVertical="4dp"
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_gray_segment_corner"
+            android:textColor="@color/gray"
+            android:background="@drawable/background_stroke_gray"
             android:text="@string/drivings_history"
             android:textAllCaps="false"
             tools:layout_editor_absoluteX="210dp"

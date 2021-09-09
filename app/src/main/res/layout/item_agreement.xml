@@ -12,6 +12,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
         android:text="TextView"
+        app:fontFamily="@font/geometria"
         android:textColor="@android:color/black"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +41,8 @@
                 android:id="@+id/textViewLoginAgreementData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:fontFamily="@font/geometria"
+                android:textSize="17sp"
                 android:text="TextView" />
         </LinearLayout>
     </ScrollView>

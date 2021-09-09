@@ -173,7 +173,7 @@ class OrdersAdapter(
                 holder.buttonResumeScooter.setOnClickListener {
                     manipulatorDelegate.resumeOrder(data[position].order.id)
                 }
-                holder.textViewItemScooterMinutePricing.text = "р"+data[position].rate.pauseRate
+                holder.textViewItemScooterMinutePricing.text = data[position].rate.pauseRate+"р"
                 holder.buttonCloseOrder.setOnClickListener {
                     manipulatorDelegate.closeOrder(data[position].order.id)
                 }
@@ -228,7 +228,7 @@ class OrdersAdapter(
             OrderStatus.ACTIVATED -> {
                 tickerJobs[data[position].order.id]?.cancel()
 
-                holder.constraintLayoutScooterItemPopupLock.visibility = View.VISIBLE
+               // holder.constraintLayoutScooterItemPopupLock.visibility = View.VISIBLE
                 holder.linnearLayoutScooterItemFinishButtons.visibility = View.VISIBLE
 
                 holder.buttonScooterItemPause.setOnClickListener {
@@ -244,7 +244,7 @@ class OrdersAdapter(
 
 
 
-                holder.textViewItemScooterMinutePricing.text = "р"+data[position].rate.minute
+                holder.textViewItemScooterMinutePricing.text = data[position].rate.minute+"p"
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
                 holder.textViewItemScooterStateValue.text =
                     String.format("%.2f", data[position].order.cost).plus(" р")

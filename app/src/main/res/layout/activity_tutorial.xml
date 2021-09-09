@@ -41,7 +41,7 @@
                 app:dotsSize="22dp"
                 app:dotsStrokeWidth="2dp"
                 app:dotsSpacing="16dp"
-                app:selectedDotColor="#FFEFF3"
+                app:selectedDotColor="@color/red_button_color"
                 app:dotsColor="#CDCDCD"
                 app:dotsCornerRadius="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/buttonTutorialNext"
@@ -85,8 +85,8 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
         android:src="@drawable/logo_updated"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

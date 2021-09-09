@@ -21,26 +21,30 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonCloseDoc"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_white_circle_with_purple_corner"
+            android:background="@drawable/background_stroke_red"
             android:layout_marginEnd="8dp"
             android:text="Закрыть"
             android:textAllCaps="false"
-            android:textColor="@color/purple_secondary_text" />
+            app:fontFamily="@font/geometria"
+            android:textColor="@color/red" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonLoginUserAgreementConfirm"
             style="@style/GradientButton"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_gravity="bottom"
+            android:textColor="@color/text_green"
+            app:fontFamily="@font/geometria"
+            android:background="@drawable/background_green_red"
             android:layout_marginStart="8dp"
-            android:layout_height="50dp"
+
             android:text="@string/next" />
 
     </LinearLayout>

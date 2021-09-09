@@ -22,7 +22,7 @@ bon !-->
             android:layout_height="match_parent"
             app:autoFocusButtonVisible="false"
             app:flashButtonVisible="false"
-            app:frameColor="@color/qr_purple"
+            app:frameColor="@color/white"
             app:maskColor="#00FFFFFF">
 
         </com.budiyev.android.codescanner.CodeScannerView>
@@ -38,6 +38,7 @@ bon !-->
         android:layout_marginEnd="16dp"
         android:text="@string/qr_scanner_take_scooter"
         android:textAlignment="center"
+        android:visibility="invisible"
         android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -54,8 +55,11 @@ bon !-->
         android:layout_marginEnd="32dp"
         android:text="@string/qr_scanner_hint"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/segment_black"
         android:textSize="16dp"
+        android:padding="16dp"
+        app:fontFamily="@font/geometria"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewQrScannerTake" />
@@ -71,34 +75,30 @@ bon !-->
         app:layout_constraintBottom_toBottomOf="@+id/textViewQrScannerTake"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewQrScannerTake"
-        app:srcCompat="@drawable/ic_back_arrow_white" />
+        app:srcCompat="@drawable/ic_back_new" />
 
     <ImageButton
         android:id="@+id/imageButtonQrScannerCode"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="64dp"
-        android:background="@drawable/ic_vertical_gradient"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:background="@drawable/ic_scooter_number"
         android:padding="12dp"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_icon_code" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButtonQrScannerLantern"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_vertical_gradient"
+        android:background="@drawable/ic_scooter_light"
         android:cropToPadding="true"
         android:padding="12dp"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="@+id/imageButtonQrScannerCode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageButtonQrScannerCode"
-        app:srcCompat="@drawable/ic_icon_lantern" />
+        app:layout_constraintTop_toTopOf="@+id/imageButtonQrScannerCode" />
 
     <ProgressBar
         android:id="@+id/progressBarDrivingsQr"

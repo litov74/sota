@@ -37,5 +37,10 @@
     <color name="remove_red">#FF453A</color>
     <color name="blue_text">#2F80ED</color>
     <color name="scooter_card_gray">#bdbdbd</color>
+    <color name="red_button_color">#ff0240</color>
+    <color name="red_button">#FF0041</color>
+    <color name="text_green">#64B200</color>
+    <color name="selected_profile_menu_tint">#0ECCFE</color>
+    <color name="profile_tint_gray">#999999</color>
 
 </resources>

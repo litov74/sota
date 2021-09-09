@@ -29,9 +29,9 @@ class UpBalanceViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recycle
 
         val benefitValue = model.income - model.cost
 
-        cost?.text  = model.cost?.let { String.format("%.2f", it.toFloat()).plus(" р") }
-        benefit?.text = "Выгода "+benefitValue.toString()+"  р"
-        income?.text = model.income?.let { String.format("%.2f", it.toFloat()).plus(" р") }
+        cost?.text  = model.cost?.let { String.format("%.2f", it.toFloat()).plus("р") }
+        benefit?.text = "Выгода "+benefitValue.toString()+"р"
+        income?.text = model.income?.let { String.format("%.2f", it.toFloat()).plus("р") }
         container?.setOnClickListener({
             upBalanceManipulatorDelegate.selectPackage(model)
         })

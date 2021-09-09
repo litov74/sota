@@ -140,7 +140,7 @@ class LoginCodeFragment(
 
     override fun setProgressBarLoginCodeVisibility(state: Boolean) {
         activity?.runOnUiThread {
-            binding.progressBarLoginCode.visibility = if (state) View.VISIBLE else View.GONE
+         //   binding.progressBarLoginCode.visibility = if (state) View.VISIBLE else View.GONE
         }
     }
 
@@ -152,10 +152,10 @@ class LoginCodeFragment(
 
     override fun showErrorCode() {
         binding.loginCodePinView.setHintTextColor(resources.getColor(R.color.red_edit_text))
-        binding.loginCodePinView.hint = binding.loginCodePinView.text.toString()
+
         binding.loginCodePinView.text?.clear()
         binding.loginCodePinView.setSelection(0)
-        binding.loginCodePinView.isCursorVisible = false
+        binding.loginCodePinView.isCursorVisible = true
     }
 
     override fun closeFragment(result: Boolean) {

@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:visibility="invisible"
-    android:background="@drawable/ic_scooter_gradient"
+    android:background="@color/white"
     android:elevation="8dp">
 
     <androidx.cardview.widget.CardView
@@ -48,7 +47,7 @@
                 app:layout_constraintStart_toEndOf="@+id/textViewItemScooterId"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_scooter_profile" />
+                app:srcCompat="@drawable/ic_card_scooter" />
 
             <TextView
                 android:id="@+id/textViewItemScooterId"
@@ -56,9 +55,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@android:color/black"
                 android:textSize="30sp"
-                android:fontFamily="@font/robotobold"
+                app:fontFamily="@font/geometria_bold"
+                android:textColor="@color/segment_black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,7 +65,7 @@
                 android:id="@+id/textViewItemScooterStateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotoregular"
+                app:fontFamily="@font/geometria"
                 android:textAllCaps="true"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
@@ -79,8 +78,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="@font/robotoregular"
-                android:textColor="@color/purple_text"
+                app:fontFamily="@font/geometria_bold"
+                android:textColor="@color/segment_black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewItemScooterStateLabel"
                 app:layout_constraintStart_toEndOf="@+id/textViewItemScooterStateLabel"
@@ -111,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
-                        android:fontFamily="@font/robotoregular"
+                        app:fontFamily="@font/geometria"
                         android:textColor="@color/segment_black"
                         android:textSize="22sp" />
 
@@ -122,8 +121,8 @@
                         android:paddingTop="4dp"
                         android:paddingBottom="4dp"
                         android:layout_marginStart="4dp"
-                        android:text="в минуту"
-                        android:fontFamily="@font/robotoregular"
+                        android:text="за минуту"
+                        app:fontFamily="@font/geometria"
                         android:textColor="@color/scooter_card_gray"
                         android:textSize="14sp" />
 
@@ -134,25 +133,31 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="4dp"
+                    android:paddingTop="8dp"
                     android:paddingBottom="4dp"
                     android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="17dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_energy"/>
 
                     <TextView
                         android:id="@+id/scooterPercent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:textColor="#000"
-                        android:textSize="22sp" />
+                        app:fontFamily="@font/geometria_bold"
+                        android:textColor="@color/text_green"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/scooterPercentTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:fontFamily="@font/robotoregular"
-                        android:textColor="@color/scooter_card_gray"
+                        android:fontFamily="@font/geometria"
+                        android:textColor="@color/segment_black"
                         android:textSize="14sp"/>
 
                     <TextView
@@ -160,8 +165,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:fontFamily="@font/robotoregular"
-                        android:textColor="@color/scooter_card_gray"
+                        android:fontFamily="@font/geometria"
+                        android:textColor="@color/segment_black"
                         android:textSize="14sp"/>
 
                 </LinearLayout>
@@ -205,11 +210,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_curved_gradient"
                     android:padding="4dp"
-                    android:text="@string/scooter_activate"
+                    android:textColor="@color/red"
+                    android:background="@drawable/background_stroke_red"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -296,12 +300,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_white_circle_with_purple_corner"
+                    android:background="@drawable/background_stroke_red"
                     android:padding="4dp"
                     android:text="@string/scooter_finish"
                     android:textAllCaps="false"
-                    android:textColor="@color/purple_secondary_text"
+                    app:fontFamily="@font/geometria"
+                    android:textColor="@color/red"
                     android:textSize="15sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -327,11 +333,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_curved_gradient"
+                    android:textColor="@color/red"
+                    android:background="@drawable/background_stroke_red"
                     android:padding="4dp"
                     android:text="@string/scooter_activate"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
                     android:textSize="15sp" />
 
                 <Button
@@ -340,11 +346,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_white_circle_with_purple_corner"
+                    android:background="@drawable/background_stroke_red"
                     android:padding="4dp"
                     android:text="@string/scooter_finish"
                     android:textAllCaps="false"
-                    android:textColor="@color/purple_secondary_text"
+                    android:textColor="@color/red"
                     android:textSize="15sp" />
             </LinearLayout>
 
@@ -384,12 +390,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_curved_gradient"
+
                     android:enabled="true"
                     android:fontFamily="@font/robotoregular"
                     android:text="@string/scooter_activate"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/red"
+                    android:background="@drawable/background_stroke_red"
                     android:textSize="18sp" />
 
                 <ProgressBar
@@ -397,6 +404,8 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:visibility="gone"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="@color/red"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -411,7 +420,7 @@
                 android:alpha="0.9"
                 android:background="@drawable/ic_gray_transparent_color"
                 android:elevation="4dp"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -532,6 +541,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:visibility="gone"
                 android:background="@drawable/ic_background_open_look"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -560,7 +570,7 @@
                         android:gravity="center|center_horizontal|center_vertical"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="6dp"
-                        android:fontFamily="@font/roboto_thin"
+                        app:fontFamily="@font/geometria"
                         android:textSize="13sp"
 
                         android:text="@string/scooter_open"

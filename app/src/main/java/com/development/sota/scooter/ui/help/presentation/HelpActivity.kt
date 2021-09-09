@@ -68,11 +68,11 @@ class HelpActivity : MvpAppCompatActivity(), HelpView, HelpActivityView {
                     adapter = HelpAdapter(this, titles,telegramLink)
 
                     recyclerView.adapter = adapter
-                    val dividerItemDecoration = DividerItemDecoration(
-                        recyclerView.context,
-                        LinearLayout.VERTICAL
-                    )
-                    recyclerView.addItemDecoration(dividerItemDecoration)
+//                    val dividerItemDecoration = DividerItemDecoration(
+//                        recyclerView.context,
+//                        LinearLayout.VERTICAL
+//                    )
+//                    recyclerView.addItemDecoration(dividerItemDecoration)
 
                     binding.phoneCall.setOnClickListener {
                         val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null))

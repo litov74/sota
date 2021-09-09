@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -69,9 +70,9 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         binding.btnOpenUpBalance.setOnClickListener{
             if(key != 0){
                 binding.editCardsContainer.visibility = View.GONE
-                unCheck(binding.btnOpenCards)
-                unCheck(binding.btnOpenTransactions)
-                check(binding.btnOpenUpBalance)
+                unCheck(binding.transactionsProfile)
+                unCheck(binding.cardsProfile)
+                check(binding.topUpProfile)
                 key = 0
                 fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
             }
@@ -79,9 +80,9 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         binding.btnOpenCards.setOnClickListener{
             if(key != 1){
                 binding.editCardsContainer.visibility = View.GONE
-                check(binding.btnOpenCards)
-                unCheck(binding.btnOpenTransactions)
-                unCheck(binding.btnOpenUpBalance)
+                unCheck(binding.transactionsProfile)
+                check(binding.cardsProfile)
+                unCheck(binding.topUpProfile)
                 key = 1
                 cardListFragment = CardListFragment()
                 fm.beginTransaction().replace(binding.host.id, cardListFragment!!).commit()
@@ -90,9 +91,9 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         binding.btnOpenTransactions.setOnClickListener{
             if(key != 2){
                 binding.editCardsContainer.visibility = View.GONE
-                unCheck(binding.btnOpenCards)
-                check(binding.btnOpenTransactions)
-                unCheck(binding.btnOpenUpBalance)
+                check(binding.transactionsProfile)
+                unCheck(binding.cardsProfile)
+                unCheck(binding.topUpProfile)
                 key = 2
                 fm.beginTransaction().replace(binding.host.id, TransactionsActivity()).commit()
             }
@@ -148,16 +149,12 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
 
     }
 
-    private fun unCheck(btn: Button){
-        btn.background =
-            ContextCompat.getDrawable(this, R.drawable.ic_gray_segment_corner)
-        btn.elevation = 0f
+    private fun unCheck(mageView: ImageView){
+        mageView.setColorFilter(ContextCompat.getColor(this, R.color.profile_tint_gray), android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
-    private fun check(btn: Button){
-        btn.background =
-            ContextCompat.getDrawable(this, R.drawable.ic_white_corner)
-        btn.elevation = 4f
+    private fun check(imageView: ImageView){
+        imageView.setColorFilter(ContextCompat.getColor(this, R.color.selected_profile_menu_tint), android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
     override fun setUserBalance(value: String) {

@@ -30,6 +30,7 @@
             android:layout_marginStart="16dp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/segment_black"
+            app:fontFamily="@font/geometria"
             android:textSize="22sp"
             android:text="@string/card_points"/>
 
@@ -41,7 +42,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/segment_black"
             android:textSize="22sp"
-            android:fontFamily="@font/roboto" />
+            app:fontFamily="@font/geometria" />
 
         <Space
             android:layout_width="0dp"
@@ -64,7 +65,7 @@
                 android:gravity="center"
                 android:textSize="13sp"
                 android:textColor="@color/segment_black"
-                android:fontFamily="@font/roboto_thin"/>
+                app:fontFamily="@font/geometria"/>
 
             <FrameLayout
                 android:id="@+id/removeMainCard"
@@ -99,7 +100,7 @@
                 android:gravity="center"
                 android:textSize="13sp"
                 android:textColor="@color/blue_text"
-                android:fontFamily="@font/roboto_thin"/>
+                app:fontFamily="@font/geometria"/>
 
             <FrameLayout
                 android:id="@+id/removeNotMainCard"
@@ -132,7 +133,7 @@
                 android:text="@string/main"
                 android:layout_gravity="center_vertical"
                 android:textSize="13sp"
-                android:fontFamily="@font/roboto_thin"/>
+                app:fontFamily="@font/geometria"/>
 
             <FrameLayout
                 android:layout_width="32dp"

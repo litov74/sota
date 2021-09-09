@@ -2,40 +2,35 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/upBalanceContainer"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="12dp"
     android:layout_marginBottom="8dp"
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp">
 
-    <FrameLayout
+    <LinearLayout
 
-        android:layout_width="156dp"
-        android:layout_height="178dp"
-        android:background="@drawable/ic_start_gradient">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitEnd"
-            android:src="@drawable/bg_p" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/ic_green_gradient"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_margin="16dp">
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="start"
+                app:fontFamily="@font/geometria"
                 android:text="@string/pay"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/gray_transparent"
                 android:textSize="16sp" />
 
             <TextView
@@ -43,33 +38,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="250 Р"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="22sp"
+                app:fontFamily="@font/geometria_bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                app:fontFamily="@font/geometria"
+                android:text="@string/benefit"
+                android:textColor="@color/gray_transparent"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/benefit"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/benefit"
-                android:textAllCaps="true"
+                android:gravity="start"
+                android:text="100"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:fontFamily="@font/geometria"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="16dp"
+            android:background="@color/white"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="16dp">
+
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:gravity="start"
                 android:text="@string/get_count"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:fontFamily="@font/geometria"
+                android:textColor="#666666"
                 android:textSize="16sp" />
 
             <TextView
@@ -77,13 +93,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="250 Р"
-                android:textColor="@color/white"
+                android:textColor="#274600"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                app:fontFamily="@font/geometria_bold" />
+
         </LinearLayout>
-    </FrameLayout>
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
 

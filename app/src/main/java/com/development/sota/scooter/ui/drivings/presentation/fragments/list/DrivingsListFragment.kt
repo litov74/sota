@@ -114,14 +114,13 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
         binding.buttonDrivingsListActive.setOnClickListener {
             if (segmentId == 1) {
                 binding.addScooter.visibility = View.VISIBLE
-                binding.buttonDrivingsListActive.background =
-                    ContextCompat.getDrawable(context!!, R.drawable.ic_white_corner)
-                binding.buttonDrivingsListActive.elevation = 4f
+                binding.buttonDrivingsListActive.background = ContextCompat.getDrawable(context!!, R.drawable.background_stroke_red)
+                binding.buttonDrivingsListActive.setTextColor(ContextCompat.getColor(context!!, R.color.red))
+
 
                 binding.buttonDrivingsListHistory.background =
-                    ContextCompat.getDrawable(context!!, R.drawable.ic_gray_segment_corner)
-                binding.buttonDrivingsListHistory.elevation = 0f
-
+                    ContextCompat.getDrawable(context!!, R.drawable.background_stroke_gray)
+                binding.buttonDrivingsListHistory.setTextColor(ContextCompat.getColor(context!!, R.color.gray))
                 segmentId = 0
                 binding.viewPager2DrivingsList.currentItem = segmentId
             }
@@ -130,14 +129,13 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
         binding.buttonDrivingsListHistory.setOnClickListener {
             if (segmentId == 0) {
                 binding.addScooter.visibility = View.INVISIBLE
+                binding.buttonDrivingsListActive.background = ContextCompat.getDrawable(context!!, R.drawable.background_stroke_gray)
+                binding.buttonDrivingsListActive.setTextColor(ContextCompat.getColor(context!!, R.color.gray))
+
+
                 binding.buttonDrivingsListHistory.background =
-                    ContextCompat.getDrawable(context!!, R.drawable.ic_white_corner)
-                binding.buttonDrivingsListHistory.elevation = 4f
-
-                binding.buttonDrivingsListActive.background =
-                    ContextCompat.getDrawable(context!!, R.drawable.ic_gray_segment_corner)
-                binding.buttonDrivingsListActive.elevation = 0f
-
+                    ContextCompat.getDrawable(context!!, R.drawable.background_stroke_red)
+                binding.buttonDrivingsListHistory.setTextColor(ContextCompat.getColor(context!!, R.color.red))
                 segmentId = 1
                 binding.viewPager2DrivingsList.currentItem = segmentId
             }
@@ -174,6 +172,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
                     .content("Пожалуйста подождите")
                     .cancelable(false)
                     .progress(true, 0)
+
                     .show()
 
             } else {

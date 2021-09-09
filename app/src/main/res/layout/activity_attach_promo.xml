@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="18dp"
-            android:background="@drawable/ic_back_arrow"
+            android:background="@drawable/ic_back_new"
             android:padding="8dp" />
 
         <TextView
@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/geometria"
             android:text="@string/my_promo"
             android:textColor="#000000"
             android:textSize="20dp"
@@ -46,7 +47,7 @@
             android:layout_marginTop="64dp"
             android:text="Введите промокод"
             android:textStyle="bold"
-            android:fontFamily="@font/robotoregular"/>
+            app:fontFamily="@font/geometria_bold"/>
 
         <com.chaos.view.PinView
             android:id="@+id/loginCodePinView"
@@ -55,7 +56,6 @@
             android:focusable="true"
             android:layout_marginTop="64dp"
             android:focusableInTouchMode="true"
-            android:hint="@string/code_phone_hint"
             android:inputType="numberDecimal"
             android:textSize="24dp"
             app:itemCount="4"
@@ -63,8 +63,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lineColor="@color/gray_edit_text"
-            app:viewType="line" />
+            app:viewType="rectangle"
+            app:lineWidth="1dp"
+            app:lineColor="#E4E4E4" />
 
         <Space
             android:layout_width="wrap_content"
@@ -76,12 +77,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:background="@drawable/ic_curved_gradient"
+            android:background="@drawable/background_stroke_red"
             android:enabled="true"
             android:padding="4dp"
             android:text="@string/attach_promotional"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/red"
             android:textSize="15sp" />
 
 
