@@ -31,10 +31,10 @@
             android:textStyle="bold" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="300dp"
-        android:src="@drawable/scan_me" />
+        app:srcCompat="@drawable/scan_me" />
 
     <TextView
         android:layout_width="match_parent"

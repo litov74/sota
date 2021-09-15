@@ -18,11 +18,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/typeCard"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_visa_icon"/>
+            app:srcCompat="@drawable/ic_visa_icon"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,13 +72,13 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     app:tint="@color/remove_red"
                     android:paddingStart="8dp"
-                    android:src="@drawable/ic_remove" />
+                    app:srcCompat="@drawable/ic_remove" />
 
             </FrameLayout>
 
@@ -107,13 +107,13 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     app:tint="@color/remove_red"
                     android:paddingStart="8dp"
-                    android:src="@drawable/ic_remove" />
+                    app:srcCompat="@drawable/ic_remove" />
 
             </FrameLayout>
 
@@ -139,12 +139,12 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:paddingStart="8dp"
-                    android:src="@drawable/ic_accept_circular_button_outline"
+                    app:srcCompat="@drawable/ic_accept_circular_button_outline"
                     app:tint="@color/green_edit_text"/>
 
             </FrameLayout>

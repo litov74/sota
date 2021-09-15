@@ -37,11 +37,11 @@
         android:layout_margin="16dp"
         android:orientation="vertical">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginTop="64dp"
-            android:src="@drawable/ic_promo_new"/>
+            app:srcCompat="@drawable/ic_promo_new"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     android:background="@drawable/background_new"
-    android:theme="@style/FullscreenAppTheme" />
+    android:theme="@style/FullscreenAppTheme">
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

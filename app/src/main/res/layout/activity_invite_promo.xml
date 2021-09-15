@@ -37,10 +37,10 @@
         android:layout_marginTop="16dp"
         android:orientation="vertical">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="260dp"
-            android:src="@drawable/ic_scan_new"/>
+            app:srcCompat="@drawable/ic_scan_new"/>
 
 
 

@@ -33,7 +33,7 @@
             android:backgroundTintMode="add"
             android:outlineProvider="background">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageViewScooterItemIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -137,11 +137,11 @@
                     android:paddingBottom="4dp"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="17dp"
                         android:layout_height="17dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_energy"/>
+                        app:srcCompat="@drawable/ic_energy"/>
 
                     <TextView
                         android:id="@+id/scooterPercent"
@@ -399,6 +399,17 @@
                     android:background="@drawable/background_stroke_red"
                     android:textSize="18sp" />
 
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/constraintLayoutScooterItemPopupRoute"
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/robotoregular"
+                    android:layout_marginStart="16dp"
+                    android:textColor="@color/red"
+                    app:srcCompat="@drawable/ic_route"
+                    android:tint="@color/red" />
+
                 <ProgressBar
                     android:id="@+id/progressActivate"
                     android:layout_weight="1"
@@ -412,7 +423,7 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutScooterItemPopupRoute"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -451,7 +462,7 @@
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageView2"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -513,7 +524,7 @@
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageView3"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -577,7 +588,7 @@
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageView4"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
@@ -625,7 +636,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageView2Backgroundless"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -673,7 +684,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageView3Backgroundless"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -720,7 +731,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageView4Backgroundless"
                         android:layout_width="48dp"
                         android:layout_height="48dp"

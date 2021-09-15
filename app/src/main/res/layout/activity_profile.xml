@@ -65,7 +65,7 @@
 
             android:orientation="vertical">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/photo"
                 android:layout_width="140dp"
                 android:layout_height="140dp"

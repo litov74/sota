@@ -14,6 +14,8 @@
     <color name="red_edit_text">#FF453A</color>
 
     <color name="red">#FF0041</color>
+    <color name="yellow">#FFC700</color>
+    <color name="blue">#003D76</color>
     <color name="gray_edit_text">#AAAAAA</color>
     <color name="purple_text">#9D2CDD</color>
     <color name="purple_secondary_text">#9D2CDD</color>

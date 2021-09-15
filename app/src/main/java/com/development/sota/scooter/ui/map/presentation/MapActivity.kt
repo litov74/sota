@@ -83,6 +83,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+import android.view.animation.LinearInterpolator
+
+import android.view.animation.RotateAnimation
+
+
+
 
 
 interface MapView : MvpView {
@@ -311,18 +317,26 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                 )
                 style.addImageAsync(
                     SCOOTERS_ICON_SECOND,
-                    resources.getDrawable(R.drawable.ic_scooter_on_map_first).toBitmap()
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_second).toBitmap()
                 )
                 style.addImageAsync(
                     PARKING_IMAGE,
                     resources.getDrawable(R.drawable.ic_scooter_on_map_selected).toBitmap())
                 style.addImageAsync(
                     SCOOTERS_ICON_FIRST,
-                    resources.getDrawable(R.drawable.ic_scooter_on_map_first).toBitmap()
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_third).toBitmap()
                 )
                 style.addImageAsync(
                     SCOOTERS_ICON_CHOSEN,
-                    resources.getDrawable(R.drawable.ic_scooter_on_map_selected).toBitmap()
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_selected_third).toBitmap()
+                )
+                style.addImageAsync(
+                    SCOOTERS_ICON_CHOSEN_SECOND,
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_selected_second).toBitmap()
+                )
+                style.addImageAsync(
+                    SCOOTERS_ICON_CHOSEN_THIRD,
+                    resources.getDrawable(R.drawable.ic_scooter_on_map_selected_third).toBitmap()
                 )
                 style.addImageAsync(
                     PARKING_ICON_ID,
@@ -513,7 +527,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             val circles = CircleLayer(CLUSTERS_LAYER, SCOOTERS_SOURCE)
             circles.setProperties(
                 circleColor(layer[1]),
-                circleRadius(14f)
+                circleRadius(14f),
+
             )
             val pointCount = toNumber(get("point_count"))
 
@@ -531,7 +546,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             count.setProperties(
                 textField(toString(get("point_count"))),
                 textSize(12f),
-                textColor(Color.GREEN),
+                textColor(Color.RED),
                 textIgnorePlacement(true),
                 textAllowOverlap(true)
             )
@@ -713,8 +728,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         try {
             runOnUiThread {
 
-                Log.w("MapActivity", "showScooter currentId: "+currentShowingScooter+" income: "+scooter.id)
-                Log.w("MapActivity", "visible container: "+(getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE))
+
                 if (currentShowingScooter != scooter.id) {
 
 
@@ -918,7 +932,26 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
     override fun setLoading(by: Boolean) {
         runOnUiThread {
-            getBinding.contentOfMap.progressBarMap.visibility = if (by) View.VISIBLE else View.GONE
+            getBinding.contentOfMap.progressBarMap.visibility = if (by) {
+                val rotate = RotateAnimation(
+                    0f,
+                    180f,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f
+                )
+                rotate.duration = 300
+                rotate.interpolator = LinearInterpolator()
+
+
+                getBinding.contentOfMap.progressIndicator.startAnimation(rotate)
+                View.VISIBLE
+
+            } else {
+                View.GONE
+            }
+
         }
     }
 
@@ -1335,7 +1368,10 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         const val SCOOTERS_ICON_THIRD = "scooter-third"
         const val SCOOTERS_ICON_SECOND = "scooter-second"
         const val SCOOTERS_ICON_FIRST = "scooter-first"
+        const val SCOOTERS_ICON_CHOSEN_FIRST = "scooter-chosen-first"
         const val SCOOTERS_ICON_CHOSEN = "scooter-chosen"
+        const val SCOOTERS_ICON_CHOSEN_SECOND = "scooter-chosen-second"
+        const val SCOOTERS_ICON_CHOSEN_THIRD = "scooter-chosen-third"
         const val COUNT_LAYER = "count"
         const val ROUTE_LAYER = "route"
         const val ROUTE_SOURCE = "route-source"

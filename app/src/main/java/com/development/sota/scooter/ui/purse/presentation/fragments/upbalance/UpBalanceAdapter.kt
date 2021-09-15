@@ -16,7 +16,7 @@ class UpBalanceAdapter(private val list: List<UpBalancePackageModel>, private va
 
     override fun onBindViewHolder(holder: UpBalanceViewHolder, position: Int) {
         val upBalanceModel: UpBalancePackageModel = list[position]
-        holder.bind(upBalanceModel, upBalanceManipulatorDelegate)
+        holder.bind(upBalanceModel, upBalanceManipulatorDelegate, position, holder.itemView.context)
     }
 
     override fun getItemCount(): Int = list.size

@@ -72,7 +72,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
                 binding.editCardsContainer.visibility = View.GONE
                 unCheck(binding.transactionsProfile)
                 unCheck(binding.cardsProfile)
-                check(binding.topUpProfile)
+                binding.topUpProfile.setColorFilter(ContextCompat.getColor(this, R.color.selected_profile_menu_tint), android.graphics.PorterDuff.Mode.SRC_IN);
                 key = 0
                 fm.beginTransaction().replace(binding.host.id, UpBalanceActivity()).commit()
             }
@@ -81,7 +81,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
             if(key != 1){
                 binding.editCardsContainer.visibility = View.GONE
                 unCheck(binding.transactionsProfile)
-                check(binding.cardsProfile)
+                binding.cardsProfile.setColorFilter(ContextCompat.getColor(this, R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
                 unCheck(binding.topUpProfile)
                 key = 1
                 cardListFragment = CardListFragment()
@@ -91,7 +91,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         binding.btnOpenTransactions.setOnClickListener{
             if(key != 2){
                 binding.editCardsContainer.visibility = View.GONE
-                check(binding.transactionsProfile)
+                binding.transactionsProfile.setColorFilter(ContextCompat.getColor(this, R.color.text_green), android.graphics.PorterDuff.Mode.SRC_IN);
                 unCheck(binding.cardsProfile)
                 unCheck(binding.topUpProfile)
                 key = 2

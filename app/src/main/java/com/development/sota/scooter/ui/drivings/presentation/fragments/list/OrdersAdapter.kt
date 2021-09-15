@@ -248,6 +248,7 @@ class OrdersAdapter(
                 holder.textViewItemScooterStateLabel.setText(R.string.scooter_rented)
                 holder.textViewItemScooterStateValue.text =
                     String.format("%.2f", data[position].order.cost).plus(" р")
+                holder.textViewItemScooterStateValue.setTextColor(holder.itemView.context.resources.getColor(R.color.red))
             }
 
 

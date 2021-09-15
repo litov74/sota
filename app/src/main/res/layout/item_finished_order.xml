@@ -4,68 +4,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="@color/white"
+    android:layout_marginTop="8dp"
     android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textViewItemFinishedOrderAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:textColor="@android:color/black"
-                app:fontFamily="@font/geometria_bold"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewItemFinishedOrderAmount"
-                app:layout_constraintEnd_toStartOf="@+id/textViewItemFinishedOrderAmount"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewItemFinishedOrderAmount">
-
-                <TextView
-                    android:id="@+id/textViewItemFinishedOrderDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fontFamily="@font/geometria"
-                    android:textSize="17sp"
-                    android:gravity="center|center_horizontal|center_vertical"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/scooterNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fontFamily="@font/geometria"
-                    android:textSize="15sp"
-                    android:gravity="center|center_horizontal|center_vertical"
-                    android:textColor="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/textViewItemFinishedDelta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fontFamily="@font/geometria"
-                    android:textSize="15sp"
-                    android:gravity="center|center_horizontal|center_vertical"
-                    android:textColor="@android:color/black" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content">
 
 
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewItemFinishedOrderDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="start|top"
+            android:textSize="13sp"
+            android:layout_gravity="top"
+            app:fontFamily="@font/geometria"
+            android:textColor="@color/segment_black"
+            android:layout_height="wrap_content"/>
+
+
+
+        <TextView
+            android:id="@+id/scooterNumber"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="start|top"
+            android:textSize="13sp"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="top"
+            app:fontFamily="@font/geometria"
+            android:textColor="@color/segment_black"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/textViewItemFinishedDelta"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top" />
+
+        <TextView
+            android:id="@+id/textViewItemFinishedOrderAmount"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            app:fontFamily="@font/geometria"
+            android:gravity="start|top"
+            android:textSize="13sp"
+            android:layout_gravity="top"
+            android:textColor="@color/segment_black"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

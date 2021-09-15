@@ -81,11 +81,11 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/receiptContainer"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_docs"
+                    app:srcCompat="@drawable/ic_docs"
                     android:layout_gravity="start"
                     app:tint="@color/red" />
 

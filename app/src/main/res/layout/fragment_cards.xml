@@ -34,13 +34,13 @@
                 android:textColor="@color/red"
                 android:layout_height="wrap_content" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 app:tint="@color/red"
-                android:src="@drawable/ic_add"/>
+                app:srcCompat="@drawable/ic_add"/>
 
         </LinearLayout>
 

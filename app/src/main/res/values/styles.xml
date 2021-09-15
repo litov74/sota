@@ -21,9 +21,9 @@
         <item name="colorAccent">@color/icon_purple</item>
     </style>
 
-    <style name="AppTheme.Launch" parent="FullscreenAppTheme">
-        <item name="android:windowBackground">@drawable/background_new</item>
-    </style>
+<!--    <style name="AppTheme.Launch" parent="FullscreenAppTheme">-->
+<!--        <item name="android:windowBackground">@drawable/background_new</item>-->
+<!--    </style>-->
 
     <style name="MyActionButtonStyle" parent="AppTheme">
 

@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'org.jetbrains.kotlin.android.extensions'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
@@ -14,8 +15,8 @@ android {
         applicationId "com.development.sota.scooter"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 191
-        versionName "1.9.1_beta"
+        versionCode 195
+        versionName "1.9.5_beta"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,8 +71,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-perf:20.0.1'
     implementation 'com.google.firebase:firebase-appindexing:20.0.0'
-
-
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation platform('com.google.firebase:firebase-bom:28.4.0')
     // Pay support
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

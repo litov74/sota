@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -162,18 +163,22 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
     }
 
     override fun showAlertPayment(cost: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.dialog_attention)
-            .setMessage("Подтвердите покупку пакета за $cost руб и на старт!")
-            .setPositiveButton("Подтверждаю") {
-                    dialog, id ->  dialog.cancel()
-                    presenter.confirmUpBalance()
-            }
-            .setNegativeButton("Отмена") {
-                    dialog, id ->  dialog.cancel()
-            }
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.layout_top_up_dialog, null)
+       val alertDialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
             .create()
-            .show()
+
+        dialogView.findViewById<androidx.appcompat.widget.AppCompatImageView>(R.id.cancel)?.setOnClickListener {
+            alertDialog.cancel()
+        }
+        dialogView.findViewById<TextView>(R.id.confirmByPackage)?.text = "Подтвердите покупку пакета за $cost руб и на старт!"
+
+        dialogView.findViewById<androidx.appcompat.widget.AppCompatImageView>(R.id.accept)?.setOnClickListener {
+            presenter.confirmUpBalance()
+            alertDialog.cancel()
+        }
+
+        alertDialog.show()
     }
 
     fun createPaymentsClient(activity: Activity): PaymentsClient {

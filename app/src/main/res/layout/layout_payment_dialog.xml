@@ -13,11 +13,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/decorator">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/card_logo"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/ic_visa_icon"
+            app:srcCompat="@drawable/ic_visa_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             android:padding="8dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,14 +35,14 @@
             app:fontFamily="@font/geometria"
             android:textSize="17sp"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="10dp"
             android:layout_height="40dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/googleText"
-            android:src="@drawable/ic_right_arrow"
+            app:srcCompat="@drawable/ic_right_arrow"
             android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="1.0"
             app:tint="@android:color/black" />
@@ -62,17 +62,17 @@
       <androidx.constraintlayout.widget.ConstraintLayout
           android:id="@+id/googlePayContainer"
           android:layout_width="match_parent"
-
+          android:visibility="gone"
           android:layout_height="wrap_content"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="@id/decorator">
 
-          <ImageView
+          <androidx.appcompat.widget.AppCompatImageView
               android:id="@+id/google_logo"
               android:layout_width="60dp"
               android:layout_height="60dp"
-              android:src="@drawable/ic_google_pay_mark_800"
+              app:srcCompat="@drawable/ic_google_pay_mark_800"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintStart_toStartOf="parent"
               app:layout_constraintTop_toTopOf="parent" />
@@ -90,14 +90,14 @@
               app:fontFamily="@font/geometria"
               android:textSize="17sp"/>
 
-          <ImageView
+          <androidx.appcompat.widget.AppCompatImageView
               android:layout_width="10dp"
               android:layout_height="40dp"
               app:layout_constraintTop_toTopOf="parent"
               app:layout_constraintBottom_toBottomOf="parent"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintStart_toEndOf="@id/googleText"
-              android:src="@drawable/ic_right_arrow"
+              app:srcCompat="@drawable/ic_right_arrow"
               android:layout_marginEnd="8dp"
               app:layout_constraintHorizontal_bias="1.0"
               app:tint="@android:color/black" />

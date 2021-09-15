@@ -6,8 +6,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import com.development.sota.scooter.net.ClientRetrofitProvider
 import com.development.sota.scooter.net.LoginRetrofitProvider
 import com.development.sota.scooter.ui.login.presentation.LoginActivity
+import com.development.sota.scooter.ui.map.data.ClientUpdateToken
 import com.development.sota.scooter.ui.map.presentation.MapActivity
 import com.development.sota.scooter.ui.tutorial.presentation.TutorialActivity
 import com.microsoft.appcenter.AppCenter
@@ -64,19 +66,30 @@ class MainActivity : MvpAppCompatActivity() {
 //
 //                            })
 
-                    var token = sharedPreferences.getString("token", "")
+                ClientRetrofitProvider.service
+                    .getClient(sharedPreferences.getLong("id", -1).toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onNext = {
+                            var token = sharedPreferences.getString("token", "")
 
-                    val classActivity: Class<*> =
-                        if (!sharedPreferences.getBoolean(SP_KEY_FIRST_INIT, false)) {
-                            LoginActivity::class.java
-                        } else if (!sharedPreferences.getBoolean(SP_KEY_WAS_TUTORIAL, false)) {
-                            TutorialActivity::class.java
-                        } else if (token!!.length > 0) {
-                            MapActivity::class.java
-                        } else {
-                            LoginActivity::class.java
+                            val classActivity: Class<*> =
+                                if (!sharedPreferences.getBoolean(SP_KEY_FIRST_INIT, false)) {
+                                    LoginActivity::class.java
+                                } else if (!sharedPreferences.getBoolean(SP_KEY_WAS_TUTORIAL, false)) {
+                                    TutorialActivity::class.java
+                                } else if (token!!.isNotEmpty()) {
+                                    MapActivity::class.java
+                                } else {
+                                    LoginActivity::class.java
+                                }
+                            startActivity(Intent(this, classActivity))
+                        },
+                        onError = {
+                            startActivity(Intent(this,  LoginActivity::class.java))
                         }
-                    startActivity(Intent(this, classActivity))
+                    )
     //    })
 
     }

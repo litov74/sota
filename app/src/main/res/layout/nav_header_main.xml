@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/ic_navigation_new_gradient">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="0dp"

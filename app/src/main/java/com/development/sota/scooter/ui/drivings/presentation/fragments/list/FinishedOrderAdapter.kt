@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.development.sota.scooter.R
@@ -71,20 +72,18 @@ class FinishedOrderAdapter(val data: List<OrderWithStatusRate>, val context: Con
 
             val odt = OffsetDateTime.parse(data[position].order.startTime)
 
-            holder.textViewItemFinishedOrderDate.text = dateFormatter.format(data[position].order.parseStartTimeWithoutOffset())+" "+period.minutes+" минут"
+            holder.textViewItemFinishedOrderDate.text = dateFormatter.format(data[position].order.parseStartTimeWithoutOffset())+" "+period.minutes+" m "+period.seconds+" s"
 
             holder.textViewItemFinishedOrderAmount.text =
                 String.format("%.2f", data[position].order.cost).plus(" р")
 
             holder.scooterNumber.text = "Самокат №"+data[position].order.scooter
 
-            if (data[position].order.status == OrderStatus.CANCELED.value) {
-                holder.textViewItemFinishedDelta.text =
-                    context.getString(R.string.drivings_cancelled)
-            }
             if (data[position].order.status == OrderStatus.CLOSED.value) {
-                holder.textViewItemFinishedDelta.text =
-                    context.getString(R.string.drivings_closed)
+                holder.textViewItemFinishedDelta.setImageDrawable(resources.getDrawable(R.drawable.ic_accept))
+            }
+            if (data[position].order.status == OrderStatus.CANCELED.value) {
+                holder.textViewItemFinishedDelta.setImageDrawable(resources.getDrawable(R.drawable.ic_cancel))
             }
         }
 
@@ -95,7 +94,7 @@ class FinishedOrderAdapter(val data: List<OrderWithStatusRate>, val context: Con
             itemView.findViewById(R.id.textViewItemFinishedOrderDate)
         val textViewItemFinishedOrderAmount: TextView =
             itemView.findViewById(R.id.textViewItemFinishedOrderAmount)
-        val textViewItemFinishedDelta: TextView =
+        val textViewItemFinishedDelta: ImageView =
             itemView.findViewById(R.id.textViewItemFinishedDelta)
         val scooterNumber: TextView =
             itemView.findViewById(R.id.scooterNumber)

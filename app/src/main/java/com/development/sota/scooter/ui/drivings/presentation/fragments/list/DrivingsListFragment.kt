@@ -116,6 +116,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
                 binding.addScooter.visibility = View.VISIBLE
                 binding.buttonDrivingsListActive.background = ContextCompat.getDrawable(context!!, R.drawable.background_stroke_red)
                 binding.buttonDrivingsListActive.setTextColor(ContextCompat.getColor(context!!, R.color.red))
+                binding.tableHelper.visibility = View.GONE
 
 
                 binding.buttonDrivingsListHistory.background =
@@ -123,6 +124,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
                 binding.buttonDrivingsListHistory.setTextColor(ContextCompat.getColor(context!!, R.color.gray))
                 segmentId = 0
                 binding.viewPager2DrivingsList.currentItem = segmentId
+
             }
         }
 
@@ -138,6 +140,7 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
                 binding.buttonDrivingsListHistory.setTextColor(ContextCompat.getColor(context!!, R.color.red))
                 segmentId = 1
                 binding.viewPager2DrivingsList.currentItem = segmentId
+                binding.tableHelper.visibility = View.VISIBLE
             }
         }
 
