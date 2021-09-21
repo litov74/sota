@@ -138,7 +138,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="164dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     app:srcCompat="@drawable/ic_invite_new" />
 
                 <LinearLayout
@@ -172,15 +172,6 @@
                                 android:textStyle="bold"
                                 app:fontFamily="@font/geometria_bold"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="13sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/gray"
-                                android:text="@string/invite_friends_and_get_bonus"
-                                android:textStyle="bold"
-                                app:fontFamily="@font/geometria"/>
 
                         </LinearLayout>
 

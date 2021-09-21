@@ -182,6 +182,8 @@
             android:id="@+id/progressAddCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/red"
             android:visibility="gone"/>
 
     </LinearLayout>

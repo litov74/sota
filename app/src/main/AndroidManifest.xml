@@ -64,6 +64,7 @@
 
         <activity
             android:name=".ui.drivings.presentation.DrivingsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <activity

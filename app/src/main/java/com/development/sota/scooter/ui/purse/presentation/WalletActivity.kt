@@ -53,6 +53,8 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
     private val binding get() = _binding!!
     private var cardListFragment: CardListFragment? = null
     private var upBalanceActivity: UpBalanceActivity? = null
+    var key: Int = 0
+    val fm = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +65,7 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         }
 
 
-        var key: Int = 0
-        val fm = supportFragmentManager
+
         upBalanceActivity = UpBalanceActivity()
         fm.beginTransaction().add(binding.host.id, upBalanceActivity!!).commit()
         binding.btnOpenUpBalance.setOnClickListener{
@@ -107,6 +108,16 @@ class WalletActivity : MvpAppCompatActivity(), WalletView, WalletActivityView{
         binding.editCardsContainer.setOnClickListener { cardListFragment?.changeEditMode() }
     }
 
+
+    fun openAttachCard() {
+        binding.editCardsContainer.visibility = View.GONE
+        unCheck(binding.transactionsProfile)
+        binding.cardsProfile.setColorFilter(ContextCompat.getColor(this, R.color.red), android.graphics.PorterDuff.Mode.SRC_IN);
+        unCheck(binding.topUpProfile)
+        key = 1
+        cardListFragment = CardListFragment()
+        fm.beginTransaction().replace(binding.host.id, cardListFragment!!).commit()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

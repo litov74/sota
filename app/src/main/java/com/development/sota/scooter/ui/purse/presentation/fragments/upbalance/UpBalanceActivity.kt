@@ -51,6 +51,9 @@ interface UpBalanceView : MvpView {
     fun showAlertPayment(cost: String)
 
     @AddToEnd
+    fun showNeedCard()
+
+    @AddToEnd
     fun showPaymentTypeDialog(cost: String, userCard: UserCardModel?)
 
     @AddToEnd
@@ -171,7 +174,7 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         dialogView.findViewById<androidx.appcompat.widget.AppCompatImageView>(R.id.cancel)?.setOnClickListener {
             alertDialog.cancel()
         }
-        dialogView.findViewById<TextView>(R.id.confirmByPackage)?.text = "Подтвердите покупку пакета за $cost руб и на старт!"
+        dialogView.findViewById<TextView>(R.id.confirmByPackage)?.text = "Подтвердите покупку пакета за $cost руб."
 
         dialogView.findViewById<androidx.appcompat.widget.AppCompatImageView>(R.id.accept)?.setOnClickListener {
             presenter.confirmUpBalance()
@@ -179,6 +182,17 @@ class UpBalanceActivity: MvpAppCompatFragment(R.layout.fragment_up_balance), UpB
         }
 
         alertDialog.show()
+    }
+
+    override fun showNeedCard() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Для пополнения баланса необходимо привязать карту.")
+        builder.setPositiveButton("Ок") { dialog, which ->
+            dialog.dismiss()
+            (activity as WalletActivity).openAttachCard()
+        }
+
+        builder.show()
     }
 
     fun createPaymentsClient(activity: Activity): PaymentsClient {

@@ -46,6 +46,7 @@
                 android:textAllCaps="false"
                 app:fontFamily="@font/geometria"
                 android:textColor="@color/red"
+                android:visibility="gone"
                 android:textSize="15sp" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -56,7 +57,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_green_red"
                 android:padding="4dp"
-                android:text="Я сделал это"
+                android:text="Финиш"
                 android:textAllCaps="false"
                 app:fontFamily="@font/geometria"
                 android:textColor="@color/green_edit_text"

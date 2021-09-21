@@ -6,7 +6,10 @@
     android:orientation="vertical">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+
         android:layout_width="match_parent"
+        android:background="@color/white"
+        android:paddingBottom="8dp"
         android:layout_height="wrap_content">
 
 
@@ -31,11 +34,31 @@
             android:textStyle="bold" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+
+            android:src="@drawable/sotes_background"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+
+            android:background="@color/gray_edit_text"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
         android:orientation="vertical">
+
+
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
@@ -62,7 +85,7 @@
             android:id="@+id/buttonAttachPromo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:visibility="gone"
             android:background="@drawable/background_stroke_red"
             android:enabled="true"
             android:padding="4dp"
@@ -73,5 +96,7 @@
 
 
     </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

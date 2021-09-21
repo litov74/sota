@@ -19,6 +19,12 @@ class TutorialPresenter(val context: Context) : MvpPresenter<TutorialView>(), Ba
         }
     }
 
+    fun onBackClicked(index: Int) {
+        if (index-1 >= 0) {
+            viewState.nextPage(index - 1)
+        }
+    }
+
     fun onSkipButtonClicked() {
         closeTutorial()
     }

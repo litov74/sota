@@ -3,8 +3,8 @@ package com.development.sota.scooter.ui.map.presentation
 import android.Manifest
 import android.R.style
 import android.annotation.SuppressLint
-import android.content.DialogInterface
-import android.content.Intent
+import android.app.Activity
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.os.Build
@@ -86,9 +86,8 @@ import kotlin.collections.ArrayList
 import android.view.animation.LinearInterpolator
 
 import android.view.animation.RotateAnimation
-
-
-
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.development.sota.scooter.ui.drivings.presentation.DrivingsListFragmentType
 
 
 interface MapView : MvpView {
@@ -183,11 +182,34 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     private lateinit var localizationPlugin: LocalizationPlugin
     private lateinit var geoJsonSource: GeoJsonSource
     private val QR_CODE_REQUEST = 555
+    private val TUTORIAL_REQUEST = 666
+    private lateinit var activity: Activity
     private val disposableJobsBag = hashSetOf<Job>()
-    private lateinit var slideTop: Animation
-    private lateinit var slideBottom: Animation
+//    private lateinit var slideTop: Animation
+//    private lateinit var slideBottom: Animation
+    private var drawLayer = false
 
     private var currentShowingScooter = -1L
+
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent) {
+            if (ActivityCompat.checkSelfPermission(
+                    context!!,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                val intent = Intent(context!!, DrivingsActivity::class.java)
+                intent.putExtra("aim", DrivingsStartTarget.QRandCode)
+
+                startActivityForResult(intent, QR_CODE_REQUEST)
+            } else {
+                getCameraPermission()
+            }
+
+        }
+    }
+
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -243,11 +265,12 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
 
 
-        getBinding.contentOfMap.mapPopupItem.constraintLayoutPopupMap.clipToOutline = true
-        getBinding.contentOfMap.mapPopupItem.imageViewMapPopupScooterIcon.clipToOutline = true
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+            IntentFilter("show_qr")
+        );
+
         getBinding.contentOfMap.mapPopupItem.constraintLayoutParentPopupMap.visibility = View.GONE
 
-        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.clipToOutline = true
         getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility = View.GONE
 
         getBinding.navView.setNavigationItemSelectedListener {
@@ -269,42 +292,42 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         }
 
         fusedLocationProviderClient = FusedLocationProviderClient(this)
-        slideTop = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_top)
-
-        slideTop.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(p0: Animation?) {
-
-                Log.w("MapActivity", "start slide top animation")
-                getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
-                        View.VISIBLE
-            }
-
-            override fun onAnimationEnd(p0: Animation?) {
-                Log.w("MapActivity", "end slide top animation")
-            }
-
-            override fun onAnimationRepeat(p0: Animation?) {
-
-            }
-
-        })
-        slideBottom = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_to_bottom)
-        slideBottom.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(p0: Animation?) {
-                Log.w("MapActivity", "start slide bottom animation")
-            }
-
-            override fun onAnimationEnd(p0: Animation?) {
-                getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
-                    View.GONE
-                Log.w("MapActivity", "end slide bottom animation")
-            }
-
-            override fun onAnimationRepeat(p0: Animation?) {
-
-            }
-
-        })
+//        slideTop = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_top)
+//
+//        slideTop.setAnimationListener(object : Animation.AnimationListener {
+//            override fun onAnimationStart(p0: Animation?) {
+//
+//                Log.w("MapActivity", "start slide top animation")
+//                getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility =
+//                        View.VISIBLE
+//            }
+//
+//            override fun onAnimationEnd(p0: Animation?) {
+//                Log.w("MapActivity", "end slide top animation")
+//            }
+//
+//            override fun onAnimationRepeat(p0: Animation?) {
+//
+//            }
+//
+//        })
+//        slideBottom = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_to_bottom)
+//        slideBottom.setAnimationListener(object : Animation.AnimationListener {
+//            override fun onAnimationStart(p0: Animation?) {
+//                Log.w("MapActivity", "start slide bottom animation")
+//            }
+//
+//            override fun onAnimationEnd(p0: Animation?) {
+//                getBinding.contentOfMap.mapScooterItem.root.visibility =
+//                    View.GONE
+//                Log.w("MapActivity", "end slide bottom animation")
+//            }
+//
+//            override fun onAnimationRepeat(p0: Animation?) {
+//
+//            }
+//
+//        })
 
         getBinding.contentOfMap.mapView.getMapAsync { map ->
             this.map = map
@@ -319,9 +342,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                     SCOOTERS_ICON_SECOND,
                     resources.getDrawable(R.drawable.ic_scooter_on_map_second).toBitmap()
                 )
-                style.addImageAsync(
-                    PARKING_IMAGE,
-                    resources.getDrawable(R.drawable.ic_scooter_on_map_selected).toBitmap())
+
                 style.addImageAsync(
                     SCOOTERS_ICON_FIRST,
                     resources.getDrawable(R.drawable.ic_scooter_on_map_third).toBitmap()
@@ -422,22 +443,23 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                 } else {
                     currentShowingScooter = -1L
 
-                    if (getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE) {
-
-                        val animate = TranslateAnimation(
-                            0f,  // fromXDelta
-                            0f,  // toXDelta
-                            0f,  // fromYDelta
-                            getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.height.toFloat()  // toYDelta
-                        )
-
-                        animate.duration = 500
-                        animate.fillAfter = true
-                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.startAnimation(
-                            animate
-                        )
-                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.gone()
-                    }
+//                    if (getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE) {
+//
+//                        val animate = TranslateAnimation(
+//                            0f,  // fromXDelta
+//                            0f,  // toXDelta
+//                            0f,  // fromYDelta
+//                            getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.height.toFloat()  // toYDelta
+//                        )
+//
+//                        animate.duration = 500
+//                        animate.fillAfter = true
+//                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.startAnimation(
+//                            animate
+//                        )
+//                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.gone()
+//                    }
+                   getBinding.contentOfMap.mapScooterItem.root.visibility = View.GONE
 
                     presenter.scooterUnselected()
 
@@ -486,10 +508,15 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == QR_CODE_REQUEST) {
+        Log.d("MapPresenter"," activity result ${requestCode} ${resultCode} ${data} ")
+
+        if (requestCode == QR_CODE_REQUEST && resultCode == RESULT_OK) {
             presenter.selectScooterByCode(data?.getSerializableExtra("scooter") as Scooter)
         }
 
+        if (requestCode == TUTORIAL_REQUEST && resultCode == RESULT_OK) {
+            presenter.selectScooterByCode(data?.getSerializableExtra("scooter") as Scooter)
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "TimberArgCount")
@@ -499,7 +526,6 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             map?.style?.removeLayer(SCOOTERS_LAYER)
             map?.style?.removeLayer(CIRCLES_LAYER)
             map?.style?.removeLayer(COUNT_LAYER)
-
             map?.style?.removeSource(SCOOTERS_SOURCE)
 
             geoJsonSource = GeoJsonSource(
@@ -630,7 +656,9 @@ class MapActivity : MvpAppCompatActivity(), MapView {
                     val intent = Intent(this, DrivingsActivity::class.java)
                     intent.putExtra("aim", DrivingsStartTarget.QRandCode)
 
-                    startActivity(intent)
+                    startActivityForResult(intent, QR_CODE_REQUEST)
+
+
                 }
             }
         }
@@ -728,21 +756,22 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         try {
             runOnUiThread {
 
-
+                Timber.d("current scooter ${currentShowingScooter} scooter show ${scooter.id}")
                 if (currentShowingScooter != scooter.id) {
 
+                    getBinding.contentOfMap.mapScooterItem.root.visibility = View.VISIBLE
 
-                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visible()
-                    val animate = TranslateAnimation(
-                        0f,
-                        0f,
-                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.height.toFloat(),  // fromYDelta
-                        0f
-                    )
 
-                    animate.duration = 500
-                    animate.fillAfter = true
-                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.startAnimation(animate)
+//                    val animate = TranslateAnimation(
+//                        0f,
+//                        0f,
+//                        getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent!!.height.toFloat(),  // fromYDelta
+//                        0f
+//                    )
+//
+//                    animate.duration = 500
+//                    animate.fillAfter = true
+//                    getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.startAnimation(animate)
 
                     //getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility = View.VISIBLE
 
@@ -893,6 +922,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
 
     override fun showBottomActionButtons(visible: Boolean) {
         if (visible) {
+            getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility = View.GONE
             getBinding.contentOfMap.imageButtonMapMessage.visible()
             getBinding.contentOfMap.imageButtonMapLocation.visible()
             getBinding.contentOfMap.imageButtonMapQr.visible()
@@ -926,8 +956,7 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     }
 
     override fun hideScooterCard() {
-        if (getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.visibility == View.VISIBLE)
-            getBinding.contentOfMap.mapScooterItem.constraintLayoutItemScooterParent.startAnimation(slideBottom)
+      getBinding.contentOfMap.mapScooterItem.root.visibility = View.GONE
     }
 
     override fun setLoading(by: Boolean) {
@@ -1120,88 +1149,90 @@ class MapActivity : MvpAppCompatActivity(), MapView {
     override fun drawGeoZones(feauters: ArrayList<Feature>) {
         runOnUiThread {
             try {
-
-                map?.style?.removeLayer(GEOZONE_LAYER)
-                map?.style?.removeLayer(GEOZONE_LAYER_LINE)
-                map?.style?.removeLayer(PARKING_LAYER)
-                map?.style?.removeLayer(PARKING_IMAGE_LAYER)
-                map?.style?.removeLayer(PARKING_BONUS_LAYER)
-
-                map?.style?.removeSource(GEOZONE_SOURCE)
-                map?.style?.removeSource(PARKING_SOURCE)
-                map?.style?.removeSource(PARKING_BONUS_SOURCE)
+                Timber.d("draw layer ${drawLayer}")
 
 
+                    map?.style?.removeLayer(GEOZONE_LAYER)
+                    map?.style?.removeLayer(GEOZONE_LAYER_LINE)
+                    map?.style?.removeLayer(PARKING_LAYER)
+                    map?.style?.removeLayer(PARKING_IMAGE_LAYER)
+                    map?.style?.removeLayer(PARKING_BONUS_LAYER)
 
-                val geozoneJsonSource = GeoJsonSource(
-                    GEOZONE_SOURCE,
-                    FeatureCollection.fromFeatures(
-                        feauters.filter { it.getStringProperty("geoType") == GEOZONE_LABEL }
-                    ),
-                    GeoJsonOptions()
-                )
-
-                val parkingJsonSource = GeoJsonSource(
-                    PARKING_SOURCE,
-                    FeatureCollection.fromFeatures(
-                        feauters.filter { it.getStringProperty("geoType") == PARKING_LABEL }
-                    ),
-                    GeoJsonOptions()
-                )
-
-                val parkingBonusJsonSource = GeoJsonSource(
-                    PARKING_BONUS_SOURCE,
-                    FeatureCollection.fromFeatures(
-                        feauters.filter { it.getStringProperty("geoType") == PARKING_BONUS_LABEL }
-                    ),
-                    GeoJsonOptions()
-                )
+                    map?.style?.removeSource(GEOZONE_SOURCE)
+                    map?.style?.removeSource(PARKING_SOURCE)
+                    map?.style?.removeSource(PARKING_BONUS_SOURCE)
 
 
-                map?.style?.addSource(geozoneJsonSource)
-                map?.style?.addSource(parkingJsonSource)
-                map?.style?.addSource(parkingBonusJsonSource)
+                    val geozoneJsonSource = GeoJsonSource(
+                        GEOZONE_SOURCE,
+                        FeatureCollection.fromFeatures(
+                            feauters.filter { it.getStringProperty("geoType") == GEOZONE_LABEL }
+                        ),
+                        GeoJsonOptions()
+                    )
 
-                val geoZoneLayer = FillLayer(GEOZONE_LAYER, GEOZONE_SOURCE)
-                geoZoneLayer.setProperties(
-                    fillColor(PARKING_COLOR),
-                    fillOpacity(0.3f),
-                    fillOutlineColor(PARKING_BONUS_COLOR)
-                )
+                    val parkingJsonSource = GeoJsonSource(
+                        PARKING_SOURCE,
+                        FeatureCollection.fromFeatures(
+                            feauters.filter { it.getStringProperty("geoType") == PARKING_LABEL }
+                        ),
+                        GeoJsonOptions()
+                    )
 
-                val geoZoneLine = LineLayer(GEOZONE_LAYER_LINE, GEOZONE_SOURCE)
-                geoZoneLine.setProperties(
-                    lineColor(PARKING_BONUS_COLOR),
-                    lineWidth(1f),
-                )
-
-                val parkingZoneLayer = LineLayer(PARKING_LAYER, PARKING_SOURCE)
-                parkingZoneLayer.setProperties(
-                    lineColor(PARKING_LINE_COLOR),
-
-                    lineWidth(1f),
-                )
-
-
-                val parkingLayer = SymbolLayer(PARKING_IMAGE_LAYER, PARKING_SOURCE)
-                parkingLayer.setProperties(
-                    iconImage(PARKING_ICON_ID),
-                )
-
-                val parkingBonusZoneLayer = LineLayer(PARKING_BONUS_LAYER, PARKING_BONUS_SOURCE)
-                parkingZoneLayer.setProperties(
-                    lineColor(PARKING_LINE_COLOR),
-                    lineWidth(1f),
-                )
+                    val parkingBonusJsonSource = GeoJsonSource(
+                        PARKING_BONUS_SOURCE,
+                        FeatureCollection.fromFeatures(
+                            feauters.filter { it.getStringProperty("geoType") == PARKING_BONUS_LABEL }
+                        ),
+                        GeoJsonOptions()
+                    )
 
 
-                map?.style?.addLayer(geoZoneLayer)
-                map?.style?.addLayer(parkingLayer)
-                map?.style?.addLayer(geoZoneLine)
-                map?.style?.addLayer(parkingZoneLayer)
-                map?.style?.addLayer(parkingBonusZoneLayer)
+                    map?.style?.addSource(geozoneJsonSource)
+                    map?.style?.addSource(parkingJsonSource)
+                    map?.style?.addSource(parkingBonusJsonSource)
+
+                    val geoZoneLayer = FillLayer(GEOZONE_LAYER, GEOZONE_SOURCE)
+                    geoZoneLayer.setProperties(
+                        fillColor(PARKING_COLOR),
+                        fillOpacity(0.3f),
+                        fillOutlineColor(PARKING_BONUS_COLOR)
+                    )
+
+                    val geoZoneLine = LineLayer(GEOZONE_LAYER_LINE, GEOZONE_SOURCE)
+                    geoZoneLine.setProperties(
+                        lineColor(PARKING_BONUS_COLOR),
+                        lineWidth(1f),
+                    )
+
+                    val parkingZoneLayer = LineLayer(PARKING_LAYER, PARKING_SOURCE)
+                    parkingZoneLayer.setProperties(
+                        lineColor(PARKING_LINE_COLOR),
+
+                        lineWidth(1f),
+                    )
+
+
+                    val parkingLayer = SymbolLayer(PARKING_IMAGE_LAYER, PARKING_SOURCE)
+                    parkingLayer.setProperties(
+                        iconImage(PARKING_ICON_ID),
+                    )
+
+                    val parkingBonusZoneLayer = LineLayer(PARKING_BONUS_LAYER, PARKING_BONUS_SOURCE)
+                    parkingZoneLayer.setProperties(
+                        lineColor(PARKING_LINE_COLOR),
+                        lineWidth(1f),
+                    )
+
+
+                    map?.style?.addLayer(geoZoneLayer)
+                    map?.style?.addLayer(parkingLayer)
+                    map?.style?.addLayer(geoZoneLine)
+                    map?.style?.addLayer(parkingZoneLayer)
+                    map?.style?.addLayer(parkingBonusZoneLayer)
 
             } catch (e: Exception) {
+                drawLayer = false
                 e.printStackTrace()
             }
         }
@@ -1233,14 +1264,14 @@ class MapActivity : MvpAppCompatActivity(), MapView {
             val intent = Intent(this, DrivingsActivity::class.java)
 
             intent.putExtra("aim", DrivingsStartTarget.DrivingList)
-            startActivity(intent)
+            startActivityForResult(intent, QR_CODE_REQUEST)
         }
     }
 
     override fun sendToLookTutorial() {
         runOnUiThread {
             val intent = Intent(this, TutorialStartRentActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, TUTORIAL_REQUEST)
 
         }
     }
@@ -1368,8 +1399,8 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         const val SCOOTERS_ICON_THIRD = "scooter-third"
         const val SCOOTERS_ICON_SECOND = "scooter-second"
         const val SCOOTERS_ICON_FIRST = "scooter-first"
-        const val SCOOTERS_ICON_CHOSEN_FIRST = "scooter-chosen-first"
         const val SCOOTERS_ICON_CHOSEN = "scooter-chosen"
+        const val SCOOTERS_ICON_CHOSEN_FIRST = "scooter-chosen-first"
         const val SCOOTERS_ICON_CHOSEN_SECOND = "scooter-chosen-second"
         const val SCOOTERS_ICON_CHOSEN_THIRD = "scooter-chosen-third"
         const val COUNT_LAYER = "count"
@@ -1386,6 +1417,9 @@ class MapActivity : MvpAppCompatActivity(), MapView {
         const val PARKING_BONUS_LAYER = "parking-bonus"
         const val PARKING_BONUS_SOURCE = "parking-bonus-source"
         const val PARKING_IMAGE = "parking-image"
+        const val PARKING_IMAGE_FIRST = "parking-image-first"
+        const val PARKING_IMAGE_SECOND = "parking-image-second"
+        const val PARKING_IMAGE_THIRD = "parking-image-third"
         const val PARKING_ICON_ID = "parking-icon"
 
         val GEOZONE_COLOR = Color.parseColor("#40FF453A")

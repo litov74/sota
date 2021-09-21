@@ -44,6 +44,7 @@
                 android:padding="4dp"
                 android:text="Нужна помощь"
                 android:textAllCaps="false"
+                android:visibility="gone"
                 android:textColor="@color/red"
                 android:textSize="15sp" />
 
@@ -55,7 +56,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/background_green_red"
                 android:padding="4dp"
-                android:text="Я сделал это"
+                android:text="Поехали"
                 android:textAllCaps="false"
                 android:textColor="@color/text_green"
                 android:textSize="15sp" />

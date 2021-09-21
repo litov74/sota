@@ -11,9 +11,9 @@ import kotlinx.android.synthetic.main.fragment_tutorial.view.*
 class TutorialFinishAdapter : RecyclerView.Adapter<TutorialFinishAdapter.TutorialViewHolder>() {
     private val data: ArrayList<Triple<Int, Int, Int>> = arrayListOf(
         Triple(
-            R.string.finish_tutorial_title_1,
-            R.string.finish_tutorial_body_1,
-            R.drawable.ic_finish_scooter
+            R.string.login_tutorial_label_6,
+            R.string.login_tutorial_body_6,
+            R.drawable.ic_frame_6
         ),
 
     )

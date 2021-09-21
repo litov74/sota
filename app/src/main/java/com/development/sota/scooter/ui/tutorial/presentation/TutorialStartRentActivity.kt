@@ -1,5 +1,6 @@
 package com.development.sota.scooter.ui.tutorial.presentation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.development.sota.scooter.databinding.ActivityStartRentTutorialBinding
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivity
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsStartTarget
 import com.development.sota.scooter.ui.help.presentation.HelpActivity
+import com.development.sota.scooter.ui.map.data.Scooter
 import com.development.sota.scooter.ui.map.presentation.MapActivity
 import kotlinx.android.synthetic.main.activity_tutorial.*
 import kotlinx.android.synthetic.main.fragment_tutorial.*
@@ -18,6 +20,7 @@ import moxy.MvpAppCompatActivity
 import moxy.MvpView
 import moxy.ktx.moxyPresenter
 import moxy.viewstate.strategy.alias.AddToEnd
+import java.io.Serializable
 
 
 interface TutorialStartRentView : MvpView {
@@ -32,6 +35,7 @@ class TutorialStartRentActivity : MvpAppCompatActivity(), TutorialStartRentView 
     private val presenter by moxyPresenter { TutorialStartRentPresenter(this) }
     private var _binding: ActivityStartRentTutorialBinding? = null
     private val binding get() = _binding!!
+    private val QR_CODE_REQUEST = 555
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,10 +81,24 @@ class TutorialStartRentActivity : MvpAppCompatActivity(), TutorialStartRentView 
     override fun finishActivity() {
         runOnUiThread {
             val intent = Intent(this, DrivingsActivity::class.java)
+
             intent.putExtra("aim", DrivingsStartTarget.DrivingList)
-            startActivity(intent)
+            startActivityForResult(intent, QR_CODE_REQUEST)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == QR_CODE_REQUEST && resultCode == RESULT_OK) {
+            val sendData = Intent()
+            sendData.putExtra("scooter", data?.getSerializableExtra("scooter") as Scooter as Serializable);
+            setResult(Activity.RESULT_OK, sendData);
+            finish()
+        } else {
             finish()
         }
+
     }
 }
 

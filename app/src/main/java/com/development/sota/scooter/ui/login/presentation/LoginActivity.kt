@@ -73,8 +73,6 @@ class LoginActivity : MvpAppCompatActivity(),
         setContentView(binding.root)
     }
 
-
-
     override fun setFragmentInput() {
         runOnUiThread {
             var first = false

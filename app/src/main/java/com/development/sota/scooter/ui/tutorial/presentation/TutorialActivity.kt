@@ -54,6 +54,10 @@ class TutorialActivity : MvpAppCompatActivity(), TutorialView{
 
         binding.buttonTutorialSkip.setOnClickListener { presenter.onSkipButtonClicked() }
 
+        binding.buttonTutorialBack.setOnClickListener {
+            presenter.onBackClicked(binding.viewPager2Tutorial.currentItem)
+        }
+
         binding.springDotsIndicatorTutorial.setViewPager2(binding.viewPager2Tutorial)
 
 

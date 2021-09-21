@@ -24,7 +24,7 @@ class TransactionViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recyc
 ) {
 
     private val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-    private val dateFormatterTime = SimpleDateFormat("hh:mm", Locale.getDefault())
+    private val dateFormatterTime = SimpleDateFormat("HH:mm", Locale.getDefault())
   //  private val dateFormatter = SimpleDateFormat("dd-M-yyyy hh:mm", Locale.getDefault())
 
     private var dateTransaction: TextView? = null

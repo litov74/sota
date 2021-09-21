@@ -132,7 +132,7 @@ class LoginInputFragment(private val loginActivityView: LoginActivityView) : Mvp
                 b
             )
         }
-        binding.viewLoginClickableUserAgreement.setOnClickListener { presenter.userAgreementFragmentRequested() }
+        binding.userAgreementText.setOnClickListener { presenter.userAgreementFragmentRequested() }
         binding.buttonLoginRequestCode.setOnClickListener { presenter.onRequestCodeButtonClicked() }
 
         return binding.root

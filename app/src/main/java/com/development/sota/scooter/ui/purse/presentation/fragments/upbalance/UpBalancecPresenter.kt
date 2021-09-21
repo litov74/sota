@@ -48,15 +48,16 @@ class UpBalancePresenter(val context: Context) : MvpPresenter<UpBalanceView>(), 
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
-
     }
 
     fun upBalancePackage(model: UpBalancePackageModel) {
-        selectedModel = model
+        if (mainCard == null) {
+            viewState.showNeedCard()
+        } else {
+            selectedModel = model
+            viewState.showAlertPayment(selectedModel.cost.toString())
+        }
 
-        viewState.showAlertPayment(selectedModel.cost.toString())
     }
 
     fun confirmUpBalance() {

@@ -104,10 +104,11 @@ class DrivingsListFragment(val drivingsView: DrivingsActivityView) : MvpAppCompa
         }
 
         binding.addScooter.setOnClickListener {
+
             val intent =  Intent("show_qr");
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+            requireActivity().finish()
         }
-
 
         binding.viewPager2DrivingsList.isUserInputEnabled = false
 

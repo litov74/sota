@@ -39,19 +39,19 @@ class UserCardViewHolder(inflater: LayoutInflater, parent: ViewGroup) : Recycler
     }
     fun bind(useCardModel: UserCardModel, editMode: Boolean, userCardAction: UserCardAction) {
         cardLastSymbols?.text = useCardModel.last_four
-        isMainCardContainer?.visibility = View.GONE
-        isNotMainCardEditContainer?.visibility = View.GONE
+       // isMainCardContainer?.visibility = View.GONE
+      //  isNotMainCardEditContainer?.visibility = View.GONE
         isMainCardEditContainer?.visibility = View.GONE
 
-        if (editMode) {
-            if (useCardModel.is_main == true) {
-                isMainCardEditContainer?.visibility = View.VISIBLE
-            } else {
-                isNotMainCardEditContainer?.visibility = View.VISIBLE
-            }
-        } else if (useCardModel.is_main == true) {
-            isMainCardContainer?.visibility = View.VISIBLE
-        }
+//        if (editMode) {
+//            if (useCardModel.is_main == true) {
+//                isMainCardEditContainer?.visibility = View.VISIBLE
+//            } else {
+//                isNotMainCardEditContainer?.visibility = View.VISIBLE
+//            }
+//        } else if (useCardModel.is_main == true) {
+//            isMainCardContainer?.visibility = View.VISIBLE
+//        }
 
         removeNotMainCard?.setOnClickListener { userCardAction.selectRemove(useCardModel) }
         removeMainCard?.setOnClickListener { userCardAction.selectRemove(useCardModel) }

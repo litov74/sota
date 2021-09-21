@@ -7,6 +7,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
+        android:paddingBottom="8dp"
         android:layout_height="wrap_content">
 
 
@@ -31,47 +33,64 @@
             android:textStyle="bold" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
-            app:srcCompat="@drawable/ic_scan_new"/>
-
-
-
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:gravity="center"
-            android:layout_margin="16dp"
-            android:textColor="@color/segment_black"
-            android:text="@string/invite_friends_and_get_bonus"
-            app:fontFamily="@font/geometria"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/sotes_background"/>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonInvite"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/background_stroke_red"
-            android:enabled="true"
-            android:padding="4dp"
-            android:text="@string/share"
-            android:textAllCaps="false"
-            android:textColor="@color/red"
-            android:textSize="15sp" />
+            android:layout_height="0.5dp"
+            android:background="@color/gray_edit_text"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                app:srcCompat="@drawable/ic_scan_new"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                android:textColor="@color/segment_black"
+                android:text="@string/invite_friends_and_get_bonus"
+                app:fontFamily="@font/geometria"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonInvite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/background_stroke_red"
+                android:enabled="true"
+                android:padding="4dp"
+                android:text="@string/share"
+                android:textAllCaps="false"
+                android:textColor="@color/red"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

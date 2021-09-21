@@ -2,11 +2,13 @@ package com.development.sota.scooter.ui.drivings.presentation.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.ScanMode
 import com.development.sota.scooter.databinding.FragmentDrivingsQrBinding
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsActivityView
 import com.development.sota.scooter.ui.drivings.presentation.DrivingsFragmentView
@@ -35,31 +37,20 @@ class QRFragment(val drivingsView: DrivingsActivityView) : MvpAppCompatFragment(
     private var _binding: FragmentDrivingsQrBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var codeScanner: CodeScanner
+    private  var codeScanner: CodeScanner? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("QRFragment", "new fragment")
         _binding = FragmentDrivingsQrBinding.inflate(inflater, container, false)
 
-        codeScanner = CodeScanner(context ?: activity?.applicationContext!!, binding.qrScanner)
-
-        codeScanner.autoFocusMode = AutoFocusMode.CONTINUOUS
-        codeScanner.isAutoFocusEnabled = true
-
-        codeScanner.setDecodeCallback {
-            presenter.getDataFromScanner(it.text)
-        }
-        codeScanner.setErrorCallback {
-            presenter.gotErrorFromScanner()
-        }
-
-        codeScanner.startPreview()
+        initScanner()
 
         binding.imageButtonQrScannerLantern.setOnClickListener {
-            codeScanner.isFlashEnabled = !codeScanner.isFlashEnabled
+            codeScanner!!.isFlashEnabled = !codeScanner!!.isFlashEnabled
         }
 
         binding.imageButtonQrScannerCode.setOnClickListener {
@@ -73,6 +64,32 @@ class QRFragment(val drivingsView: DrivingsActivityView) : MvpAppCompatFragment(
         return binding.root
     }
 
+    private fun initScanner() {
+        try {
+            codeScanner = CodeScanner(requireContext(), binding.qrScanner)
+            codeScanner!!.setDecodeCallback {
+                presenter.getDataFromScanner(it.text)
+            }
+            codeScanner!!.setErrorCallback {
+                presenter.gotErrorFromScanner()
+            }
+
+            // Parameters (default values)
+            codeScanner!!.camera = CodeScanner.CAMERA_BACK // or CAMERA_FRONT or specific camera id
+            codeScanner!!.formats = CodeScanner.ALL_FORMATS // list of type BarcodeFormat,
+            // ex. listOf(BarcodeFormat.QR_CODE)
+            codeScanner!!.autoFocusMode = AutoFocusMode.SAFE // or CONTINUOUS
+            codeScanner!!.scanMode = ScanMode.SINGLE // or CONTINUOUS or PREVIEW
+            codeScanner!!.isAutoFocusEnabled = true // Whether to enable auto focus or not
+            codeScanner!!.isFlashEnabled = false // Whether to enable flash or
+
+            codeScanner!!.autoFocusMode = AutoFocusMode.CONTINUOUS
+            codeScanner!!.isAutoFocusEnabled = true
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun sendFoundCodeToDrivings(code: Long) {
         activity?.runOnUiThread {
             drivingsView.gotCode(code, this)
@@ -80,26 +97,52 @@ class QRFragment(val drivingsView: DrivingsActivityView) : MvpAppCompatFragment(
     }
 
     override fun setLoading(by: Boolean) {
-        activity?.runOnUiThread {
-            if (by) {
-                binding.progressBarDrivingsQr.visibility = View.VISIBLE
-                codeScanner.stopPreview()
-            } else {
-                binding.progressBarDrivingsQr.visibility = View.GONE
-                codeScanner.startPreview()
+//        activity?.runOnUiThread {
+//            if (by) {
+//                binding.progressBarDrivingsQr.visibility = View.VISIBLE
+//                codeScanner.stopPreview()
+//            } else {
+//                binding.progressBarDrivingsQr.visibility = View.GONE
+//                codeScanner.startPreview()
+//            }
+//        }
+    }
+
+
+
+    override fun onResume() {
+        super.onResume()
+        try {
+            activity?.runOnUiThread {
+                codeScanner!!.startPreview()
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+    }
+
+
+
+    override fun onPause() {
+        try {
+
+            codeScanner!!.releaseResources()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        super.onPause()
     }
 
     fun toggleLantern() {
         activity?.runOnUiThread {
-            codeScanner.isFlashEnabled = !codeScanner.isFlashEnabled
+            codeScanner!!.isFlashEnabled = !codeScanner!!.isFlashEnabled
         }
     }
 
     override fun sendToCodeFragment() {
         activity?.runOnUiThread {
-            codeScanner.stopPreview()
+            codeScanner!!.stopPreview()
 
             drivingsView.sendToCodeActivity()
         }
@@ -109,19 +152,5 @@ class QRFragment(val drivingsView: DrivingsActivityView) : MvpAppCompatFragment(
         presenter.gotResponseFromActivity(result)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
 
-        activity?.runOnUiThread {
-            try {
-                codeScanner.startPreview()
-            } catch (e: Exception) {
-            }
-        }
-    }
-
-    override fun onDestroy() {
-        presenter.onDestroyCalled()
-        super.onDestroy()
-    }
 }

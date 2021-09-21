@@ -24,6 +24,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import moxy.MvpPresenter
+import timber.log.Timber
 import java.util.*
 
 
@@ -144,12 +145,16 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
 
     fun selectScooterByCode(scooter:Scooter) {
 
+        Log.d("MapPresenter"," scooter by code ${scooter} ")
         if (scooter != null) {
             currentScooter = scooter
             viewState.showBottomActionButtons(false)
             viewState.showScooterCard(scooter!!, OrderStatus.CANDIDIATE)
             interactor.getRouteFor(destination = position, origin = scooter!!.getLatLng())
             interactor.getGeoZoneForRate(currentScooter!!.geozone, currentScooter!!.id)
+        } else {
+            viewState.hideScooterCard()
+            viewState.showBottomActionButtons(true)
         }
     }
 
@@ -183,6 +188,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
     }
 
     fun activateSucc() {
+        currentScooter = null
         viewState.setActivatingScooter(false)
         viewState.hideScooterCard()
         viewState.sendToLookTutorial()
@@ -214,6 +220,7 @@ class  MapPresenter(val context: Context) : MvpPresenter<MapView>(), BasePresent
                     withActivation = false
                 )
             } else if (info.first.balance.toDouble() <= 0) {
+
                 viewState.setActivatingScooter(false)
                 viewState.setDialogBy(MapDialogType.NO_MONEY_FOR_START)
 

@@ -15,16 +15,16 @@
     <string name="login_request_code_again">Запросить код повторно</string>
     <string name="login_ticker_text">Отправить код снова через</string>
 
-    <string name="login_tutorial_label_1">Начало поездки</string>
-    <string name="login_tutorial_body_1">Найдите свой скутер на карте, подойдите, отсканируйте его QR-код возле руля.</string>
-    <string name="login_tutorial_label_2">Открой замок</string>
-    <string name="login_tutorial_body_2">Открой замок. После включения самоката, выньте трос из гнезда, в месте, указанном стрелкой. Если самокат без электрического замка, отстегните карабин.</string>
-    <string name="login_tutorial_label_3">Как набрать скорость</string>
-    <string name="login_tutorial_body_3">Оттолкнитесь ногой для начала движения, используйте правый рычаг для ускорения</string>
+    <string name="login_tutorial_label_1">Стоимость поездки</string>
+    <string name="login_tutorial_body_1">Для того чтобы узнать стоимость поездки, необходимо выбрать самокат на карте и появится информация о тарифах.</string>
+    <string name="login_tutorial_label_2">Начало поездки</string>
+    <string name="login_tutorial_body_2">Отсканируйте QR-код самоката или выберите его на карте в приложении и активируйте его.</string>
+    <string name="login_tutorial_label_3">Управление самокатом</string>
+    <string name="login_tutorial_body_3">Для старта нужно оттолкнуться ногой и нажать справа курок газа. Тормоз находиться слева.</string>
     <string name="login_tutorial_label_4">Катайтесь безопасно</string>
     <string name="login_tutorial_body_4">Пожалуйста, не выезжайте на проезжую часть, не ускоряйтесь возле пешеходов.</string>
     <string name="login_tutorial_label_5">Места для катания</string>
-    <string name="login_tutorial_body_5">В некоторых районах катание и парковка не разрешены. Мы покажем на карте.</string>
+    <string name="login_tutorial_body_5">Не выезжайте за зону разрешенного использования, она помечена зеленым контуром. Завершить аренду можно только на парковке, она обозначены буквой P.</string>
     <string name="login_tutorial_label_6">Паркуйте ответственно</string>
     <string name="login_tutorial_body_6">Пожалуйста, не блокируйте дороги и оставляйте место для пешеходов.</string>
 
@@ -321,12 +321,12 @@
     <string name="cardholder_name">Имя на карте</string>
     <string name="mm_year">ММ/ГГ</string>
     <string name="cvv">CVV</string>
-    <string name="first_transaction_description">Мы спишем и тут же вернем 1р, чтобы\nудостовериться, что твоя карта работает</string>
+    <string name="first_transaction_description">Мы спишем 1р, чтобы\nудостовериться, что твоя карта работает</string>
     <string name="add">Добавить</string>
     <string name="help">Помощь</string>
     <string name="call_to_free_number">Позвонить по бесплатному номеру</string>
     <string name="invite_friends">Пригласить друзей</string>
-    <string name="invite_friends_and_get_bonus">Пригласи друга, и получите бонусы на поездки</string>
+    <string name="invite_friends_and_get_bonus">Пригласи друга</string>
     <string name="share">Поделиться</string>
     <string name="user_menu_profile">Профиль</string>
     <string name="user_menu_edit">Ред.</string>
